@@ -3,5 +3,5 @@
 
 void InitializeTranslation (TranslatorMain* self)
 {
-    FILE* src_asm = 
+    FILE* src_asm =  get_file
 }
