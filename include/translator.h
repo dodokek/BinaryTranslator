@@ -16,47 +16,12 @@
 // ===============================================
 
 // ===============================================
-// Structs   ||
-//           \/
-
-
-struct CmdFile
-{
-    const char* content;
-    int len;
-};
-
-
-struct TranslatorMain
-{
-    CmdFile src_cmds;
-    CmdFile dst_x86;
-};
-
-
-struct Command 
-{
-    /* data */
-};
-
-
-// ===============================================
-// Constants ||
-//           \/
-
-const char* INPUT_FILE_PATH = "../data/cmds.bin";
-
-const int HEADER_OFFSET = 8;
-
-// ===============================================
-
-// ===============================================
 // Enums     ||
 //           \/
 
 #define DEF_CMD(CMD, offset, id) CMD = id, 
 
-enum Commands
+enum EnumCommands
 {
     HLT = 0,
 
@@ -86,17 +51,83 @@ enum OffsetsAndFlags
     END_OF_PROG = -1,
 };
 
+
+enum ExitCodes
+{
+    SUCCESS,
+    ALLOCATION_FAILURE,
+};
+
 // ===============================================
+
+
+// ===============================================
+// Structs   ||
+//           \/
+
+typedef double elem_t;
+
+struct CmdsBuffer
+{
+    const char* content;
+    int len;
+};
+
+
+struct Command 
+{
+    EnumCommands name;
+    
+    int reg_index;
+    elem_t value;
+
+    bool is_immed;
+    bool use_reg;
+    bool use_mem;
+};
+
+
+struct TranslatorMain
+{
+    CmdsBuffer src_cmds;
+    CmdsBuffer dst_x86;
+
+    Command** cmds_array;
+    int cmds_counter;
+
+};
+
+
+
+
+// ===============================================
+// Constants ||
+//           \/
+
+const char* INPUT_FILE_PATH = "../data/cmds.bin";
+
+const int HEADER_OFFSET = 8;
+
+// ===============================================
+
 
 // ===============================================
 // Functions ||
 //           \/
 
+void DumpRawCmds (TranslatorMain* self);
+
+void FillCmdInfo (const char* code, TranslatorMain* self);
+
+void TranslatorCtor (TranslatorMain* self);
+
 void InitializeTranslation (TranslatorMain* self);
 
 void ReadFileToStruct (TranslatorMain* self, FILE* file);
 
-int CmdToStruct (const char* cur_ptr);
+int CmdToStruct (const char* code, TranslatorMain* self);
+
+int AllocateCmdArrays (TranslatorMain* self);
 
 // ===============================================
 
