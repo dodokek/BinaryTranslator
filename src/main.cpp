@@ -2,5 +2,9 @@
 
 int main()
 {
+    TranslatorMain TranslatorInfo = {};
+    
+    InitializeTranslation (&TranslatorInfo);
+
     
 }

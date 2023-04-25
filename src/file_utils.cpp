@@ -18,16 +18,7 @@ FILE* get_file (const char file_name[], const char* mode)
 }
 
 
-int read_file (FILE* file, char** buffer)
-{
-    assert (file != nullptr);
 
-    fseek (file, 0L, SEEK_END);
-    long int file_len = ftell (file);
-    fseek (file, 0L, SEEK_SET);
-
-    return (int) fread (*buffer, sizeof(char), file_len, file);
-}
 
 
 
