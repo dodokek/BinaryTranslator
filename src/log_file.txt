@@ -1,0 +1,21 @@
+Ip   8:
+	Id: 1
+Ip  18:
+End of prog.
+
+================ Begin of struct dump ==================
+
+Command. Id: 1, Orig ip: 8, x86 ip: 0
+	Operating width digit, value: 228
+
+================ End of struct dump ==================
+
+---------- Begin translation -------------
+
+
+====== x86 buffer dump begin =======
+
+0: 48 31 c0 b8 02 00 00 00 c3 
+
+====== x86 buffer dump end =======
+

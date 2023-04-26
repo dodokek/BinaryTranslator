@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <sys/mman.h>
 
 #include "file_utils.h"
 
@@ -11,7 +12,7 @@
 // Defines   ||
 //           \/
 
-#define LOG(...) fprintf (stderr, __VA_ARGS__);
+#define LOG(...) fprintf (LOG_FILE, __VA_ARGS__);
 
 // ===============================================
 
@@ -86,15 +87,14 @@ const struct InstructionSizes InstrSizes[30] =
     {POP,  10,  1},
     {},
     {},
-    {},
     {JMP,  10,  5}
 };
 
 
 struct CmdsBuffer
 {
-    const char* content;
-    int len;
+    char* content;
+    size_t len;
 };
 
 
@@ -134,9 +134,13 @@ struct TranslatorMain
 
 const int MAX_IP = 1000;
 
-const char* INPUT_FILE_PATH = "../data/cmds.bin";
+const int MAX_OPCODE_LEN = 6;
+
+const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
 
 const int HEADER_OFFSET = 8;
+
+const int PAGESIZE = 4096;
 
 // ===============================================
 
@@ -146,6 +150,8 @@ const int HEADER_OFFSET = 8;
 //           \/
 
 void DumpRawCmds (TranslatorMain* self);
+
+void Dump86Buffer (TranslatorMain* self);
 
 int FillCmdInfo (const char* code, TranslatorMain* self);
 
@@ -158,6 +164,18 @@ void ReadFileToStruct (TranslatorMain* self, FILE* file);
 int CmdToStruct (const char* code, TranslatorMain* self);
 
 int AllocateCmdArrays (TranslatorMain* self);
+
+void RunCode (TranslatorMain* self);
+
+void StartTranslation (TranslatorMain* self);
+
+//-- Translation Units:
+
+void LoadToX86Buffer (TranslatorMain* self, char* op_code, size_t len);
+
+void TranslatePushPop (TranslatorMain* self, Command* cur_cmd);
+
+void TranslateJmp (TranslatorMain* self, Command* cur_cmd);
 
 // ===============================================
 

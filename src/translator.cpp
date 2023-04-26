@@ -2,6 +2,8 @@
 
 #include "../include/translator.h"
 
+FILE* LOG_FILE = get_file ("log_file.txt", "w");
+
 
 int main()
 {
@@ -12,14 +14,82 @@ int main()
 
     DumpRawCmds (&TranslatorInfo);
 
-    // StartTranslation (&TranslatorInfo);
+    StartTranslation (&TranslatorInfo);
+
+    Dump86Buffer (&TranslatorInfo);
+
+    RunCode (&TranslatorInfo);
 }
 
 
-// void StartTranslation (TranslatorMain* self)
-// {
+void RunCode (TranslatorMain* self)
+{
+    int flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_EXEC);
 
-// }
+    if (flag == -1)
+    {
+        LOG ("**** mprotect error ****\n");
+        return;
+    }
+
+    int (* god_save_me)(void) = (int (*)(void))(self->dst_x86.content);
+
+    int kek = god_save_me();
+
+    printf ("Bruh: %x\n", kek);
+}
+
+
+void StartTranslation (TranslatorMain* self)
+{
+    LOG ("---------- Begin translation -------------\n");
+
+    for (int cmd_indx = 0; cmd_indx < self->cmds_counter; cmd_indx++)
+    {
+        switch (self->cmds_array[cmd_indx]->name)
+        {
+        case PUSH:
+        case POP:
+            TranslatePushPop (self, self->cmds_array[cmd_indx]);
+            break;
+
+        case JMP:
+            TranslateJmp (self, self->cmds_array[cmd_indx]);
+            break;
+        
+        default:
+            break;
+        }
+    }
+
+}
+
+
+void LoadToX86Buffer (TranslatorMain* self, char* op_code, size_t len)
+{
+    memcpy (self->dst_x86.content + self->dst_x86.len, (void*) op_code, len);
+    self->dst_x86.len += len;
+}
+
+
+
+void TranslatePushPop (TranslatorMain* self, Command* cur_cmd)
+{
+    // For now let's just write xor rax, rax; mov rax, 2d
+
+    char opcode_buff[] = { 0x48, 0x31, 0xC0, 0xB8, 0x02, 0x00, 0x00, 0x00 }; // mov rax, 02d
+
+
+
+    LoadToX86Buffer (self, opcode_buff, sizeof (opcode_buff));
+}
+
+
+void TranslateJmp (TranslatorMain* self, Command* cur_cmd)
+{
+    // Need to add cool calculations of jump
+}
+
 
 
 void TranslatorCtor (TranslatorMain* self)
@@ -52,7 +122,7 @@ void ParseOnStructs (TranslatorMain* self)
 
     while (self->orig_ip_counter < self->src_cmds.len)
     {
-        printf ("Ip %3d:\n ", self->orig_ip_counter);
+        LOG ("Ip %3d:\n", self->orig_ip_counter);
 
         int flag = CmdToStruct (self->src_cmds.content + self->orig_ip_counter, self);
         
@@ -68,7 +138,7 @@ int CmdToStruct (const char* code, TranslatorMain* self)
 
     #define DEF_CMD(name, OFFSET, id)    \
         case name:                       \
-            printf ("\t%d\n", name);     \
+            LOG ("\tId: %d\n", name);     \
             FillCmdInfo (code, self);    \
             return 0;                    \
 
@@ -81,7 +151,7 @@ int CmdToStruct (const char* code, TranslatorMain* self)
             return END_OF_PROG;
 
         default:
-            printf ("SIGILL %d\n", *code);
+            LOG ("*!**!**!**!* SIGILL %d\n *!**!**!**!*", *code);
             return END_OF_PROG;
     }
 
@@ -109,7 +179,6 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
         new_cmd->is_immed = cmd & ARG_IMMED;
         new_cmd->use_reg  = cmd & ARG_REG;
         new_cmd->use_mem  = cmd & ARG_MEM;
-
         // Here calculating offset for push/pop
 
         new_cmd->name = (EnumCommands) name;
@@ -118,7 +187,8 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
     {
         new_cmd->name = (EnumCommands) name;
     }
-
+    // printf ("Adding %d\n", InstrSizes[name].original_size);
+    
     self->jump_table[self->orig_ip_counter] = self->x86_ip_counter;
     
     self->x86_ip_counter  += InstrSizes[name].x86_size;
@@ -135,7 +205,7 @@ int AllocateCmdArrays (TranslatorMain* self)
 {
     self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
 
-    self->dst_x86.content = (char*) calloc (self->src_cmds.len, sizeof (char));
+    self->dst_x86.content = (char*) aligned_alloc (PAGESIZE, self->src_cmds.len * sizeof (char)); // alignment for mprotect
     memset ((void*) self->dst_x86.content, 0xC3, self->src_cmds.len);      // Filling all buffer
                                                                            // With ret (0xC3) byte code
 
@@ -149,24 +219,45 @@ int AllocateCmdArrays (TranslatorMain* self)
 
 void DumpRawCmds (TranslatorMain* self)
 {
+    LOG ("\n================ Begin of struct dump ==================\n");
+
     for (int i = 0; i < self->cmds_counter; i++)
     {
         Command* cur_cmd = self->cmds_array[i];
 
-        printf ("\nCommand. Id: %d, Orig ip: %d, x86 ip: %d\n",
+        LOG ("\nCommand. Id: %d, Orig ip: %d, x86 ip: %d\n",
                 cur_cmd->name, cur_cmd->orig_ip, self->jump_table[cur_cmd->orig_ip]);
         if (cur_cmd->name == PUSH || cur_cmd->name == POP)
         {
             if (cur_cmd->use_reg)
-                printf ("\tUsing register, its id: %d\n", cur_cmd->reg_index);
+                LOG ("\tUsing register, its id: %d\n", cur_cmd->reg_index);
             
             if (cur_cmd->is_immed)
-                printf ("\tOperating width digit, value: %lg\n", cur_cmd->value);
+                LOG ("\tOperating width digit, value: %lg\n", cur_cmd->value);
             if (cur_cmd->use_mem)
-                printf ("--- Adresses to memory\n");
+                LOG ("--- Adresses to memory\n");
         }
     }
+
+    LOG ("\n================ End of struct dump ==================\n\n");
 }
+
+
+void Dump86Buffer (TranslatorMain* self)
+{
+    LOG ("\n\n====== x86 buffer dump begin =======\n");
+
+    for (int i = 0; i < self->dst_x86.len + 1; i++)
+    {
+        if (i % 10 == 0) LOG ("\n%d: ", i);
+
+        LOG ("%02x ", (unsigned char) self->dst_x86.content[i]);
+    }
+
+    LOG ("\n\n====== x86 buffer dump end =======\n\n");
+
+}
+
 
 void ReadFileToStruct (TranslatorMain* self, FILE* file)
 {
