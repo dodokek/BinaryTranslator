@@ -4,7 +4,7 @@ int main()
 {
     TranslatorMain TranslatorInfo = {};
     
-    InitializeTranslation (&TranslatorInfo);
+    ParseOnStructs (&TranslatorInfo);
 
     
 }

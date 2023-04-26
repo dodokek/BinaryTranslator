@@ -67,6 +67,30 @@ enum ExitCodes
 
 typedef double elem_t;
 
+struct InstructionSizes
+{
+    EnumCommands id;
+    
+    int original_size;
+    int x86_size;
+};
+
+const struct InstructionSizes InstrSizes[30] =
+{
+    {HLT,  1,   1},
+    {PUSH, 10,  5},
+    {},
+    {},
+    {},
+    {},
+    {POP,  10,  1},
+    {},
+    {},
+    {},
+    {JMP,  10,  5}
+};
+
+
 struct CmdsBuffer
 {
     const char* content;
@@ -77,6 +101,7 @@ struct CmdsBuffer
 struct Command 
 {
     EnumCommands name;
+    int orig_ip;
     
     int reg_index;
     elem_t value;
@@ -95,6 +120,9 @@ struct TranslatorMain
     Command** cmds_array;
     int cmds_counter;
 
+    int* jump_table; // ind - original ip, value - x86 ip
+    int orig_ip_counter;
+    int x86_ip_counter;
 };
 
 
@@ -103,6 +131,8 @@ struct TranslatorMain
 // ===============================================
 // Constants ||
 //           \/
+
+const int MAX_IP = 1000;
 
 const char* INPUT_FILE_PATH = "../data/cmds.bin";
 
@@ -117,11 +147,11 @@ const int HEADER_OFFSET = 8;
 
 void DumpRawCmds (TranslatorMain* self);
 
-void FillCmdInfo (const char* code, TranslatorMain* self);
+int FillCmdInfo (const char* code, TranslatorMain* self);
 
 void TranslatorCtor (TranslatorMain* self);
 
-void InitializeTranslation (TranslatorMain* self);
+void ParseOnStructs (TranslatorMain* self);
 
 void ReadFileToStruct (TranslatorMain* self, FILE* file);
 

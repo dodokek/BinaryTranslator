@@ -8,10 +8,18 @@ int main()
     TranslatorMain TranslatorInfo = {};
     TranslatorCtor (&TranslatorInfo);
 
-    InitializeTranslation (&TranslatorInfo);
- 
+    ParseOnStructs (&TranslatorInfo);
+
     DumpRawCmds (&TranslatorInfo);
+
+    // StartTranslation (&TranslatorInfo);
 }
+
+
+// void StartTranslation (TranslatorMain* self)
+// {
+
+// }
 
 
 void TranslatorCtor (TranslatorMain* self)
@@ -24,30 +32,34 @@ void TranslatorCtor (TranslatorMain* self)
 
     self->cmds_array = nullptr;
     self->cmds_counter = 0;
+
+    self->jump_table = (int*) calloc (MAX_IP, sizeof (int));
+    self->orig_ip_counter = 0;
+    self->x86_ip_counter = 0;
 }
 
 
-void InitializeTranslation (TranslatorMain* self)
+void ParseOnStructs (TranslatorMain* self)
 {   
     FILE* input_file = get_file (INPUT_FILE_PATH, "rb");
     ReadFileToStruct (self, input_file);
+    close_file (input_file, INPUT_FILE_PATH);
 
     if (AllocateCmdArrays (self) == ALLOCATION_FAILURE)
         LOG ("Failed to allocate the memory for buffers");
 
-    for (int ip = HEADER_OFFSET; ip < self->src_cmds.len; ip++)
-    {
-        printf ("Ip %3d:\n ", ip);
+    self->orig_ip_counter = HEADER_OFFSET;
 
-        int offset_or_hlt = CmdToStruct (self->src_cmds.content + ip, self);
+    while (self->orig_ip_counter < self->src_cmds.len)
+    {
+        printf ("Ip %3d:\n ", self->orig_ip_counter);
+
+        int flag = CmdToStruct (self->src_cmds.content + self->orig_ip_counter, self);
         
-        if (offset_or_hlt == END_OF_PROG)
-            break;
-        
-        ip += offset_or_hlt;   
+        if (flag == END_OF_PROG)
+            break;   
     }
 
-    close_file (input_file, INPUT_FILE_PATH);
 }
 
 
@@ -58,7 +70,7 @@ int CmdToStruct (const char* code, TranslatorMain* self)
         case name:                       \
             printf ("\t%d\n", name);     \
             FillCmdInfo (code, self);    \
-            return OFFSET;               \
+            return 0;                    \
 
     switch (*code & CMD_BITMASK)
     {
@@ -78,12 +90,14 @@ int CmdToStruct (const char* code, TranslatorMain* self)
 }
 
 
-void FillCmdInfo (const char* code, TranslatorMain* self)
+int FillCmdInfo (const char* code, TranslatorMain* self)
 {
     int name = *code & CMD_BITMASK; 
     int cmd = *code;
 
     Command* new_cmd = (Command*) calloc (1, sizeof (Command));
+
+    new_cmd->orig_ip = self->orig_ip_counter;
 
     if (name == PUSH || name == POP)
     {
@@ -95,17 +109,25 @@ void FillCmdInfo (const char* code, TranslatorMain* self)
         new_cmd->is_immed = cmd & ARG_IMMED;
         new_cmd->use_reg  = cmd & ARG_REG;
         new_cmd->use_mem  = cmd & ARG_MEM;
+
+        // Here calculating offset for push/pop
+
+        new_cmd->name = (EnumCommands) name;
     }
     else
     {
         new_cmd->name = (EnumCommands) name;
     }
-    
-    self->cmds_array[self->cmds_counter] = new_cmd;
 
+    self->jump_table[self->orig_ip_counter] = self->x86_ip_counter;
+    
+    self->x86_ip_counter  += InstrSizes[name].x86_size;
+    self->orig_ip_counter += InstrSizes[name].original_size;
+
+    self->cmds_array[self->cmds_counter] = new_cmd;
     self->cmds_counter++;
 
-    return;
+    return 0;
 }
 
 
@@ -114,6 +136,8 @@ int AllocateCmdArrays (TranslatorMain* self)
     self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
 
     self->dst_x86.content = (char*) calloc (self->src_cmds.len, sizeof (char));
+    memset ((void*) self->dst_x86.content, 0xC3, self->src_cmds.len);      // Filling all buffer
+                                                                           // With ret (0xC3) byte code
 
     if (self->src_cmds.content != nullptr &&
         self->dst_x86.content  != nullptr)
@@ -129,8 +153,8 @@ void DumpRawCmds (TranslatorMain* self)
     {
         Command* cur_cmd = self->cmds_array[i];
 
-
-        printf ("Command. Id: %d\n", cur_cmd->name);
+        printf ("\nCommand. Id: %d, Orig ip: %d, x86 ip: %d\n",
+                cur_cmd->name, cur_cmd->orig_ip, self->jump_table[cur_cmd->orig_ip]);
         if (cur_cmd->name == PUSH || cur_cmd->name == POP)
         {
             if (cur_cmd->use_reg)
@@ -142,7 +166,6 @@ void DumpRawCmds (TranslatorMain* self)
                 printf ("--- Adresses to memory\n");
         }
     }
-
 }
 
 void ReadFileToStruct (TranslatorMain* self, FILE* file)
