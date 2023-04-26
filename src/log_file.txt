@@ -1,12 +1,27 @@
 Ip   8:
 	Id: 1
 Ip  18:
+	Id: 9
+Ip  28:
 End of prog.
+
+
+---------- Filling labels --------
+
+ 1: Trying to find x86 ip for ip 8:
+	 Found, x86 ip is 0
+
+
+---------- End filling labels --------
+
 
 ================ Begin of struct dump ==================
 
-Command. Id: 1, Orig ip: 8, x86 ip: 0
-	Operating width digit, value: 228
+Command < PUSH > | Orig ip: 8 | x86 ip: 0
+	+Operating width digit, value: 228
+
+Command < JMP > | Orig ip: 18 | x86 ip: 5
+	+Wants to jump into 0
 
 ================ End of struct dump ==================
 
@@ -15,7 +30,7 @@ Command. Id: 1, Orig ip: 8, x86 ip: 0
 
 ====== x86 buffer dump begin =======
 
-0: 48 31 c0 b8 02 00 00 00 c3 
+ 0: 48 31 c0 b8 02 00 00 00 c3 
 
 ====== x86 buffer dump end =======
 

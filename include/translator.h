@@ -16,11 +16,32 @@
 
 // ===============================================
 
+
+// Constants ||
+//           \/
+
+const int MAX_IP = 1000;
+
+const int MAX_LABELS = 100;
+
+const int MAX_OPCODE_LEN = 6;
+
+const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
+
+const int HEADER_OFFSET = 8;
+
+const int PAGESIZE = 4096;
+
+const char* NotFound = "Not found\n";
+
+// ===============================================
+
+
 // ===============================================
 // Enums     ||
 //           \/
 
-#define DEF_CMD(CMD, offset, id) CMD = id, 
+#define DEF_CMD(CMD, id) CMD = id, 
 
 enum EnumCommands
 {
@@ -102,6 +123,7 @@ struct Command
 {
     EnumCommands name;
     int orig_ip;
+    int x86_ip;
     
     int reg_index;
     elem_t value;
@@ -112,6 +134,8 @@ struct Command
 };
 
 
+
+
 struct TranslatorMain
 {
     CmdsBuffer src_cmds;
@@ -120,7 +144,6 @@ struct TranslatorMain
     Command** cmds_array;
     int cmds_counter;
 
-    int* jump_table; // ind - original ip, value - x86 ip
     int orig_ip_counter;
     int x86_ip_counter;
 };
@@ -129,25 +152,16 @@ struct TranslatorMain
 
 
 // ===============================================
-// Constants ||
-//           \/
-
-const int MAX_IP = 1000;
-
-const int MAX_OPCODE_LEN = 6;
-
-const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
-
-const int HEADER_OFFSET = 8;
-
-const int PAGESIZE = 4096;
-
-// ===============================================
-
 
 // ===============================================
 // Functions ||
 //           \/
+
+void FillJumpLables (TranslatorMain* self);
+
+int FindJumpIp (TranslatorMain* self, int orig_ip);
+
+char* GetNameFromId (EnumCommands id);
 
 void DumpRawCmds (TranslatorMain* self);
 

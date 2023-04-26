@@ -1,5 +1,4 @@
 
-
 #include "../include/translator.h"
 
 FILE* LOG_FILE = get_file ("log_file.txt", "w");
@@ -12,9 +11,11 @@ int main()
 
     ParseOnStructs (&TranslatorInfo);
 
+    FillJumpLables (&TranslatorInfo);
     DumpRawCmds (&TranslatorInfo);
 
     StartTranslation (&TranslatorInfo);
+
 
     Dump86Buffer (&TranslatorInfo);
 
@@ -79,8 +80,6 @@ void TranslatePushPop (TranslatorMain* self, Command* cur_cmd)
 
     char opcode_buff[] = { 0x48, 0x31, 0xC0, 0xB8, 0x02, 0x00, 0x00, 0x00 }; // mov rax, 02d
 
-
-
     LoadToX86Buffer (self, opcode_buff, sizeof (opcode_buff));
 }
 
@@ -103,7 +102,6 @@ void TranslatorCtor (TranslatorMain* self)
     self->cmds_array = nullptr;
     self->cmds_counter = 0;
 
-    self->jump_table = (int*) calloc (MAX_IP, sizeof (int));
     self->orig_ip_counter = 0;
     self->x86_ip_counter = 0;
 }
@@ -136,7 +134,7 @@ void ParseOnStructs (TranslatorMain* self)
 int CmdToStruct (const char* code, TranslatorMain* self)
 {
 
-    #define DEF_CMD(name, OFFSET, id)    \
+    #define DEF_CMD(name, id)    \
         case name:                       \
             LOG ("\tId: %d\n", name);     \
             FillCmdInfo (code, self);    \
@@ -168,6 +166,7 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
     Command* new_cmd = (Command*) calloc (1, sizeof (Command));
 
     new_cmd->orig_ip = self->orig_ip_counter;
+    new_cmd->x86_ip  = self->x86_ip_counter;
 
     if (name == PUSH || name == POP)
     {
@@ -180,16 +179,12 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
         new_cmd->use_reg  = cmd & ARG_REG;
         new_cmd->use_mem  = cmd & ARG_MEM;
         // Here calculating offset for push/pop
-
-        new_cmd->name = (EnumCommands) name;
     }
-    else
-    {
-        new_cmd->name = (EnumCommands) name;
-    }
-    // printf ("Adding %d\n", InstrSizes[name].original_size);
+    if (name == JMP)
+        new_cmd->value = *(elem_t*)(code + 1);
     
-    self->jump_table[self->orig_ip_counter] = self->x86_ip_counter;
+    new_cmd->name = (EnumCommands) name;
+    // printf ("Adding %d\n", InstrSizes[name].original_size);
     
     self->x86_ip_counter  += InstrSizes[name].x86_size;
     self->orig_ip_counter += InstrSizes[name].original_size;
@@ -201,12 +196,47 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
 }
 
 
+void FillJumpLables (TranslatorMain* self)
+{
+    LOG ("\n\n---------- Filling labels --------\n\n");
+
+    for (int i = 0; i < self->cmds_counter; i++)
+    {
+        if (self->cmds_array[i]->name == JMP)
+        {
+            LOG ("%2d: Trying to find x86 ip for ip %lg:\n", i, self->cmds_array[i]->value);
+
+            self->cmds_array[i]->value = FindJumpIp (self, self->cmds_array[i]->value);
+        }
+    }
+
+    LOG ("\n\n---------- End filling labels --------\n\n");
+}
+
+
+int FindJumpIp (TranslatorMain* self, int orig_ip)
+{
+    for (int i = 0; i < self->cmds_counter; i++)
+    {
+        if (self->cmds_array[i]->orig_ip == orig_ip)
+        {
+            LOG ("\t Found, x86 ip is %d\n", self->cmds_array[i]->x86_ip)
+            return self->cmds_array[i]->x86_ip;
+        }
+    }
+
+    LOG ("\tNot found\n");
+
+    return -1;
+}
+
+
 int AllocateCmdArrays (TranslatorMain* self)
 {
     self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
 
     self->dst_x86.content = (char*) aligned_alloc (PAGESIZE, self->src_cmds.len * sizeof (char)); // alignment for mprotect
-    memset ((void*) self->dst_x86.content, 0xC3, self->src_cmds.len);      // Filling all buffer
+    memset ((void*) self->dst_x86.content, 0xC3, self->src_cmds.len);      // Filling whole buffer
                                                                            // With ret (0xC3) byte code
 
     if (self->src_cmds.content != nullptr &&
@@ -225,17 +255,21 @@ void DumpRawCmds (TranslatorMain* self)
     {
         Command* cur_cmd = self->cmds_array[i];
 
-        LOG ("\nCommand. Id: %d, Orig ip: %d, x86 ip: %d\n",
-                cur_cmd->name, cur_cmd->orig_ip, self->jump_table[cur_cmd->orig_ip]);
+        LOG ("\nCommand < %s > | Orig ip: %d | x86 ip: %d\n",
+                GetNameFromId(cur_cmd->name), cur_cmd->orig_ip, cur_cmd->x86_ip);
         if (cur_cmd->name == PUSH || cur_cmd->name == POP)
         {
             if (cur_cmd->use_reg)
-                LOG ("\tUsing register, its id: %d\n", cur_cmd->reg_index);
+                LOG ("\t+Using register, its id: %d\n", cur_cmd->reg_index);
             
             if (cur_cmd->is_immed)
-                LOG ("\tOperating width digit, value: %lg\n", cur_cmd->value);
+                LOG ("\t+Operating width digit, value: %lg\n", cur_cmd->value);
             if (cur_cmd->use_mem)
                 LOG ("--- Adresses to memory\n");
+        }
+        if (cur_cmd->name == JMP)
+        {
+            LOG ("\t+Wants to jump into %lg\n", cur_cmd->value);
         }
     }
 
@@ -249,13 +283,32 @@ void Dump86Buffer (TranslatorMain* self)
 
     for (int i = 0; i < self->dst_x86.len + 1; i++)
     {
-        if (i % 10 == 0) LOG ("\n%d: ", i);
+        if (i % 10 == 0) LOG ("\n%2d: ", i);
 
         LOG ("%02x ", (unsigned char) self->dst_x86.content[i]);
     }
 
     LOG ("\n\n====== x86 buffer dump end =======\n\n");
 
+}
+
+
+char* GetNameFromId (EnumCommands id)
+{
+    #define DEF_CMD(name, id)    \
+        case name:               \
+            return (char*) #name;        \
+
+
+    switch (id)
+    {
+        #include "../codegen/cmds.h"    // generating cases for all cmds
+
+        default:
+            return (char*) NotFound;
+    }
+
+    return (char*) NotFound;
 }
 
 
