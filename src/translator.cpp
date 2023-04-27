@@ -11,6 +11,8 @@ int main()
 
     ParseOnStructs (&TranslatorInfo);
 
+    DumpRawCmds (&TranslatorInfo);
+
     FillJumpLables (&TranslatorInfo);
     DumpRawCmds (&TranslatorInfo);
 
@@ -57,6 +59,15 @@ void StartTranslation (TranslatorMain* self)
         case JMP:
             TranslateJmp (self, self->cmds_array[cmd_indx]);
             break;
+
+        case JB:
+        case JBE:
+        case JA:
+        case JAE:
+        case JE:
+        case JNE:
+            TranslateConditionJmp (self, self->cmds_array[cmd_indx]);
+            break;
         
         default:
             break;
@@ -71,7 +82,6 @@ void LoadToX86Buffer (TranslatorMain* self, char* op_code, size_t len)
     memcpy (self->dst_x86.content + self->dst_x86.len, (void*) op_code, len);
     self->dst_x86.len += len;
 }
-
 
 
 void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
@@ -165,9 +175,24 @@ int CalcVariationSum (Command* cur_cmd)
 }
 
 
-void TranslateJmp (TranslatorMain* self, Command* cur_cmd)
+void TranslateJmp (TranslatorMain* self, Command* jmp_cmd)
+{
+    int rel_ptr = jmp_cmd->value - jmp_cmd->x86_ip  - 1;
+
+    char x86_buffer[] = {0xE9, 0x00, 0x00, 0x00, 0x00}; // jmp 00 00 00 00 
+
+    *( int* )(x86_buffer + 1) = rel_ptr;
+
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+}
+
+
+void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd)
 {
     // Need to add cool calculations of jump
+    int rel_ptr = jmp_cmd->value - jmp_cmd->x86_ip  - 2;
+    char x86_buffer[] = {0x0F, 0x8D, 0x00, 0x00, 0x00, 0x00};
+
 }
 
 
@@ -266,7 +291,6 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
         
         switch (variation)
         {
-
         case IMM:
             /* code */
             break;
@@ -299,11 +323,12 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
     }
     else
     {
-        if (name == JMP)
+        if (IsJump (name))
+        {
             new_cmd->value = *(elem_t*)(code + 1);
-        
+            // LOG ("\tip to jmp:%lg \n", new_cmd->value);
+        }
         new_cmd->name = (EnumCommands) name;
-        // printf ("Adding %d\n", InstrSizes[name].original_size);
         
         self->x86_ip_counter  += InstrSizes[name].x86_size;
         self->orig_ip_counter += InstrSizes[name].original_size;
@@ -316,6 +341,16 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
 }
 
 
+bool IsJump (int cmd)
+{
+    if (cmd == JMP || cmd == JB || cmd == JBE || cmd == JA ||
+        cmd == JAE || cmd == JE || cmd == JNE)
+    {
+        LOG ("\tYeah, it is jump\n");
+        return true;
+    }
+    return false;
+}
 
 
 void FillJumpLables (TranslatorMain* self)

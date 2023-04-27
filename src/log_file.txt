@@ -5,11 +5,33 @@ Ip  18:
 Ip  28:
 	Id: 6
 Ip  38:
+	Id: 9
+	Yeah, it is jump
+Ip  48:
 End of prog.
+
+================ Begin of struct dump ==================
+
+Command < POP > | Orig ip: 8 | x86 ip: 0
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 18 | x86 ip: 1
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 28 | x86 ip: 2
+	+Using register, its id: 0
+
+Command < JMP > | Orig ip: 38 | x86 ip: 3
+	+Wants to jump into 8
+
+================ End of struct dump ==================
+
 
 
 ---------- Filling labels --------
 
+ 3: Trying to find x86 ip for ip 8:
+	 Found, x86 ip is 0
 
 
 ---------- End filling labels --------
@@ -26,6 +48,9 @@ Command < POP > | Orig ip: 18 | x86 ip: 1
 Command < POP > | Orig ip: 28 | x86 ip: 2
 	+Using register, its id: 0
 
+Command < JMP > | Orig ip: 38 | x86 ip: 3
+	+Wants to jump into 0
+
 ================ End of struct dump ==================
 
 ---------- Begin translation -------------
@@ -33,7 +58,7 @@ Command < POP > | Orig ip: 28 | x86 ip: 2
 
 ====== x86 buffer dump begin =======
 
- 0: 58 58 58 c3 
+ 0: 58 58 58 e9 fb ff ff ff c3 
 
 ====== x86 buffer dump end =======
 

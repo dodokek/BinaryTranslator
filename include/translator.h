@@ -137,7 +137,13 @@ const struct InstructionSizes InstrSizes[30] =
     {POP,  10,  1},
     {},
     {},
-    {JMP,  10,  5}
+    {JMP, 10,  5},
+    {JB,  10,  6},
+    {JBE, 10,  6},
+    {JA,  10,  6},
+    {JAE, 10,  6},
+    {JE,  10,  6},
+    {JNE, 10,  6},
 };
 
 
@@ -212,6 +218,8 @@ void RunCode (TranslatorMain* self);
 
 void StartTranslation (TranslatorMain* self);
 
+bool IsJump (int cmd);
+
 //-- Translation Units:
 
 int CalcVariationSum (Command* cur_cmd);
@@ -225,6 +233,8 @@ void TranslatePop (TranslatorMain* self, Command* cur_cmd);
 void TranslatePopReg (TranslatorMain* self, Command* cur_cmd);
 
 void TranslateJmp (TranslatorMain* self, Command* cur_cmd);
+
+void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd);
 
 // ===============================================
 
