@@ -80,6 +80,35 @@ enum ExitCodes
     ALLOCATION_FAILURE,
 };
 
+
+enum PushPopVariations
+{
+    VOID = 0,
+    IMM = 1,
+    REG = 3,
+    RAM = 5,
+
+    IMM_REG = 4,
+    IMM_RAM = 6,
+    REG_RAM = 8,
+    IMM_REG_RAM = 9,
+};
+
+
+enum PushPopSizes
+{
+    POP_REG_SIZE = 1, 
+};
+
+
+enum Registers
+{
+    RAX = 0,
+    RBX,
+    RCX,
+    RDX,
+};
+
 // ===============================================
 
 
@@ -100,7 +129,7 @@ struct InstructionSizes
 const struct InstructionSizes InstrSizes[30] =
 {
     {HLT,  1,   1},
-    {PUSH, 10,  5},
+    {PUSH, 10,  1}, 
     {},
     {},
     {},
@@ -185,9 +214,15 @@ void StartTranslation (TranslatorMain* self);
 
 //-- Translation Units:
 
+int CalcVariationSum (Command* cur_cmd);
+
 void LoadToX86Buffer (TranslatorMain* self, char* op_code, size_t len);
 
-void TranslatePushPop (TranslatorMain* self, Command* cur_cmd);
+void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd);
+
+void TranslatePop (TranslatorMain* self, Command* cur_cmd);
+
+void TranslatePopReg (TranslatorMain* self, Command* cur_cmd);
 
 void TranslateJmp (TranslatorMain* self, Command* cur_cmd);
 

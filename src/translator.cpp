@@ -19,7 +19,7 @@ int main()
 
     Dump86Buffer (&TranslatorInfo);
 
-    RunCode (&TranslatorInfo);
+    // RunCode (&TranslatorInfo);
 }
 
 
@@ -51,7 +51,7 @@ void StartTranslation (TranslatorMain* self)
         {
         case PUSH:
         case POP:
-            TranslatePushPop (self, self->cmds_array[cmd_indx]);
+            HandlePushPopVariation (self, self->cmds_array[cmd_indx]);
             break;
 
         case JMP:
@@ -74,13 +74,94 @@ void LoadToX86Buffer (TranslatorMain* self, char* op_code, size_t len)
 
 
 
-void TranslatePushPop (TranslatorMain* self, Command* cur_cmd)
+void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
 {
-    // For now let's just write xor rax, rax; mov rax, 2d
+    // char opcode_buff[] = { 0x48, 0x31, 0xC0, 0xB8, 0x02, 0x00, 0x00, 0x00 }; // mov rax, 02d
+    int variation = CalcVariationSum (cur_cmd);
 
-    char opcode_buff[] = { 0x48, 0x31, 0xC0, 0xB8, 0x02, 0x00, 0x00, 0x00 }; // mov rax, 02d
+    switch (variation)
+    {
+    case VOID:
+        TranslatePop (self, cur_cmd);
+        break;
 
-    LoadToX86Buffer (self, opcode_buff, sizeof (opcode_buff));
+    case IMM:
+        /* code */
+        break;
+
+    case REG:
+        TranslatePopReg(self, cur_cmd);
+        break;
+    
+    case IMM_REG:
+        /* code */
+        break;
+
+    case IMM_RAM:
+        /* code */
+        break;
+
+    case REG_RAM:
+        /* code */
+        break;
+
+    case IMM_REG_RAM:
+        /* code */
+        break;
+
+    default:
+        LOG ("**No such variation of Push/Pop**\n");
+
+        break;
+    }
+
+    // LoadToX86Buffer (self, opcode_buff, sizeof (opcode_buff));
+}
+
+
+void TranslatePop (TranslatorMain* self, Command* cur_cmd)
+{
+    char x86_buffer[] = { 0x5f }; // pop rdi
+
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+}
+
+
+void TranslatePopReg (TranslatorMain* self, Command* cur_cmd)
+{
+    char x86_buffer[1] = { 0x90 }; // pop rax/rbx/rcx/rdx
+
+
+    switch (cur_cmd->reg_index)
+    {
+    case RAX:
+        *x86_buffer = 0x58;  // pop rax
+        break;
+
+    case RCX:
+        *x86_buffer = 0x59;  // pop rcx
+        break;
+
+    case RDX:
+        *x86_buffer = 0x5A; // pop rdx
+        break;
+
+    case RBX:
+        *x86_buffer = 0x5B; // pop rbx
+        break;
+    
+    default:
+        LOG ("**No such register!**\n");
+        break;
+    }
+
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+}
+
+
+int CalcVariationSum (Command* cur_cmd)
+{
+    return cur_cmd->is_immed + cur_cmd->use_reg * 3 + cur_cmd->use_mem * 5;
 }
 
 
@@ -178,22 +259,63 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
         new_cmd->is_immed = cmd & ARG_IMMED;
         new_cmd->use_reg  = cmd & ARG_REG;
         new_cmd->use_mem  = cmd & ARG_MEM;
-        // Here calculating offset for push/pop
+        
+        int variation = CalcVariationSum (new_cmd);
+
+        self->orig_ip_counter += InstrSizes[name].original_size;
+        
+        switch (variation)
+        {
+
+        case IMM:
+            /* code */
+            break;
+
+        case REG:
+            self->x86_ip_counter  += POP_REG_SIZE;
+            break;
+        
+        case IMM_REG:
+            /* code */
+            break;
+
+        case IMM_RAM:
+            /* code */
+            break;
+
+        case REG_RAM:
+            /* code */
+            break;
+
+        case IMM_REG_RAM:
+            /* code */
+            break;
+
+        default:
+            LOG ("**No such variation of Push/Pop**\n");
+            break;
+        }
+
     }
-    if (name == JMP)
-        new_cmd->value = *(elem_t*)(code + 1);
-    
-    new_cmd->name = (EnumCommands) name;
-    // printf ("Adding %d\n", InstrSizes[name].original_size);
-    
-    self->x86_ip_counter  += InstrSizes[name].x86_size;
-    self->orig_ip_counter += InstrSizes[name].original_size;
+    else
+    {
+        if (name == JMP)
+            new_cmd->value = *(elem_t*)(code + 1);
+        
+        new_cmd->name = (EnumCommands) name;
+        // printf ("Adding %d\n", InstrSizes[name].original_size);
+        
+        self->x86_ip_counter  += InstrSizes[name].x86_size;
+        self->orig_ip_counter += InstrSizes[name].original_size;
+    }
 
     self->cmds_array[self->cmds_counter] = new_cmd;
     self->cmds_counter++;
 
     return 0;
 }
+
+
 
 
 void FillJumpLables (TranslatorMain* self)
