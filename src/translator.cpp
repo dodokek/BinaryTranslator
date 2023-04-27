@@ -101,7 +101,10 @@ void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
         break;
 
     case REG:
-        TranslatePopReg(self, cur_cmd);
+        if (cur_cmd->name == PUSH)
+            TranslatePushReg (self, cur_cmd);
+        else
+            TranslatePopReg (self, cur_cmd);
         break;
     
     case IMM_REG:
@@ -140,7 +143,7 @@ void TranslatePop (TranslatorMain* self, Command* cur_cmd)
 
 void TranslatePopReg (TranslatorMain* self, Command* cur_cmd)
 {
-    char x86_buffer[1] = { 0x90 }; // pop rax/rbx/rcx/rdx
+    char x86_buffer[] = { 0x90 }; // pop r_x
 
 
     switch (cur_cmd->reg_index)
@@ -164,6 +167,64 @@ void TranslatePopReg (TranslatorMain* self, Command* cur_cmd)
     default:
         LOG ("**No such register!**\n");
         break;
+    }
+
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+}
+
+
+void TranslatePushReg (TranslatorMain* self, Command* cur_cmd)
+{
+    char x86_buffer[] = { 0x90 }; // pop r_x
+
+    switch (cur_cmd->reg_index)
+    {
+        case RAX:
+            *x86_buffer = 0x50;      // push rax
+            break;
+        case RCX:
+            *x86_buffer = 0x51;      // push rcx
+            break;
+        case RDX:
+            *x86_buffer = 0x52;      // push rdx
+            break;
+        case RBX:
+            *x86_buffer = 0x53;      // push rbx
+            break;
+    
+        default:
+            LOG ("**No such register!**\n");
+            break;
+    }
+
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+}
+
+
+void TranslatePushRegRam (TranslatorMain* self, Command* cur_cmd)
+{
+    char x86_buffer[] = { 0x48, 0x8B, 0x00, // mov rsi, [r_x]
+                          0x56 };           // push rdi
+
+
+    switch (cur_cmd->reg_index)
+    {
+        case RAX:
+            x86_buffer[2] = 0x30;    // rax
+            break;
+        case RCX:
+            x86_buffer[2] = 0x31;    // rcx
+            break;
+        case RDX:
+            x86_buffer[2] = 0x32;    // rdx
+            break;
+        case RBX:
+            x86_buffer[2] = 0x33;    // rbx
+            break;
+        
+        default:
+            LOG ("**No such register!**\n");
+            break;
     }
 
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
@@ -200,7 +261,6 @@ void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd)
         rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 5);
     else
         rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip) - 6;
-
 
 
     // Need to add cool calculations of jump
