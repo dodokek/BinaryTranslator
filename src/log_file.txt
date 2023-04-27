@@ -5,9 +5,275 @@ Ip  18:
 Ip  28:
 	Id: 6
 Ip  38:
-	Id: 9
-	Yeah, it is jump
+	Id: 6
 Ip  48:
+	Id: 6
+Ip  58:
+	Id: 6
+Ip  68:
+	Id: 6
+Ip  78:
+	Id: 6
+Ip  88:
+	Id: 6
+Ip  98:
+	Id: 6
+Ip 108:
+	Id: 6
+Ip 118:
+	Id: 6
+Ip 128:
+	Id: 6
+Ip 138:
+	Id: 6
+Ip 148:
+	Id: 6
+Ip 158:
+	Id: 6
+Ip 168:
+	Id: 6
+Ip 178:
+	Id: 6
+Ip 188:
+	Id: 6
+Ip 198:
+	Id: 6
+Ip 208:
+	Id: 6
+Ip 218:
+	Id: 6
+Ip 228:
+	Id: 6
+Ip 238:
+	Id: 6
+Ip 248:
+	Id: 6
+Ip 258:
+	Id: 6
+Ip 268:
+	Id: 6
+Ip 278:
+	Id: 6
+Ip 288:
+	Id: 6
+Ip 298:
+	Id: 6
+Ip 308:
+	Id: 6
+Ip 318:
+	Id: 6
+Ip 328:
+	Id: 6
+Ip 338:
+	Id: 6
+Ip 348:
+	Id: 6
+Ip 358:
+	Id: 6
+Ip 368:
+	Id: 6
+Ip 378:
+	Id: 6
+Ip 388:
+	Id: 6
+Ip 398:
+	Id: 6
+Ip 408:
+	Id: 6
+Ip 418:
+	Id: 6
+Ip 428:
+	Id: 6
+Ip 438:
+	Id: 6
+Ip 448:
+	Id: 6
+Ip 458:
+	Id: 6
+Ip 468:
+	Id: 6
+Ip 478:
+	Id: 6
+Ip 488:
+	Id: 6
+Ip 498:
+	Id: 6
+Ip 508:
+	Id: 6
+Ip 518:
+	Id: 6
+Ip 528:
+	Id: 6
+Ip 538:
+	Id: 6
+Ip 548:
+	Id: 6
+Ip 558:
+	Id: 6
+Ip 568:
+	Id: 6
+Ip 578:
+	Id: 6
+Ip 588:
+	Id: 6
+Ip 598:
+	Id: 6
+Ip 608:
+	Id: 6
+Ip 618:
+	Id: 6
+Ip 628:
+	Id: 6
+Ip 638:
+	Id: 6
+Ip 648:
+	Id: 6
+Ip 658:
+	Id: 6
+Ip 668:
+	Id: 6
+Ip 678:
+	Id: 6
+Ip 688:
+	Id: 6
+Ip 698:
+	Id: 6
+Ip 708:
+	Id: 6
+Ip 718:
+	Id: 6
+Ip 728:
+	Id: 6
+Ip 738:
+	Id: 6
+Ip 748:
+	Id: 6
+Ip 758:
+	Id: 6
+Ip 768:
+	Id: 6
+Ip 778:
+	Id: 6
+Ip 788:
+	Id: 6
+Ip 798:
+	Id: 6
+Ip 808:
+	Id: 6
+Ip 818:
+	Id: 6
+Ip 828:
+	Id: 6
+Ip 838:
+	Id: 6
+Ip 848:
+	Id: 6
+Ip 858:
+	Id: 6
+Ip 868:
+	Id: 6
+Ip 878:
+	Id: 6
+Ip 888:
+	Id: 6
+Ip 898:
+	Id: 6
+Ip 908:
+	Id: 6
+Ip 918:
+	Id: 6
+Ip 928:
+	Id: 6
+Ip 938:
+	Id: 6
+Ip 948:
+	Id: 6
+Ip 958:
+	Id: 6
+Ip 968:
+	Id: 6
+Ip 978:
+	Id: 6
+Ip 988:
+	Id: 6
+Ip 998:
+	Id: 6
+Ip 1008:
+	Id: 6
+Ip 1018:
+	Id: 6
+Ip 1028:
+	Id: 6
+Ip 1038:
+	Id: 6
+Ip 1048:
+	Id: 6
+Ip 1058:
+	Id: 6
+Ip 1068:
+	Id: 6
+Ip 1078:
+	Id: 6
+Ip 1088:
+	Id: 6
+Ip 1098:
+	Id: 6
+Ip 1108:
+	Id: 6
+Ip 1118:
+	Id: 6
+Ip 1128:
+	Id: 6
+Ip 1138:
+	Id: 6
+Ip 1148:
+	Id: 6
+Ip 1158:
+	Id: 6
+Ip 1168:
+	Id: 6
+Ip 1178:
+	Id: 6
+Ip 1188:
+	Id: 6
+Ip 1198:
+	Id: 6
+Ip 1208:
+	Id: 6
+Ip 1218:
+	Id: 6
+Ip 1228:
+	Id: 6
+Ip 1238:
+	Id: 6
+Ip 1248:
+	Id: 6
+Ip 1258:
+	Id: 6
+Ip 1268:
+	Id: 6
+Ip 1278:
+	Id: 6
+Ip 1288:
+	Id: 6
+Ip 1298:
+	Id: 6
+Ip 1308:
+	Id: 6
+Ip 1318:
+	Id: 6
+Ip 1328:
+	Id: 6
+Ip 1338:
+	Id: 6
+Ip 1348:
+	Id: 6
+Ip 1358:
+	Id: 14
+	Yeah, it is jump
+Ip 1368:
+	Id: 1
+Ip 1378:
 End of prog.
 
 ================ Begin of struct dump ==================
@@ -21,8 +287,408 @@ Command < POP > | Orig ip: 18 | x86 ip: 1
 Command < POP > | Orig ip: 28 | x86 ip: 2
 	+Using register, its id: 0
 
-Command < JMP > | Orig ip: 38 | x86 ip: 3
-	+Wants to jump into 8
+Command < POP > | Orig ip: 38 | x86 ip: 3
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 48 | x86 ip: 4
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 58 | x86 ip: 5
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 68 | x86 ip: 6
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 78 | x86 ip: 7
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 88 | x86 ip: 8
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 98 | x86 ip: 9
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 108 | x86 ip: 10
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 118 | x86 ip: 11
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 128 | x86 ip: 12
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 138 | x86 ip: 13
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 148 | x86 ip: 14
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 158 | x86 ip: 15
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 168 | x86 ip: 16
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 178 | x86 ip: 17
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 188 | x86 ip: 18
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 198 | x86 ip: 19
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 208 | x86 ip: 20
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 218 | x86 ip: 21
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 228 | x86 ip: 22
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 238 | x86 ip: 23
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 248 | x86 ip: 24
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 258 | x86 ip: 25
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 268 | x86 ip: 26
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 278 | x86 ip: 27
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 288 | x86 ip: 28
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 298 | x86 ip: 29
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 308 | x86 ip: 30
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 318 | x86 ip: 31
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 328 | x86 ip: 32
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 338 | x86 ip: 33
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 348 | x86 ip: 34
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 358 | x86 ip: 35
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 368 | x86 ip: 36
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 378 | x86 ip: 37
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 388 | x86 ip: 38
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 398 | x86 ip: 39
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 408 | x86 ip: 40
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 418 | x86 ip: 41
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 428 | x86 ip: 42
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 438 | x86 ip: 43
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 448 | x86 ip: 44
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 458 | x86 ip: 45
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 468 | x86 ip: 46
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 478 | x86 ip: 47
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 488 | x86 ip: 48
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 498 | x86 ip: 49
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 508 | x86 ip: 50
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 518 | x86 ip: 51
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 528 | x86 ip: 52
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 538 | x86 ip: 53
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 548 | x86 ip: 54
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 558 | x86 ip: 55
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 568 | x86 ip: 56
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 578 | x86 ip: 57
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 588 | x86 ip: 58
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 598 | x86 ip: 59
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 608 | x86 ip: 60
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 618 | x86 ip: 61
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 628 | x86 ip: 62
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 638 | x86 ip: 63
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 648 | x86 ip: 64
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 658 | x86 ip: 65
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 668 | x86 ip: 66
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 678 | x86 ip: 67
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 688 | x86 ip: 68
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 698 | x86 ip: 69
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 708 | x86 ip: 70
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 718 | x86 ip: 71
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 728 | x86 ip: 72
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 738 | x86 ip: 73
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 748 | x86 ip: 74
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 758 | x86 ip: 75
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 768 | x86 ip: 76
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 778 | x86 ip: 77
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 788 | x86 ip: 78
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 798 | x86 ip: 79
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 808 | x86 ip: 80
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 818 | x86 ip: 81
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 828 | x86 ip: 82
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 838 | x86 ip: 83
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 848 | x86 ip: 84
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 858 | x86 ip: 85
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 868 | x86 ip: 86
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 878 | x86 ip: 87
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 888 | x86 ip: 88
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 898 | x86 ip: 89
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 908 | x86 ip: 90
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 918 | x86 ip: 91
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 928 | x86 ip: 92
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 938 | x86 ip: 93
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 948 | x86 ip: 94
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 958 | x86 ip: 95
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 968 | x86 ip: 96
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 978 | x86 ip: 97
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 988 | x86 ip: 98
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 998 | x86 ip: 99
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1008 | x86 ip: 100
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1018 | x86 ip: 101
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1028 | x86 ip: 102
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1038 | x86 ip: 103
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1048 | x86 ip: 104
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1058 | x86 ip: 105
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1068 | x86 ip: 106
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1078 | x86 ip: 107
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1088 | x86 ip: 108
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1098 | x86 ip: 109
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1108 | x86 ip: 110
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1118 | x86 ip: 111
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1128 | x86 ip: 112
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1138 | x86 ip: 113
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1148 | x86 ip: 114
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1158 | x86 ip: 115
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1168 | x86 ip: 116
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1178 | x86 ip: 117
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1188 | x86 ip: 118
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1198 | x86 ip: 119
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1208 | x86 ip: 120
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1218 | x86 ip: 121
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1228 | x86 ip: 122
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1238 | x86 ip: 123
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1248 | x86 ip: 124
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1258 | x86 ip: 125
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1268 | x86 ip: 126
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1278 | x86 ip: 127
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1288 | x86 ip: 128
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1298 | x86 ip: 129
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1308 | x86 ip: 130
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1318 | x86 ip: 131
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1328 | x86 ip: 132
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1338 | x86 ip: 133
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1348 | x86 ip: 134
+	+Using register, its id: 0
+
+Command < JE > | Orig ip: 1358 | x86 ip: 135
+	Yeah, it is jump
+	+Wants to jump into 18
+
+Command < PUSH > | Orig ip: 1368 | x86 ip: 146
+	+Using register, its id: 0
 
 ================ End of struct dump ==================
 
@@ -30,8 +696,9 @@ Command < JMP > | Orig ip: 38 | x86 ip: 3
 
 ---------- Filling labels --------
 
- 3: Trying to find x86 ip for ip 8:
-	 Found, x86 ip is 0
+	Yeah, it is jump
+135: Trying to find x86 ip for ip 18:
+	 Found, x86 ip is 1
 
 
 ---------- End filling labels --------
@@ -48,17 +715,432 @@ Command < POP > | Orig ip: 18 | x86 ip: 1
 Command < POP > | Orig ip: 28 | x86 ip: 2
 	+Using register, its id: 0
 
-Command < JMP > | Orig ip: 38 | x86 ip: 3
-	+Wants to jump into 0
+Command < POP > | Orig ip: 38 | x86 ip: 3
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 48 | x86 ip: 4
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 58 | x86 ip: 5
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 68 | x86 ip: 6
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 78 | x86 ip: 7
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 88 | x86 ip: 8
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 98 | x86 ip: 9
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 108 | x86 ip: 10
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 118 | x86 ip: 11
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 128 | x86 ip: 12
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 138 | x86 ip: 13
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 148 | x86 ip: 14
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 158 | x86 ip: 15
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 168 | x86 ip: 16
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 178 | x86 ip: 17
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 188 | x86 ip: 18
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 198 | x86 ip: 19
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 208 | x86 ip: 20
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 218 | x86 ip: 21
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 228 | x86 ip: 22
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 238 | x86 ip: 23
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 248 | x86 ip: 24
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 258 | x86 ip: 25
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 268 | x86 ip: 26
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 278 | x86 ip: 27
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 288 | x86 ip: 28
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 298 | x86 ip: 29
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 308 | x86 ip: 30
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 318 | x86 ip: 31
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 328 | x86 ip: 32
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 338 | x86 ip: 33
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 348 | x86 ip: 34
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 358 | x86 ip: 35
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 368 | x86 ip: 36
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 378 | x86 ip: 37
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 388 | x86 ip: 38
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 398 | x86 ip: 39
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 408 | x86 ip: 40
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 418 | x86 ip: 41
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 428 | x86 ip: 42
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 438 | x86 ip: 43
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 448 | x86 ip: 44
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 458 | x86 ip: 45
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 468 | x86 ip: 46
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 478 | x86 ip: 47
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 488 | x86 ip: 48
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 498 | x86 ip: 49
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 508 | x86 ip: 50
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 518 | x86 ip: 51
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 528 | x86 ip: 52
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 538 | x86 ip: 53
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 548 | x86 ip: 54
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 558 | x86 ip: 55
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 568 | x86 ip: 56
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 578 | x86 ip: 57
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 588 | x86 ip: 58
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 598 | x86 ip: 59
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 608 | x86 ip: 60
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 618 | x86 ip: 61
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 628 | x86 ip: 62
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 638 | x86 ip: 63
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 648 | x86 ip: 64
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 658 | x86 ip: 65
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 668 | x86 ip: 66
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 678 | x86 ip: 67
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 688 | x86 ip: 68
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 698 | x86 ip: 69
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 708 | x86 ip: 70
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 718 | x86 ip: 71
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 728 | x86 ip: 72
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 738 | x86 ip: 73
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 748 | x86 ip: 74
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 758 | x86 ip: 75
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 768 | x86 ip: 76
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 778 | x86 ip: 77
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 788 | x86 ip: 78
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 798 | x86 ip: 79
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 808 | x86 ip: 80
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 818 | x86 ip: 81
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 828 | x86 ip: 82
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 838 | x86 ip: 83
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 848 | x86 ip: 84
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 858 | x86 ip: 85
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 868 | x86 ip: 86
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 878 | x86 ip: 87
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 888 | x86 ip: 88
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 898 | x86 ip: 89
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 908 | x86 ip: 90
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 918 | x86 ip: 91
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 928 | x86 ip: 92
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 938 | x86 ip: 93
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 948 | x86 ip: 94
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 958 | x86 ip: 95
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 968 | x86 ip: 96
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 978 | x86 ip: 97
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 988 | x86 ip: 98
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 998 | x86 ip: 99
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1008 | x86 ip: 100
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1018 | x86 ip: 101
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1028 | x86 ip: 102
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1038 | x86 ip: 103
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1048 | x86 ip: 104
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1058 | x86 ip: 105
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1068 | x86 ip: 106
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1078 | x86 ip: 107
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1088 | x86 ip: 108
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1098 | x86 ip: 109
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1108 | x86 ip: 110
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1118 | x86 ip: 111
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1128 | x86 ip: 112
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1138 | x86 ip: 113
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1148 | x86 ip: 114
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1158 | x86 ip: 115
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1168 | x86 ip: 116
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1178 | x86 ip: 117
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1188 | x86 ip: 118
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1198 | x86 ip: 119
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1208 | x86 ip: 120
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1218 | x86 ip: 121
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1228 | x86 ip: 122
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1238 | x86 ip: 123
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1248 | x86 ip: 124
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1258 | x86 ip: 125
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1268 | x86 ip: 126
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1278 | x86 ip: 127
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1288 | x86 ip: 128
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1298 | x86 ip: 129
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1308 | x86 ip: 130
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1318 | x86 ip: 131
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1328 | x86 ip: 132
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1338 | x86 ip: 133
+	+Using register, its id: 0
+
+Command < POP > | Orig ip: 1348 | x86 ip: 134
+	+Using register, its id: 0
+
+Command < JE > | Orig ip: 1358 | x86 ip: 135
+	Yeah, it is jump
+	+Wants to jump into 1
+
+Command < PUSH > | Orig ip: 1368 | x86 ip: 146
+	+Using register, its id: 0
 
 ================ End of struct dump ==================
 
 ---------- Begin translation -------------
+135: Translating jmp
 
 
 ====== x86 buffer dump begin =======
 
- 0: 58 58 58 e9 fb ff ff ff c3 
+ 0: 58 58 58 58 58 58 58 58 58 58 
+10: 58 58 58 58 58 58 58 58 58 58 
+20: 58 58 58 58 58 58 58 58 58 58 
+30: 58 58 58 58 58 58 58 58 58 58 
+40: 58 58 58 58 58 58 58 58 58 58 
+50: 58 58 58 58 58 58 58 58 58 58 
+60: 58 58 58 58 58 58 58 58 58 58 
+70: 58 58 58 58 58 58 58 58 58 58 
+80: 58 58 58 58 58 58 58 58 58 58 
+90: 58 58 58 58 58 58 58 58 58 58 
+100: 58 58 58 58 58 58 58 58 58 58 
+110: 58 58 58 58 58 58 58 58 58 58 
+120: 58 58 58 58 58 58 58 58 58 58 
+130: 58 58 58 58 58 5e 5f 48 39 f7 
+140: 0f 84 74 ff ff ff 58 c3 
 
 ====== x86 buffer dump end =======
 

@@ -60,12 +60,13 @@ void StartTranslation (TranslatorMain* self)
             TranslateJmp (self, self->cmds_array[cmd_indx]);
             break;
 
-        case JB:
-        case JBE:
+        case JG:
+        case JGE:
         case JA:
         case JAE:
         case JE:
         case JNE:
+            LOG ("%d: Translating jmp\n", cmd_indx);
             TranslateConditionJmp (self, self->cmds_array[cmd_indx]);
             break;
         
@@ -177,9 +178,14 @@ int CalcVariationSum (Command* cur_cmd)
 
 void TranslateJmp (TranslatorMain* self, Command* jmp_cmd)
 {
-    int rel_ptr = jmp_cmd->value - jmp_cmd->x86_ip  - 1;
+    int rel_ptr = 0;
+    if (jmp_cmd->value >= jmp_cmd->x86_ip)
+        rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 5);
+    else
+        rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip) - 5;
 
-    char x86_buffer[] = {0xE9, 0x00, 0x00, 0x00, 0x00}; // jmp 00 00 00 00 
+
+    char x86_buffer[] = {0xE9, 0x00, 0x00, 0x00, 0x00}; // jmp 00 00 00 00 - rel adress x32 
 
     *( int* )(x86_buffer + 1) = rel_ptr;
 
@@ -189,12 +195,55 @@ void TranslateJmp (TranslatorMain* self, Command* jmp_cmd)
 
 void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd)
 {
+    int rel_ptr = 0;
+    if (jmp_cmd->value >= jmp_cmd->x86_ip)
+        rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 5);
+    else
+        rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip) - 6;
+
+
+
     // Need to add cool calculations of jump
-    int rel_ptr = jmp_cmd->value - jmp_cmd->x86_ip  - 2;
-    char x86_buffer[] = {0x0F, 0x8D, 0x00, 0x00, 0x00, 0x00};
+    char x86_buffer[] = {
+                        0x5E,                   // pop rsi           
+                        0x5F,                   // pop rdi
+                        0x48, 0x39, 0xF7,       // cmp rdi, rsi
+                        0x0F, 0x00,             // j?? 
+                        0x00, 0x00, 0x00, 0x00  // filled in the end
+    };
 
+    // filling proper conditional jmp bytecode
+
+    switch (jmp_cmd->name)
+    {
+        case JE:
+            x86_buffer[6] = 0x84;   // je
+            break;
+        case JNE:
+            x86_buffer[6] = 0x85;   // jne
+            break;
+        case JG:
+            x86_buffer[6] = 0x8C;   // jl
+            break;
+        case JAE:
+            x86_buffer[6] = 0x8D;   // jge
+            break;
+        case JGE:
+            x86_buffer[6] = 0x8E;   // jle
+            break;
+        case JA:
+            x86_buffer[6] = 0x8F;   // jg
+            break;
+    
+        default:
+            LOG ("No such conditional jmp!\n");
+            break;
+    }
+
+    *( int* )(x86_buffer + 7) = rel_ptr;
+
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
-
 
 
 void TranslatorCtor (TranslatorMain* self)
@@ -343,7 +392,7 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
 
 bool IsJump (int cmd)
 {
-    if (cmd == JMP || cmd == JB || cmd == JBE || cmd == JA ||
+    if (cmd == JMP || cmd == JG || cmd == JGE || cmd == JA ||
         cmd == JAE || cmd == JE || cmd == JNE)
     {
         LOG ("\tYeah, it is jump\n");
@@ -359,7 +408,7 @@ void FillJumpLables (TranslatorMain* self)
 
     for (int i = 0; i < self->cmds_counter; i++)
     {
-        if (self->cmds_array[i]->name == JMP)
+        if (IsJump(self->cmds_array[i]->name))
         {
             LOG ("%2d: Trying to find x86 ip for ip %lg:\n", i, self->cmds_array[i]->value);
 
@@ -424,7 +473,7 @@ void DumpRawCmds (TranslatorMain* self)
             if (cur_cmd->use_mem)
                 LOG ("--- Adresses to memory\n");
         }
-        if (cur_cmd->name == JMP)
+        if (IsJump(cur_cmd->name))
         {
             LOG ("\t+Wants to jump into %lg\n", cur_cmd->value);
         }
