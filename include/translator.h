@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <sys/mman.h>
+#include <stdint.h>
 
 #include "file_utils.h"
 
@@ -98,6 +99,9 @@ enum PushPopVariations
 enum PushPopSizes
 {
     POP_REG_SIZE = 1, 
+    PUSH_REG_SIZE = 1, 
+    PUSH_REG_NUM_SIZE = 4, 
+    PUSH_IMM_SIZE = 10, 
 };
 
 
@@ -130,10 +134,10 @@ const struct InstructionSizes InstrSizes[30] =
 {
     {HLT,  1,   1},
     {PUSH, 10,  1}, 
-    {},
-    {},
-    {},
-    {},
+    {MUL, 0, 28},
+    {ADD, 1, 28},
+    {SUB, 1, 28},
+    {DIV, 1, 28},
     {POP,  10,  1},
     {},
     {},
@@ -222,6 +226,10 @@ bool IsJump (int cmd);
 
 //-- Translation Units:
 
+void TranslateBaseMath (TranslatorMain* self, Command* cur_cmd);
+
+void TranslatePushImm (TranslatorMain* self, Command* cur_cmd);
+
 int CalcVariationSum (Command* cur_cmd);
 
 void LoadToX86Buffer (TranslatorMain* self, char* op_code, size_t len);
@@ -232,9 +240,15 @@ void TranslatePop (TranslatorMain* self, Command* cur_cmd);
 
 void TranslatePopReg (TranslatorMain* self, Command* cur_cmd);
 
+void TranslatePushReg (TranslatorMain* self, Command* cur_cmd);
+
 void TranslateJmp (TranslatorMain* self, Command* cur_cmd);
 
 void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd);
+
+void DumpCurBuffer (char* cur_buff, size_t len);
+
+void EndLog();
 
 // ===============================================
 

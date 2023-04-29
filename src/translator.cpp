@@ -6,6 +6,7 @@ FILE* LOG_FILE = get_file ("log_file.txt", "w");
 
 int main()
 {
+    fprintf (stderr, "add: %p\n", main);
     TranslatorMain TranslatorInfo = {};
     TranslatorCtor (&TranslatorInfo);
 
@@ -18,16 +19,16 @@ int main()
 
     StartTranslation (&TranslatorInfo);
 
-
     Dump86Buffer (&TranslatorInfo);
 
-    // RunCode (&TranslatorInfo);
+    RunCode (&TranslatorInfo);
 }
-
 
 void RunCode (TranslatorMain* self)
 {
     int flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_EXEC);
+    
+    printf ("Address: %p\n", RunCode);
 
     if (flag == -1)
     {
@@ -39,13 +40,17 @@ void RunCode (TranslatorMain* self)
 
     int kek = god_save_me();
 
-    printf ("Bruh: %x\n", kek);
+    printf ("Bruh: %d\n", kek);
 }
 
 
 void StartTranslation (TranslatorMain* self)
 {
     LOG ("---------- Begin translation -------------\n");
+
+    char header[] = {0x56}; // push rsi
+    LoadToX86Buffer (self, header, sizeof (header));
+
 
     for (int cmd_indx = 0; cmd_indx < self->cmds_counter; cmd_indx++)
     {
@@ -70,24 +75,41 @@ void StartTranslation (TranslatorMain* self)
             TranslateConditionJmp (self, self->cmds_array[cmd_indx]);
             break;
         
+        case MUL:
+        case ADD:
+        case SUB:
+        case DIV:
+            LOG ("%d: Translating math\n", cmd_indx);
+            TranslateBaseMath (self, self->cmds_array[cmd_indx]);
+
         default:
             break;
         }
     }
 
+    // char opcode_buff[] = { 0x48, 0x89, 0xD8}; // mov rax, rbx
+    // LoadToX86Buffer (self, opcode_buff, sizeof (opcode_buff));
+
+    char footer[] = {0x5e}; // push rsi
+    LoadToX86Buffer (self, footer, sizeof (footer));
 }
 
 
 void LoadToX86Buffer (TranslatorMain* self, char* op_code, size_t len)
 {
+
+    DumpCurBuffer (op_code, len);
+
     memcpy (self->dst_x86.content + self->dst_x86.len, (void*) op_code, len);
     self->dst_x86.len += len;
+
+    // self->dst_x86.content[self->dst_x86.len] = 0x90; // nop at the end
+    // self->dst_x86.len++;
 }
 
 
 void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
 {
-    // char opcode_buff[] = { 0x48, 0x31, 0xC0, 0xB8, 0x02, 0x00, 0x00, 0x00 }; // mov rax, 02d
     int variation = CalcVariationSum (cur_cmd);
 
     switch (variation)
@@ -97,10 +119,15 @@ void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
         break;
 
     case IMM:
-        /* code */
+        LOG ("<%d>:Push/Pop IMM\n", cur_cmd->x86_ip);
+        if (cur_cmd->name == PUSH)
+            TranslatePushImm (self, cur_cmd);
+        // else
+        //     // TranslatePopImm (self, cur_cmd);
         break;
 
     case REG:
+        LOG ("%d:Push/Pop REG\n", cur_cmd->x86_ip);
         if (cur_cmd->name == PUSH)
             TranslatePushReg (self, cur_cmd);
         else
@@ -129,13 +156,68 @@ void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
         break;
     }
 
-    // LoadToX86Buffer (self, opcode_buff, sizeof (opcode_buff));
+    
+}
+
+void CursedOut (double num)
+{
+    printf ("%lg\n", num);
 }
 
 
+void TranslateOut (TranslatorMain* self, Command* cur_cmd)
+{
+    
+
+    *(uint32_t *)(opcode + 10) = (uint64_t )CursedOut - 
+                                 (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 10 + sizeof (int));
+
+    // LoadToX86Buffer (x86_buffer);
+}
+
+
+void TranslateBaseMath (TranslatorMain* self, Command* cur_cmd)
+{
+    char x86_buffer[] = { 0xF2, 0x0F, 0x10, 0x04, 0x24,       // movsd xmm0, [rsp]
+                          0xF2, 0x0F, 0x10, 0x4C, 0x24, 0x08, // movsd xmm1, [rsp+8]
+                          0x48, 0x83, 0xC4, 0x10,             // add rsp, 16
+                          0xF2, 0x0F, 0x00, 0xC1              // add, sub, mul or div. third byte is changed
+    };
+
+    switch (cur_cmd->name)
+    {
+        case ADD:
+            x86_buffer[17] = 0x58;
+            break;
+
+        case MUL:
+            x86_buffer[17] = 0x59;
+            break;
+
+        case SUB:
+            x86_buffer[17] = 0x5C;
+            break;
+
+        case DIV:
+            x86_buffer[17] = 0x5E;
+            break;
+        
+        default:
+            LOG ("No such Math operation\n");
+            break;
+    }
+
+    char x86_addition[] = { 0x48, 0x83, 0xEC, 0x08,        // sub rsp, 8
+                            0xF2, 0x0F, 0x11, 0x04, 0x24   // movsd [rsp], xmm0
+    };
+
+    LoadToX86Buffer (self, x86_buffer,   sizeof (x86_buffer));
+    LoadToX86Buffer (self, x86_addition, sizeof (x86_addition));
+}
+
 void TranslatePop (TranslatorMain* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 0x5f }; // pop rdi
+    char x86_buffer[] = { 0x5F }; // pop rdi
 
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
@@ -172,10 +254,9 @@ void TranslatePopReg (TranslatorMain* self, Command* cur_cmd)
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
-
 void TranslatePushReg (TranslatorMain* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 0x90 }; // pop r_x
+    char x86_buffer[] = { 0x90 }; // push r_x
 
     switch (cur_cmd->reg_index)
     {
@@ -199,6 +280,19 @@ void TranslatePushReg (TranslatorMain* self, Command* cur_cmd)
 
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
+
+
+void TranslatePushImm (TranslatorMain* self, Command* cur_cmd)
+{
+    char x86_buffer[] = { 0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b number - filled down below
+                          0x56                                // push rsi
+                        }; 
+
+    *(double*)(x86_buffer + 2) = cur_cmd->value;
+    
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+}
+
 
 
 void TranslatePushRegRam (TranslatorMain* self, Command* cur_cmd)
@@ -239,12 +333,7 @@ int CalcVariationSum (Command* cur_cmd)
 
 void TranslateJmp (TranslatorMain* self, Command* jmp_cmd)
 {
-    int rel_ptr = 0;
-    if (jmp_cmd->value >= jmp_cmd->x86_ip)
-        rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 5);
-    else
-        rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip) - 5;
-
+    int rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 1 + sizeof (int));
 
     char x86_buffer[] = {0xE9, 0x00, 0x00, 0x00, 0x00}; // jmp 00 00 00 00 - rel adress x32 
 
@@ -254,16 +343,13 @@ void TranslateJmp (TranslatorMain* self, Command* jmp_cmd)
 }
 
 
+
 void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd)
 {
     int rel_ptr = 0;
-    if (jmp_cmd->value >= jmp_cmd->x86_ip)
-        rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 5);
-    else
-        rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip) - 6;
-
-
-    // Need to add cool calculations of jump
+ 
+    rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 2 + sizeof(int) + 5);
+        
     char x86_buffer[] = {
                         0x5E,                   // pop rsi           
                         0x5F,                   // pop rdi
@@ -349,9 +435,9 @@ void ParseOnStructs (TranslatorMain* self)
 int CmdToStruct (const char* code, TranslatorMain* self)
 {
 
-    #define DEF_CMD(name, id)    \
+    #define DEF_CMD(name, id)            \
         case name:                       \
-            LOG ("\tId: %d\n", name);     \
+            LOG ("\tId: %d\n", name);    \
             FillCmdInfo (code, self);    \
             return 0;                    \
 
@@ -401,34 +487,48 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
         switch (variation)
         {
         case IMM:
-            /* code */
+            if (name == PUSH)
+                self->x86_ip_counter += PUSH_IMM_SIZE; 
+            else
+                // self->x86_ip_counter += POP_REG_SIZE;
             break;
 
         case REG:
-            self->x86_ip_counter  += POP_REG_SIZE;
+            if (name == PUSH)
+                self->x86_ip_counter += PUSH_REG_SIZE; 
+            else
+                self->x86_ip_counter += POP_REG_SIZE;
             break;
         
         case IMM_REG:
-            /* code */
+            // self->x86_ip_counter += PUSH_REG_IMM_SIZE;
             break;
 
         case IMM_RAM:
-            /* code */
+            // if (name == PUSH)
+                // self->x86_ip_counter += PUSH_RAM_SIZE; 
+            // else
+                // self->x86_ip_counter += POP_RAM_SIZE;
             break;
 
         case REG_RAM:
-            /* code */
+            // if (name == PUSH)
+                // self->x86_ip_counter += PUSH_REG_RAM_SIZE; 
+            // else
+                // self->x86_ip_counter += POP_REG_RAM_SIZE;
             break;
 
         case IMM_REG_RAM:
-            /* code */
+            // if (name == PUSH)
+                // self->x86_ip_counter += PUSH_IMM_REG_RAM_SIZE; 
+            // else
+                // self->x86_ip_counter += POP_IMM_REG_RAM_SIZE;
             break;
 
         default:
             LOG ("**No such variation of Push/Pop**\n");
             break;
         }
-
     }
     else
     {
@@ -437,6 +537,7 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
             new_cmd->value = *(elem_t*)(code + 1);
             // LOG ("\tip to jmp:%lg \n", new_cmd->value);
         }
+
         new_cmd->name = (EnumCommands) name;
         
         self->x86_ip_counter  += InstrSizes[name].x86_size;
@@ -477,6 +578,29 @@ void FillJumpLables (TranslatorMain* self)
     }
 
     LOG ("\n\n---------- End filling labels --------\n\n");
+}
+
+
+void DumpCurBuffer (char* cur_buff, size_t len)
+{
+    LOG ("\n##########");
+
+    for (int i = 0; i < len; i++)
+    {
+        if (i % 8 == 0) LOG ("\n\t%2d: ", i);
+
+        if (cur_buff[i] == (char)144) 
+        {
+            LOG ("| ");
+        }
+        else
+        {
+            LOG ("%02x ",  (unsigned char) cur_buff[i]);
+        }
+    }
+
+    LOG ("\n##########\n\n");
+
 }
 
 
@@ -549,9 +673,16 @@ void Dump86Buffer (TranslatorMain* self)
 
     for (int i = 0; i < self->dst_x86.len + 1; i++)
     {
-        if (i % 10 == 0) LOG ("\n%2d: ", i);
+        if (i % 8 == 0) LOG ("\n%2d: ", i);
 
-        LOG ("%02x ", (unsigned char) self->dst_x86.content[i]);
+        if (self->dst_x86.content[i] == (char)144) 
+        {
+            LOG ("|  ");
+        }
+        else
+        {
+            LOG ("%02x ", (unsigned char) self->dst_x86.content[i]);
+        }
     }
 
     LOG ("\n\n====== x86 buffer dump end =======\n\n");
