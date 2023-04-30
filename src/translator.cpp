@@ -3,10 +3,10 @@
 
 FILE* LOG_FILE = get_file ("log_file.txt", "w");
 
+extern "C" void DodoPrint (const char* template_string, ...);
 
 int main()
 {
-    fprintf (stderr, "add: %p\n", main);
     TranslatorMain TranslatorInfo = {};
     TranslatorCtor (&TranslatorInfo);
 
@@ -27,6 +27,8 @@ int main()
 void RunCode (TranslatorMain* self)
 {
     int flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_EXEC);
+        // flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_WRITE);
+        // flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_READ);
     
     printf ("Address: %p\n", RunCode);
 
@@ -36,7 +38,7 @@ void RunCode (TranslatorMain* self)
         return;
     }
 
-    int (* god_save_me)(void) = (int (*)(void))(self->dst_x86.content);
+    int (* god_save_me)(void) = (int (*)(void))(self->dst_x86.content + MEMORY_SIZE);
 
     int kek = god_save_me();
 
@@ -48,7 +50,17 @@ void StartTranslation (TranslatorMain* self)
 {
     LOG ("---------- Begin translation -------------\n");
 
-    char header[] = {0x56}; // push rsi
+    char memory_buffer[MEMORY_SIZE] = "";
+
+    LoadToX86Buffer (self, memory_buffer, sizeof (memory_buffer)); // at the beginning of prog space for RAM
+
+
+    char header[] = { 0x56, 0x41, 0x52,   // push rsi; push r10
+                      0x41, 0xBA, 0x00, 0x00, 0x00, 0x00 // mov r10, ptr of ram begin
+    }; 
+
+    *(uint64_t*)(header + 5) = (uint64_t) self->dst_x86.content;
+
     LoadToX86Buffer (self, header, sizeof (header));
 
 
@@ -81,6 +93,9 @@ void StartTranslation (TranslatorMain* self)
         case DIV:
             LOG ("%d: Translating math\n", cmd_indx);
             TranslateBaseMath (self, self->cmds_array[cmd_indx]);
+        case OUT:
+            LOG ("Translating OUT");
+            TranslateOut (self, self->cmds_array[cmd_indx]);
 
         default:
             break;
@@ -90,7 +105,7 @@ void StartTranslation (TranslatorMain* self)
     // char opcode_buff[] = { 0x48, 0x89, 0xD8}; // mov rax, rbx
     // LoadToX86Buffer (self, opcode_buff, sizeof (opcode_buff));
 
-    char footer[] = {0x5e}; // push rsi
+    char footer[] = {0x41, 0x5A, 0x5e}; // pop r10; push rsi
     LoadToX86Buffer (self, footer, sizeof (footer));
 }
 
@@ -139,7 +154,10 @@ void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
         break;
 
     case IMM_RAM:
-        /* code */
+        if (cur_cmd->name == PUSH)
+            TranslatePushImmRam (self, cur_cmd);
+        else
+            TranslatePopImmRam (self, cur_cmd);
         break;
 
     case REG_RAM:
@@ -167,12 +185,28 @@ void CursedOut (double num)
 
 void TranslateOut (TranslatorMain* self, Command* cur_cmd)
 {
-    
+    char x86_buffer[] = {
+                        0xF2, 0x0F, 0x10, 0x04, 0x24,   // movsd xmm0, qword [rsp]
 
-    *(uint32_t *)(opcode + 10) = (uint64_t )CursedOut - 
-                                 (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 10 + sizeof (int));
+                        0x50,        // push rax
+                        0x53,        // push rbx
+                        0x51,        // push rcx
+                        0x52,        // push rdx
 
-    // LoadToX86Buffer (x86_buffer);
+                        0xE8, 0x00, 0x00, 0x00, 0x00,   // call Out
+
+                        0x5A,       // pop rdx
+                        0x59,       // pop rcx
+                        0x5B,       // pop rbx
+                        0x58,       // pop rax
+
+                        0x5F        // pop rdi
+                    };
+
+    *(uint32_t *)(x86_buffer + 10) = (uint64_t)DodoPrint - 
+                                     (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 10 + sizeof (int));
+
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 
@@ -289,6 +323,37 @@ void TranslatePushImm (TranslatorMain* self, Command* cur_cmd)
                         }; 
 
     *(double*)(x86_buffer + 2) = cur_cmd->value;
+    
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+}
+
+
+void TranslatePushImmRam (TranslatorMain* self, Command* cur_cmd)
+{
+    char x86_buffer[] = { 
+                        0x49, 0x8B, 0xBA,            // mov rdi, [r10 + ?]
+                        0x00, 0x00, 0x00, 0x00,     // ? - offset from begin of ram
+
+                        0x57                        // push rdi
+    };   
+
+    *(int*)(x86_buffer + 3) = cur_cmd->value;
+    
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+}
+
+
+void TranslatePopImmRam (TranslatorMain* self, Command* cur_cmd)
+{
+    char x86_buffer[] = { 
+                        0x5F,                        // pop rdi
+  
+                        0x49, 0x89, 0xBA,            // mov [r10 + ?], rdi
+                        0x00, 0x00, 0x00, 0x00       // ? - offset from begin of ram
+
+    };   
+
+    *(int*)(x86_buffer + 4) = cur_cmd->value;
     
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
@@ -505,10 +570,10 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
             break;
 
         case IMM_RAM:
-            // if (name == PUSH)
-                // self->x86_ip_counter += PUSH_RAM_SIZE; 
-            // else
-                // self->x86_ip_counter += POP_RAM_SIZE;
+            if (name == PUSH)
+                self->x86_ip_counter += PUSH_IMM_RAM_SIZE; 
+            else
+                self->x86_ip_counter += POP_IMM_RAM_SIZE;
             break;
 
         case REG_RAM:

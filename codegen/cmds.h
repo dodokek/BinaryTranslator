@@ -12,6 +12,8 @@ DEF_CMD(DIV,         5)
 
 DEF_CMD(POP,   6)
 
+DEF_CMD(OUT, 7)
+
 DEF_CMD(JMP, 9)
 
 DEF_CMD(JG,  10)

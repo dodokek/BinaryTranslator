@@ -35,6 +35,8 @@ const int PAGESIZE = 4096;
 
 const char* NotFound = "Not found\n";
 
+const int MEMORY_SIZE = 16;
+
 // ===============================================
 
 
@@ -66,7 +68,6 @@ enum BitMasks
 
 enum OffsetsAndFlags
 {
-    ZERO_OFFSET = 0,
     MULTI_BYTE_OFFSET = 9,
     BYTE_OFFSET = 1,
     JMP_OFFSET = 6,
@@ -99,9 +100,12 @@ enum PushPopVariations
 enum PushPopSizes
 {
     POP_REG_SIZE = 1, 
+    POP_IMM_RAM_SIZE = 8,
+
     PUSH_REG_SIZE = 1, 
     PUSH_REG_NUM_SIZE = 4, 
     PUSH_IMM_SIZE = 10, 
+    PUSH_IMM_RAM_SIZE = 8,
 };
 
 
@@ -139,7 +143,7 @@ const struct InstructionSizes InstrSizes[30] =
     {SUB, 1, 28},
     {DIV, 1, 28},
     {POP,  10,  1},
-    {},
+    {OUT, 1, 19},
     {},
     {JMP, 10,  5},
     {JG,  10,  11},
@@ -225,6 +229,12 @@ void StartTranslation (TranslatorMain* self);
 bool IsJump (int cmd);
 
 //-- Translation Units:
+
+void TranslatePushImmRam (TranslatorMain* self, Command* cur_cmd);
+
+void TranslatePopImmRam (TranslatorMain* self, Command* cur_cmd);
+
+void TranslateOut (TranslatorMain* self, Command* cur_cmd);
 
 void TranslateBaseMath (TranslatorMain* self, Command* cur_cmd);
 
