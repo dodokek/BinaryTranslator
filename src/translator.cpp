@@ -184,7 +184,7 @@ void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
 
 void CursedOut (double num)
 {
-    printf ("%g\n", num);
+    DodoPrint ("I am gay %d %%\n", (int) num);
 }
 
 
