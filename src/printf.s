@@ -31,35 +31,18 @@ extern printf
 global DodoPrint
 
 DodoPrint:
-	pop r13					; saving return address
+    ; rdi - template string
+    ; rsi - double number
 
-	push r9					; due to the call of the printf, first 6 args are being stored in the following registers			
-	push r8					; other arguments are being in stack
-	push rcx
-	push rdx
-	push rsi ; <---------------------<---------------------------<-------------------------------																					
-	push rdi ;																					|
-	push rbp				; saving base pointer 												|
-	;																							|
-	mov rbp, rsp			; saving stack pointer to access args								^
-	add rbp, 16				; skipping template string in stack	also skipping rbp				|
-	;																							|
-	; rbp -->----------------------------->---------------->-------------------------------------
+    push rsi
 
-	mov rsi, rdi			; rsi points to template string which passed as 1-st argument of printf
+    mov rax, 1
+    movsd xmm0, [rsp]
+
+    call printf
+
+    add rsp, 16
 	
-	call PrintfMain			; calling main function
-	
-	pop rbp
-
-	pop rdi 				; balancing stack by deleting 6 args from it
-	pop rsi
-	pop rdx
-	pop rcx
-	pop r8
-	pop r9
-
-	push r13
 
 	ret
 

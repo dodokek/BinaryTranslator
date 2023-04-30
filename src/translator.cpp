@@ -184,7 +184,7 @@ void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
 
 void CursedOut (double num)
 {
-    DodoPrint ("I am gay %d %%\n", (int) num);
+    printf ("I am gay %g %%\n", num);
 }
 
 
@@ -199,7 +199,7 @@ void TranslateOut (TranslatorMain* self, Command* cur_cmd)
 
                         0x48, 0x83, 0xE4, 0xF0,         // and rsp, -16 - aligning stack
 
-                        0xE8, 0x00, 0x00, 0x00, 0x00,   // call Out
+                        0xE8, 0x00, 0x00, 0x00, 0x00,   // call CursedOut
 
                         0x4C, 0x89, 0xE4,               // mov rsp, rbp
 
@@ -209,7 +209,7 @@ void TranslateOut (TranslatorMain* self, Command* cur_cmd)
                     };
 
     *(uint32_t *)(x86_buffer + 17) = (uint64_t)CursedOut - 
-                                     (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 10 + sizeof (int));
+                                     (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 26 + sizeof (int));
 
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }

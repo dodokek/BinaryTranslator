@@ -8,7 +8,7 @@ End of prog.
 ================ Begin of struct dump ==================
 
 Command < PUSH > | Orig ip: 8 | x86 ip: 0
-	+Operating width digit, value: 0
+	+Operating width digit, value: 456
 
 Command < OUT > | Orig ip: 18 | x86 ip: 11
 
@@ -26,7 +26,7 @@ Command < OUT > | Orig ip: 18 | x86 ip: 11
 ================ Begin of struct dump ==================
 
 Command < PUSH > | Orig ip: 8 | x86 ip: 0
-	+Operating width digit, value: 0
+	+Operating width digit, value: 456
 
 Command < OUT > | Orig ip: 18 | x86 ip: 11
 
@@ -35,22 +35,22 @@ Command < OUT > | Orig ip: 18 | x86 ip: 11
 ---------- Begin translation -------------
 
 ##########
-	 0: 56 41 52 41 ba c0 c0 09 
-	 8: 02 
+	 0: 56 41 52 41 ba c0 40 93 
+	 8: 01 
 ##########
 
 <0>:Push/Pop IMM
 
 ##########
-	 0: 48 be 00 00 00 00 00 00 
-	 8: 00 00 56 
+	 0: 48 be 00 00 00 00 00 80 
+	 8: 7c 40 56 
 ##########
 
 Translating OUT
 ##########
 	 0: f2 0f 10 04 24 50 53 51 
 	 8: 52 49 89 e4 48 83 e4 f0 
-	16: e8 3a 68 36 fe 4c 89 e4 
+	16: e8 2a e8 ac fe 4c 89 e4 
 	24: 5a 59 5b 58 5f 
 ##########
 
@@ -63,11 +63,11 @@ Translating OUT
 
 ====== x86 buffer dump begin =======
 
- 0: 56 41 52 41 ba c0 c0 09 
- 8: 02 48 be 00 00 00 00 00 
-16: 00 00 00 56 f2 0f 10 04 
+ 0: 56 41 52 41 ba c0 40 93 
+ 8: 01 48 be 00 00 00 00 00 
+16: 80 7c 40 56 f2 0f 10 04 
 24: 24 50 53 51 52 49 89 e4 
-32: 48 83 e4 f0 e8 3a 68 36 
+32: 48 83 e4 f0 e8 2a e8 ac 
 40: fe 4c 89 e4 5a 59 5b 58 
 48: 5f 41 5a 5e c3 
 
