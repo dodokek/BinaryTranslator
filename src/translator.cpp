@@ -42,7 +42,7 @@ void RunCode (TranslatorMain* self)
 
     int kek = god_save_me();
 
-    printf ("Bruh: %d\n", kek);
+    // printf ("Bruh: %d\n", kek);
 }
 
 
@@ -50,17 +50,17 @@ void StartTranslation (TranslatorMain* self)
 {
     LOG ("---------- Begin translation -------------\n");
 
-    char* memory_buffer = (char*) calloc (MEMORY_SIZE, sizeof(char));
-
     // LoadToX86Buffer (self, memory_buffer, sizeof (memory_buffer)); // at the beginning of prog space for RAM
 
 
-
-    char header[] = { 0x56, 0x41, 0x52,   // push rsi; push r10
-                      0x41, 0xBA, 0x00, 0x00, 0x00, 0x00 // mov r10, ptr of ram begin
+    char header[] = { 0x56, 0x41, 0x52,                  // push rsi; push r10
+                      0x49, 0xBA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // mov r10, ptr of ram begin
     }; 
 
-    *(uint64_t*)(header + 5) = (uint64_t) memory_buffer;
+    memcpy (header+5, &(self->memory_buffer), sizeof (uint64_t));
+    
+    // printf ("Memory buff filled: %x\n", self->memory_buffer);
+    
 
     LoadToX86Buffer (self, header, sizeof (header));
 
@@ -75,7 +75,9 @@ void StartTranslation (TranslatorMain* self)
             break;
 
         case JMP:
-            TranslateJmp (self, self->cmds_array[cmd_indx]);
+        case CALL:
+            LOG ("Translating Jump or Call");
+            TranslateJmpCall (self, self->cmds_array[cmd_indx]);
             break;
 
         case JG:
@@ -100,6 +102,9 @@ void StartTranslation (TranslatorMain* self)
             LOG ("Translating OUT");
             TranslateOut (self, self->cmds_array[cmd_indx]);
             break;
+
+        case RET:
+            LOG ("Translating RET");
 
         default:
             break;
@@ -210,6 +215,8 @@ void TranslateOut (TranslatorMain* self, Command* cur_cmd)
 
     *(uint32_t *)(x86_buffer + 17) = (uint64_t)CursedOut - 
                                      (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 26 + sizeof (int));
+                                                                                // ( ͡° ͜ʖ ͡°).
+
 
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
@@ -342,7 +349,7 @@ void TranslatePushImmRam (TranslatorMain* self, Command* cur_cmd)
                         0x57                        // push rdi
     };   
 
-    *(int*)(x86_buffer + 3) = cur_cmd->value;
+    *(int*)(x86_buffer + 3) = cur_cmd->value * 16;
     
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
@@ -358,7 +365,7 @@ void TranslatePopImmRam (TranslatorMain* self, Command* cur_cmd)
 
     };   
 
-    *(int*)(x86_buffer + 4) = cur_cmd->value;
+    *(int*)(x86_buffer + 4) = cur_cmd->value * 16;
     
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
@@ -401,17 +408,26 @@ int CalcVariationSum (Command* cur_cmd)
 }
 
 
-void TranslateJmp (TranslatorMain* self, Command* jmp_cmd)
+void TranslateJmpCall (TranslatorMain* self, Command* jmp_cmd)
 {
+    char x86_buffer[] = {0x00, 0x00, 0x00, 0x00, 0x00}; // jmp/call 00 00 00 00 - rel adress x32 
+
+    if (jmp_cmd->name == CALL)
+        x86_buffer[0] = 0xE8;
+    else
+        x86_buffer[0] = 0xE9;
+
     int rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 1 + sizeof (int));
-
-    char x86_buffer[] = {0xE9, 0x00, 0x00, 0x00, 0x00}; // jmp 00 00 00 00 - rel adress x32 
-
     *( int* )(x86_buffer + 1) = rel_ptr;
 
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
+
+void TranslateRet (TranslatorMain* self, Command* jmp_cmd)
+{
+
+}
 
 
 void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd)
@@ -699,8 +715,11 @@ int AllocateCmdArrays (TranslatorMain* self)
     memset ((void*) self->dst_x86.content, 0xC3, self->src_cmds.len);      // Filling whole buffer
                                                                            // With ret (0xC3) byte code
 
+    self->memory_buffer = (char*) calloc (MEMORY_SIZE, sizeof(char));
+
     if (self->src_cmds.content != nullptr &&
-        self->dst_x86.content  != nullptr)
+        self->dst_x86.content  != nullptr &&
+        self->memory_buffer    != nullptr)
         return SUCCESS;
     
     return ALLOCATION_FAILURE;

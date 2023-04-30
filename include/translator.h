@@ -152,6 +152,8 @@ const struct InstructionSizes InstrSizes[30] =
     {JAE, 10,  11},
     {JE,  10,  11},
     {JNE, 10,  11},
+    {CALL, 10,  5},
+    {RET, 1,  1},
 };
 
 
@@ -189,6 +191,8 @@ struct TranslatorMain
 
     int orig_ip_counter;
     int x86_ip_counter;
+
+    char* memory_buffer;
 };
 
 
@@ -252,7 +256,7 @@ void TranslatePopReg (TranslatorMain* self, Command* cur_cmd);
 
 void TranslatePushReg (TranslatorMain* self, Command* cur_cmd);
 
-void TranslateJmp (TranslatorMain* self, Command* cur_cmd);
+void TranslateJmpCall (TranslatorMain* self, Command* cur_cmd);
 
 void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd);
 
