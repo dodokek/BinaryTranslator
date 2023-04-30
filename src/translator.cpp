@@ -7,6 +7,8 @@ extern "C" void DodoPrint (const char* template_string, ...);
 
 int main()
 {
+    printf ("kek %g", (double)123);
+
     TranslatorMain TranslatorInfo = {};
     TranslatorCtor (&TranslatorInfo);
 
@@ -181,9 +183,10 @@ void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
     
 }
 
+
 void CursedOut (double num)
 {
-    puts ("bebra");
+    printf ("%g\n", num);
 }
 
 
@@ -207,7 +210,7 @@ void TranslateOut (TranslatorMain* self, Command* cur_cmd)
                         0x5F        // pop rdi
                     };
 
-    *(uint32_t *)(x86_buffer + 10) = (uint64_t)CursedOut - 
+    *(uint32_t *)(x86_buffer + 10) = (uint64_t)printf - 
                                      (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 10 + sizeof (int));
 
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
