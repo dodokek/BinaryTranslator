@@ -152,6 +152,7 @@ const struct InstructionSizes InstrSizes[30] =
     {JAE, 10,  11},
     {JE,  10,  11},
     {JNE, 10,  11},
+    {},
     {CALL, 10,  5},
     {RET, 1,  1},
 };

@@ -426,7 +426,9 @@ void TranslateJmpCall (TranslatorMain* self, Command* jmp_cmd)
 
 void TranslateRet (TranslatorMain* self, Command* jmp_cmd)
 {
+    char x86_buffer[] = { 0xC3 };
 
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 
