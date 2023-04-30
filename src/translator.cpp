@@ -38,7 +38,7 @@ void RunCode (TranslatorMain* self)
         return;
     }
 
-    int (* god_save_me)(void) = (int (*)(void))(self->dst_x86.content + MEMORY_SIZE);
+    int (* god_save_me)(void) = (int (*)(void))(self->dst_x86.content);
 
     int kek = god_save_me();
 
@@ -50,16 +50,17 @@ void StartTranslation (TranslatorMain* self)
 {
     LOG ("---------- Begin translation -------------\n");
 
-    char memory_buffer[MEMORY_SIZE] = "";
+    char* memory_buffer = (char*) calloc (MEMORY_SIZE, sizeof(char));
 
-    LoadToX86Buffer (self, memory_buffer, sizeof (memory_buffer)); // at the beginning of prog space for RAM
+    // LoadToX86Buffer (self, memory_buffer, sizeof (memory_buffer)); // at the beginning of prog space for RAM
+
 
 
     char header[] = { 0x56, 0x41, 0x52,   // push rsi; push r10
                       0x41, 0xBA, 0x00, 0x00, 0x00, 0x00 // mov r10, ptr of ram begin
     }; 
 
-    *(uint64_t*)(header + 5) = (uint64_t) self->dst_x86.content;
+    *(uint64_t*)(header + 5) = (uint64_t) memory_buffer;
 
     LoadToX86Buffer (self, header, sizeof (header));
 
@@ -93,9 +94,12 @@ void StartTranslation (TranslatorMain* self)
         case DIV:
             LOG ("%d: Translating math\n", cmd_indx);
             TranslateBaseMath (self, self->cmds_array[cmd_indx]);
+            break;
+
         case OUT:
             LOG ("Translating OUT");
             TranslateOut (self, self->cmds_array[cmd_indx]);
+            break;
 
         default:
             break;
@@ -179,7 +183,7 @@ void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
 
 void CursedOut (double num)
 {
-    printf ("%lg\n", num);
+    puts ("bebra");
 }
 
 
@@ -203,7 +207,7 @@ void TranslateOut (TranslatorMain* self, Command* cur_cmd)
                         0x5F        // pop rdi
                     };
 
-    *(uint32_t *)(x86_buffer + 10) = (uint64_t)DodoPrint - 
+    *(uint32_t *)(x86_buffer + 10) = (uint64_t)CursedOut - 
                                      (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 10 + sizeof (int));
 
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));

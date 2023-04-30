@@ -48,7 +48,7 @@ DodoPrint:
 
 	mov rsi, rdi			; rsi points to template string which passed as 1-st argument of printf
 	
-	; call PrintfMain			; calling main function
+	call PrintfMain			; calling main function
 	
 	pop rbp
 

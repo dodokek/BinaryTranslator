@@ -35,7 +35,7 @@ const int PAGESIZE = 4096;
 
 const char* NotFound = "Not found\n";
 
-const int MEMORY_SIZE = 16;
+const int MEMORY_SIZE = 0xFFFF;
 
 // ===============================================
 
