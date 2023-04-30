@@ -7,8 +7,6 @@ extern "C" void DodoPrint (const char* template_string, ...);
 
 int main()
 {
-    printf ("kek %g", (double)123);
-
     TranslatorMain TranslatorInfo = {};
     TranslatorCtor (&TranslatorInfo);
 
@@ -193,24 +191,24 @@ void CursedOut (double num)
 void TranslateOut (TranslatorMain* self, Command* cur_cmd)
 {
     char x86_buffer[] = {
-                        0xF2, 0x0F, 0x10, 0x04, 0x24,   // movsd xmm0, qword [rsp]
 
-                        0x50,        // push rax
-                        0x53,        // push rbx
-                        0x51,        // push rcx
-                        0x52,        // push rdx
+                        0xF2, 0x0F, 0x10, 0x04, 0x24,   // movsd xmm0, qword [rsp]
+                        0x50, 0x53, 0x51, 0x52,         // push rax - ... - rdx       
+
+                        0x49, 0x89, 0xE4,                // mov rbp, rsp
+
+                        0x48, 0x83, 0xE4, 0xF0,         // and rsp, -16 - aligning stack
 
                         0xE8, 0x00, 0x00, 0x00, 0x00,   // call Out
 
-                        0x5A,       // pop rdx
-                        0x59,       // pop rcx
-                        0x5B,       // pop rbx
-                        0x58,       // pop rax
+                        0x4C, 0x89, 0xE4,               // mov rsp, rbp
+
+                        0x5A, 0x59, 0x5B, 0x58,         // pop rdx - ... - rax
 
                         0x5F        // pop rdi
                     };
 
-    *(uint32_t *)(x86_buffer + 10) = (uint64_t)printf - 
+    *(uint32_t *)(x86_buffer + 17) = (uint64_t)CursedOut - 
                                      (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 10 + sizeof (int));
 
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));

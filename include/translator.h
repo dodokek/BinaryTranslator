@@ -1,11 +1,11 @@
 #ifndef TRANSLATOR_H
 #define TRANSLATOR_H
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <assert.h>
-#include <sys/mman.h>
+#include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <sys/mman.h>
 
 #include "file_utils.h"
 
@@ -143,7 +143,7 @@ const struct InstructionSizes InstrSizes[30] =
     {SUB, 1, 28},
     {DIV, 1, 28},
     {POP,  10,  1},
-    {OUT, 1, 19},
+    {OUT,  1, 29},
     {},
     {JMP, 10,  5},
     {JG,  10,  11},
