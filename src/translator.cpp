@@ -398,7 +398,7 @@ void TranslatePushReg (TranslatorMain* self, Command* cur_cmd)
 
 void TranslatePushImm (TranslatorMain* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b number - filled down below
+    char x86_buffer[] = { 0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b double - filled down below
                           0x56                                // push rsi
                         }; 
 
@@ -435,37 +435,6 @@ void TranslatePopImmRam (TranslatorMain* self, Command* cur_cmd)
 
     *(int*)(x86_buffer + 4) = cur_cmd->value * 16;
     
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
-}
-
-
-
-void TranslatePushRegRam (TranslatorMain* self, Command* cur_cmd)
-{
-    char x86_buffer[] = { 0x48, 0x8B, 0x00, // mov rsi, [r_x]
-                          0x56 };           // push rdi
-
-
-    switch (cur_cmd->reg_index)
-    {
-        case RAX:
-            x86_buffer[2] = 0x30;    // rax
-            break;
-        case RCX:
-            x86_buffer[2] = 0x31;    // rcx
-            break;
-        case RDX:
-            x86_buffer[2] = 0x32;    // rdx
-            break;
-        case RBX:
-            x86_buffer[2] = 0x33;    // rbx
-            break;
-        
-        default:
-            LOG ("**No such register!**\n");
-            break;
-    }
-
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
@@ -644,72 +613,12 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
 
     if (name == PUSH || name == POP)
     {
-        new_cmd->name = (EnumCommands) name;
-    
-        new_cmd->reg_index = code[sizeof(elem_t) + BYTE_OFFSET];
-        new_cmd->value = *(elem_t*)(code + 1);
-
-        new_cmd->is_immed = cmd & ARG_IMMED;
-        new_cmd->use_reg  = cmd & ARG_REG;
-        new_cmd->use_mem  = cmd & ARG_MEM;
-        
-        int variation = CalcVariationSum (new_cmd);
-
-        self->orig_ip_counter += InstrSizes[name].original_size;
-        
-        switch (variation)
-        {
-        case IMM:
-            if (name == PUSH)
-                self->x86_ip_counter += PUSH_IMM_SIZE; 
-            else
-                self->x86_ip_counter += POP_REG_SIZE;
-            break;
-
-        case REG:
-            if (name == PUSH)
-                self->x86_ip_counter += PUSH_REG_SIZE; 
-            else
-                self->x86_ip_counter += POP_REG_SIZE;
-            break;
-        
-        case IMM_REG:
-            // self->x86_ip_counter += PUSH_REG_IMM_SIZE;
-            break;
-
-        case IMM_RAM:
-            if (name == PUSH)
-                self->x86_ip_counter += PUSH_IMM_RAM_SIZE; 
-            else
-                self->x86_ip_counter += POP_IMM_RAM_SIZE;
-            break;
-
-        case REG_RAM:
-            if (name == PUSH)
-                self->x86_ip_counter += PUSH_REG_RAM_SIZE; 
-            else
-                self->x86_ip_counter += POP_REG_RAM_SIZE;
-            break;
-
-        case IMM_REG_RAM:
-            // if (name == PUSH)
-                // self->x86_ip_counter += PUSH_IMM_REG_RAM_SIZE; 
-            // else
-                // self->x86_ip_counter += POP_IMM_REG_RAM_SIZE;
-            break;
-
-        default:
-            LOG ("**No such variation of Push/Pop**\n");
-            break;
-        }
+        FillPushPopStruct (self, new_cmd, code, cmd, name);
     }
     else
     {
         if (IsJump (name))
-        {
             new_cmd->value = *(elem_t*)(code + 1);
-            // LOG ("\tip to jmp:%lg \n", new_cmd->value);
-        }
 
         new_cmd->name = (EnumCommands) name;
         
@@ -721,6 +630,70 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
     self->cmds_counter++;
 
     return 0;
+}
+
+
+void FillPushPopStruct (TranslatorMain* self, Command* new_cmd,
+                        const char* code, int cmd, int name)
+{
+    new_cmd->name = (EnumCommands) name;
+    
+    new_cmd->reg_index = code[sizeof(elem_t) + BYTE_OFFSET];
+    new_cmd->value = *(elem_t*)(code + 1);
+
+    new_cmd->is_immed = cmd & ARG_IMMED;
+    new_cmd->use_reg  = cmd & ARG_REG;
+    new_cmd->use_mem  = cmd & ARG_MEM;
+    
+    int variation = CalcVariationSum (new_cmd);
+
+    self->orig_ip_counter += InstrSizes[name].original_size;
+    
+    switch (variation)
+    {
+    case IMM:
+        if (name == PUSH)
+            self->x86_ip_counter += PUSH_IMM_SIZE; 
+        else
+            self->x86_ip_counter += POP_REG_SIZE;
+        break;
+
+    case REG:
+        if (name == PUSH)
+            self->x86_ip_counter += PUSH_REG_SIZE; 
+        else
+            self->x86_ip_counter += POP_REG_SIZE;
+        break;
+    
+    case IMM_REG:
+        // self->x86_ip_counter += PUSH_REG_IMM_SIZE;
+        break;
+
+    case IMM_RAM:
+        if (name == PUSH)
+            self->x86_ip_counter += PUSH_IMM_RAM_SIZE; 
+        else
+            self->x86_ip_counter += POP_IMM_RAM_SIZE;
+        break;
+
+    case REG_RAM:
+        if (name == PUSH)
+            self->x86_ip_counter += PUSH_REG_RAM_SIZE; 
+        else
+            self->x86_ip_counter += POP_REG_RAM_SIZE;
+        break;
+
+    case IMM_REG_RAM:
+        // if (name == PUSH)
+            // self->x86_ip_counter += PUSH_IMM_REG_RAM_SIZE; 
+        // else
+            // self->x86_ip_counter += POP_IMM_REG_RAM_SIZE;
+        break;
+
+    default:
+        LOG ("**No such variation of Push/Pop**\n");
+        break;
+    }
 }
 
 

@@ -233,6 +233,9 @@ void RunCode (TranslatorMain* self);
 
 void StartTranslation (TranslatorMain* self);
 
+void FillPushPopStruct (TranslatorMain* self, Command* new_cmd,
+                        const char* code, int cmd, int name);
+
 bool IsJump (int cmd);
 
 //-- Translation Units:
