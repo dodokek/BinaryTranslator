@@ -165,7 +165,7 @@ void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
         //     TranslatePushImmReg (self, cur_cmd);
         // else
         //     TranslatePopImmReg (self, cur_cmd);
-        // break;
+        break;
 
     case IMM_RAM:
         if (cur_cmd->name == PUSH)
@@ -182,7 +182,10 @@ void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
         break;
 
     case IMM_REG_RAM:
-        /* code */
+        if (cur_cmd->name == PUSH)
+            TranslatePushImmRegRam (self, cur_cmd);
+        else
+            TranslatePopImmRegRam (self, cur_cmd);
         break;
 
     default:
@@ -398,8 +401,9 @@ void TranslatePushReg (TranslatorMain* self, Command* cur_cmd)
 
 void TranslatePushImm (TranslatorMain* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b double - filled down below
-                          0x56                                // push rsi
+    char x86_buffer[] = { 
+                          0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b double - filled down below
+                          0x56,                                                       // push rsi
                         }; 
 
     *(double*)(x86_buffer + 2) = cur_cmd->value;
@@ -439,18 +443,84 @@ void TranslatePopImmRam (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-// void TranslatePushImmReg (TranslatorMain* self, Command* cur_cmd)
-// {
-//     char x86_buffer[] = { 0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b number - filled down below
-                          
-                          
-//                           0x56                                // push rsi
-//                         }; 
+void TranslatePushImmRegRam (TranslatorMain* self, Command* cur_cmd)
+{
+    char x86_buffer[] = { 0x4C, 0x01, 0x00,     // add r_x, r11
+                          0x48, 0x8B, 0x00, 0x00, 0x00, 0x00, 0x00,  // mov rsi, [r_x + x32 num]
+                          0x56,                                      // push rsi
+                          0x4C, 0x29, 0x00      // sub r_x, r11
+    }; 
 
-//     *(double*)(x86_buffer + 2) = cur_cmd->value;
+    switch (cur_cmd->reg_index)
+    {
+        case RAX:
+            x86_buffer[2] =  0xD8;      // add rax, r11
+            x86_buffer[5] =  0xB0;      // mov rsi, [rax]
+            x86_buffer[13] = 0xD8;      // sub rax, r11
+            break;
+        case RCX:
+            x86_buffer[2] =  0xD9;      // add rax, r11
+            x86_buffer[5] =  0xB1;      // mov rsi, [rax]
+            x86_buffer[13] = 0xD9;      // sub rax, r11
+            break;
+        case RDX:
+            x86_buffer[2] =  0xDA;      // add rax, r11
+            x86_buffer[5] =  0xB2;      // mov rsi, [rax]
+            x86_buffer[13] = 0xDA;      // sub rax, r11
+            break;
+        case RBX:
+            x86_buffer[2] =  0xDB;      // add rax, r11
+            x86_buffer[5] =  0xB3;      // mov rsi, [rax]
+            x86_buffer[13] = 0xDB;      // sub rax, r11
+            break;
     
-//     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
-// }
+        default:
+            LOG ("**No such register!**\n");
+            break;
+    }
+
+    *(int*)(x86_buffer + 3) = (int) cur_cmd->value;
+
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+}
+
+
+void TranslatePopImmRegRam (TranslatorMain* self, Command* cur_cmd)
+{
+    char x86_buffer[] = { 0x48, 0x89, 0x00, 0x00, 0x00, 0x00, 0x00,  // mov rsi, [r_x + x32 num]
+                          0x56                                       // push rsi
+     }; 
+
+    // need to fix !!!! as push
+
+    switch (cur_cmd->reg_index)
+    {
+        case RAX:
+            x86_buffer[2] = 0xB0;      // mov rsi, [rax]
+            break;
+        case RCX:
+            x86_buffer[2] = 0xB1;      // mov rsi, [rcx]
+            break;
+        case RDX:
+            x86_buffer[2] = 0xB2;      // mov rsi, [rdx]
+            break;
+        case RBX:
+            x86_buffer[2] = 0xB3;      // mov rsi, [rbx]
+            break;
+    
+        default:
+            LOG ("**No such register!**\n");
+            break;
+    }
+
+    *(int*)(x86_buffer + 3) = (int) cur_cmd->value;
+
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+}
+
+
+
+
 
 
 int CalcVariationSum (Command* cur_cmd)
@@ -684,10 +754,10 @@ void FillPushPopStruct (TranslatorMain* self, Command* new_cmd,
         break;
 
     case IMM_REG_RAM:
-        // if (name == PUSH)
-            // self->x86_ip_counter += PUSH_IMM_REG_RAM_SIZE; 
-        // else
-            // self->x86_ip_counter += POP_IMM_REG_RAM_SIZE;
+        if (name == PUSH)
+            self->x86_ip_counter += PUSH_IMM_REG_RAM_SIZE; 
+        else
+            self->x86_ip_counter += POP_IMM_REG_RAM_SIZE;
         break;
 
     default:

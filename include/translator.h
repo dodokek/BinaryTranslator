@@ -103,11 +103,13 @@ enum PushPopSizes
     POP_REG_SIZE = 1, 
     POP_IMM_RAM_SIZE = 8,
     POP_REG_RAM_SIZE = 4,
+    POP_IMM_REG_RAM_SIZE = 14, 
 
     PUSH_REG_SIZE = 1, 
     PUSH_IMM_SIZE = 11, 
     PUSH_IMM_RAM_SIZE = 8,
-    PUSH_REG_RAM_SIZE = 4, 
+    PUSH_REG_RAM_SIZE = 4,
+    PUSH_IMM_REG_RAM_SIZE = 14, 
 };
 
 
@@ -144,8 +146,8 @@ const struct InstructionSizes InstrSizes[30] =
     {ADD, 1, 28},
     {SUB, 1, 28},
     {DIV, 1, 28},
-    {POP,  10,  1},
-    {OUT,  1, 29},
+    {POP, 10,  1},
+    {OUT, 1, 29},
     {},
     {JMP, 10,  5},
     {JG,  10,  11},
@@ -182,8 +184,6 @@ struct Command
 };
 
 
-
-
 struct TranslatorMain
 {
     CmdsBuffer src_cmds;
@@ -197,8 +197,6 @@ struct TranslatorMain
 
     char* memory_buffer;
 };
-
-
 
 
 // ===============================================
@@ -239,6 +237,10 @@ void FillPushPopStruct (TranslatorMain* self, Command* new_cmd,
 bool IsJump (int cmd);
 
 //-- Translation Units:
+
+void TranslatePushImmRegRam (TranslatorMain* self, Command* cur_cmd);
+
+void TranslatePopImmRegRam (TranslatorMain* self, Command* cur_cmd);
 
 void TranslatePushImmRam (TranslatorMain* self, Command* cur_cmd);
 
