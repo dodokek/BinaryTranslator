@@ -102,11 +102,12 @@ enum PushPopSizes
 {
     POP_REG_SIZE = 1, 
     POP_IMM_RAM_SIZE = 8,
+    POP_REG_RAM_SIZE = 4,
 
     PUSH_REG_SIZE = 1, 
-    PUSH_REG_NUM_SIZE = 4, 
     PUSH_IMM_SIZE = 11, 
     PUSH_IMM_RAM_SIZE = 8,
+    PUSH_REG_RAM_SIZE = 4, 
 };
 
 
@@ -257,6 +258,10 @@ void TranslatePop (TranslatorMain* self, Command* cur_cmd);
 void TranslatePopReg (TranslatorMain* self, Command* cur_cmd);
 
 void TranslatePushReg (TranslatorMain* self, Command* cur_cmd);
+
+void TranslatePushRegRam (TranslatorMain* self, Command* cur_cmd);
+
+void TranslatePopRegRam (TranslatorMain* self, Command* cur_cmd);
 
 void TranslateJmpCall (TranslatorMain* self, Command* cur_cmd);
 
