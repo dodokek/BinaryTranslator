@@ -105,7 +105,7 @@ enum PushPopSizes
 
     PUSH_REG_SIZE = 1, 
     PUSH_REG_NUM_SIZE = 4, 
-    PUSH_IMM_SIZE = 10, 
+    PUSH_IMM_SIZE = 11, 
     PUSH_IMM_RAM_SIZE = 8,
 };
 

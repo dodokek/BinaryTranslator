@@ -218,7 +218,7 @@ void TranslateOut (TranslatorMain* self, Command* cur_cmd)
                     };
 
     *(uint32_t *)(x86_buffer + 17) = (uint64_t)CursedOut - 
-                                     (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 25 + sizeof (int));
+                                     (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 26 + sizeof (int));
                                                                                 // ( ͡° ͜ʖ ͡°).
 
 
