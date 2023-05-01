@@ -14,6 +14,7 @@
 //           \/
 
 #define LOG(...) fprintf (LOG_FILE, __VA_ARGS__);
+// #define LOG(...) printf (__VA_ARGS__);
 
 // ===============================================
 
@@ -138,7 +139,7 @@ const struct InstructionSizes InstrSizes[30] =
 {
     {HLT,  1,   1},
     {PUSH, 10,  1}, 
-    {MUL, 0, 28},
+    {MUL, 1, 28},
     {ADD, 1, 28},
     {SUB, 1, 28},
     {DIV, 1, 28},
@@ -258,6 +259,8 @@ void TranslatePopReg (TranslatorMain* self, Command* cur_cmd);
 void TranslatePushReg (TranslatorMain* self, Command* cur_cmd);
 
 void TranslateJmpCall (TranslatorMain* self, Command* cur_cmd);
+
+void TranslateRet (TranslatorMain* self, Command* jmp_cmd);
 
 void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd);
 

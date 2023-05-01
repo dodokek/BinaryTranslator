@@ -7,6 +7,8 @@ extern "C" void DodoPrint (const char* template_string, ...);
 
 int main()
 {
+    // fprintf (LOG_FILE, "bebra");
+
     TranslatorMain TranslatorInfo = {};
     TranslatorCtor (&TranslatorInfo);
 
@@ -53,7 +55,8 @@ void StartTranslation (TranslatorMain* self)
     // LoadToX86Buffer (self, memory_buffer, sizeof (memory_buffer)); // at the beginning of prog space for RAM
 
 
-    char header[] = { 0x56, 0x41, 0x52,                  // push rsi; push r10
+    char header[] = { 
+                    //   0x56, 0x41, 0x52,                  // push rsi; push r10
                       0x49, 0xBA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // mov r10, ptr of ram begin
     }; 
 
@@ -105,6 +108,7 @@ void StartTranslation (TranslatorMain* self)
 
         case RET:
             LOG ("Translating RET");
+            TranslateRet (self, self->cmds_array[cmd_indx]);
 
         default:
             break;
@@ -114,8 +118,8 @@ void StartTranslation (TranslatorMain* self)
     // char opcode_buff[] = { 0x48, 0x89, 0xD8}; // mov rax, rbx
     // LoadToX86Buffer (self, opcode_buff, sizeof (opcode_buff));
 
-    char footer[] = {0x41, 0x5A, 0x5e}; // pop r10; push rsi
-    LoadToX86Buffer (self, footer, sizeof (footer));
+    // char footer[] = {0x41, 0x5A, 0x5e}; // pop r10; push rsi
+    // LoadToX86Buffer (self, footer, sizeof (footer));
 }
 
 
@@ -214,7 +218,7 @@ void TranslateOut (TranslatorMain* self, Command* cur_cmd)
                     };
 
     *(uint32_t *)(x86_buffer + 17) = (uint64_t)CursedOut - 
-                                     (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 26 + sizeof (int));
+                                     (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 25 + sizeof (int));
                                                                                 // ( ͡° ͜ʖ ͡°).
 
 
@@ -507,14 +511,17 @@ void ParseOnStructs (TranslatorMain* self)
 
     self->orig_ip_counter = HEADER_OFFSET;
 
+    int counter = 0;
     while (self->orig_ip_counter < self->src_cmds.len)
     {
         LOG ("Ip %3d:\n", self->orig_ip_counter);
 
         int flag = CmdToStruct (self->src_cmds.content + self->orig_ip_counter, self);
         
+
         if (flag == END_OF_PROG)
             break;   
+
     }
 
 }
@@ -578,7 +585,7 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
             if (name == PUSH)
                 self->x86_ip_counter += PUSH_IMM_SIZE; 
             else
-                // self->x86_ip_counter += POP_REG_SIZE;
+                self->x86_ip_counter += POP_REG_SIZE;
             break;
 
         case REG:
@@ -642,7 +649,7 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
 bool IsJump (int cmd)
 {
     if (cmd == JMP || cmd == JG || cmd == JGE || cmd == JA ||
-        cmd == JAE || cmd == JE || cmd == JNE)
+        cmd == JAE || cmd == JE || cmd == JNE || cmd == CALL)
     {
         LOG ("\tYeah, it is jump\n");
         return true;

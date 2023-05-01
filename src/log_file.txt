@@ -1,0 +1,249 @@
+Ip   8:
+	Id: 1
+Ip  18:
+	Id: 6
+Ip  28:
+	Id: 1
+Ip  38:
+	Id: 6
+Ip  48:
+	Id: 17
+	Yeah, it is jump
+Ip  58:
+	Id: 1
+Ip  68:
+	Id: 7
+Ip  69:
+	Id: 18
+Ip  70:
+	Id: 1
+Ip  80:
+	Id: 1
+Ip  90:
+	Id: 4
+Ip  91:
+	Id: 6
+Ip 101:
+	Id: 17
+	Yeah, it is jump
+Ip 111:
+	Id: 18
+Ip 112:
+End of prog.
+
+================ Begin of struct dump ==================
+
+Command < PUSH > | Orig ip: 8 | x86 ip: 0
+	+Operating width digit, value: 3
+
+Command < POP > | Orig ip: 18 | x86 ip: 10
+	+Using register, its id: 2
+
+Command < PUSH > | Orig ip: 28 | x86 ip: 11
+	+Operating width digit, value: 1
+
+Command < POP > | Orig ip: 38 | x86 ip: 21
+	+Using register, its id: 0
+
+Command < CALL > | Orig ip: 48 | x86 ip: 22
+	Yeah, it is jump
+	+Wants to jump into 70
+
+Command < PUSH > | Orig ip: 58 | x86 ip: 27
+	+Using register, its id: 0
+
+Command < OUT > | Orig ip: 68 | x86 ip: 28
+
+Command < RET > | Orig ip: 69 | x86 ip: 57
+
+Command < PUSH > | Orig ip: 70 | x86 ip: 58
+	+Operating width digit, value: 1
+
+Command < PUSH > | Orig ip: 80 | x86 ip: 68
+	+Using register, its id: 2
+
+Command < SUB > | Orig ip: 90 | x86 ip: 69
+
+Command < POP > | Orig ip: 91 | x86 ip: 97
+	+Using register, its id: 2
+
+Command < CALL > | Orig ip: 101 | x86 ip: 98
+	Yeah, it is jump
+	+Wants to jump into 70
+
+Command < RET > | Orig ip: 111 | x86 ip: 103
+
+================ End of struct dump ==================
+
+
+
+---------- Filling labels --------
+
+	Yeah, it is jump
+ 4: Trying to find x86 ip for ip 70:
+	 Found, x86 ip is 58
+	Yeah, it is jump
+12: Trying to find x86 ip for ip 70:
+	 Found, x86 ip is 58
+
+
+---------- End filling labels --------
+
+
+================ Begin of struct dump ==================
+
+Command < PUSH > | Orig ip: 8 | x86 ip: 0
+	+Operating width digit, value: 3
+
+Command < POP > | Orig ip: 18 | x86 ip: 10
+	+Using register, its id: 2
+
+Command < PUSH > | Orig ip: 28 | x86 ip: 11
+	+Operating width digit, value: 1
+
+Command < POP > | Orig ip: 38 | x86 ip: 21
+	+Using register, its id: 0
+
+Command < CALL > | Orig ip: 48 | x86 ip: 22
+	Yeah, it is jump
+	+Wants to jump into 58
+
+Command < PUSH > | Orig ip: 58 | x86 ip: 27
+	+Using register, its id: 0
+
+Command < OUT > | Orig ip: 68 | x86 ip: 28
+
+Command < RET > | Orig ip: 69 | x86 ip: 57
+
+Command < PUSH > | Orig ip: 70 | x86 ip: 58
+	+Operating width digit, value: 1
+
+Command < PUSH > | Orig ip: 80 | x86 ip: 68
+	+Using register, its id: 2
+
+Command < SUB > | Orig ip: 90 | x86 ip: 69
+
+Command < POP > | Orig ip: 91 | x86 ip: 97
+	+Using register, its id: 2
+
+Command < CALL > | Orig ip: 101 | x86 ip: 98
+	Yeah, it is jump
+	+Wants to jump into 58
+
+Command < RET > | Orig ip: 111 | x86 ip: 103
+
+================ End of struct dump ==================
+
+---------- Begin translation -------------
+
+##########
+	 0: 49 ba 00 00 00 | 63 4f 
+	 8: 00 00 
+##########
+
+<0>:Push/Pop IMM
+
+##########
+	 0: 48 be 00 00 00 00 00 00 
+	 8: 08 40 56 
+##########
+
+10:Push/Pop REG
+
+##########
+	 0: 59 
+##########
+
+<11>:Push/Pop IMM
+
+##########
+	 0: 48 be 00 00 00 00 00 00 
+	 8: f0 3f 56 
+##########
+
+21:Push/Pop REG
+
+##########
+	 0: 58 
+##########
+
+Translating Jump or Call
+##########
+	 0: e8 1f 00 00 00 
+##########
+
+27:Push/Pop REG
+
+##########
+	 0: 50 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 04 24 50 53 51 
+	 8: 52 49 89 e4 48 83 e4 f0 
+	16: e8 4f b8 f0 ff 4c 89 e4 
+	24: 5a 59 5b 58 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+<58>:Push/Pop IMM
+
+##########
+	 0: 48 be 00 00 00 00 00 00 
+	 8: f0 3f 56 
+##########
+
+68:Push/Pop REG
+
+##########
+	 0: 51 
+##########
+
+10: Translating math
+
+##########
+	 0: f2 0f 10 04 24 f2 0f 10 
+	 8: 4c 24 08 48 83 c4 10 f2 
+	16: 0f 5c c1 
+##########
+
+
+##########
+	 0: 48 83 ec 08 f2 0f 11 04 
+	 8: 24 
+##########
+
+97:Push/Pop REG
+
+##########
+	 0: 59 
+##########
+
+Translating Jump or Call
+##########
+	 0: e8 d3 ff ff ff 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+
+
+====== x86 buffer dump begin =======
+
+ 0: 49 ba 00 00 00 |  63 4f 
+ 8: 00 00 48 be 00 00 00 00 
+16: 00 00 08 40 56 59 48 be 
+24: 00 00 00 00 00 00 f0 3f 
+32: 56 58 e8 1f 00 00 00 50 
+40: f2 0f 10 04 24 50 53 51 
+48: 52 49 89 e4 48 83 e4 f0 
+56: e8 4f b8 f0 ff 4c 89 e4 
+64: 5a 59
