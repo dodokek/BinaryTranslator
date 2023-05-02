@@ -2,7 +2,7 @@
 
 int main()
 {
-    TranslatorMain TranslatorInfo = {};
+    TranslatorInfo TranslatorInfo = {};
     
     ParseOnStructs (&TranslatorInfo);
 

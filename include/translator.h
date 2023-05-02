@@ -28,7 +28,7 @@ const int MAX_LABELS = 100;
 
 const int MAX_OPCODE_LEN = 6;
 
-const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
+const char* INPUT_FILE_PATH = "../data/cmds.bin";
 
 const int HEADER_OFFSET = 8;
 
@@ -169,6 +169,7 @@ struct CmdsBuffer
 };
 
 
+// IR
 struct Command 
 {
     EnumCommands name;
@@ -183,8 +184,10 @@ struct Command
     bool use_mem;
 };
 
+// static_assert( sizeof(Command ) == 32 );
 
-struct TranslatorMain
+
+struct TranslatorInfo
 {
     CmdsBuffer src_cmds;
     CmdsBuffer dst_x86;
@@ -205,74 +208,74 @@ struct TranslatorMain
 // Functions ||
 //           \/
 
-void FillJumpLables (TranslatorMain* self);
+void FillJumpLables (TranslatorInfo* self);
 
-int FindJumpIp (TranslatorMain* self, int orig_ip);
+int FindJumpIp (TranslatorInfo* self, int orig_ip);
 
 char* GetNameFromId (EnumCommands id);
 
-void DumpRawCmds (TranslatorMain* self);
+void DumpRawCmds (TranslatorInfo* self);
 
-void Dump86Buffer (TranslatorMain* self);
+void Dump86Buffer (TranslatorInfo* self);
 
-int FillCmdInfo (const char* code, TranslatorMain* self);
+int FillCmdInfo (const char* code, TranslatorInfo* self);
 
-void TranslatorCtor (TranslatorMain* self);
+void TranslatorCtor (TranslatorInfo* self);
 
-void ParseOnStructs (TranslatorMain* self);
+void ParseOnStructs (TranslatorInfo* self);
 
-void ReadFileToStruct (TranslatorMain* self, FILE* file);
+void ReadFileToStruct (TranslatorInfo* self, FILE* file);
 
-int CmdToStruct (const char* code, TranslatorMain* self);
+int CmdToStruct (const char* code, TranslatorInfo* self);
 
-int AllocateCmdArrays (TranslatorMain* self);
+int AllocateCmdArrays (TranslatorInfo* self);
 
-void RunCode (TranslatorMain* self);
+void RunCode (TranslatorInfo* self);
 
-void StartTranslation (TranslatorMain* self);
+void StartTranslation (TranslatorInfo* self);
 
-void FillPushPopStruct (TranslatorMain* self, Command* new_cmd,
+void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
                         const char* code, int cmd, int name);
 
 bool IsJump (int cmd);
 
 //-- Translation Units:
 
-void TranslatePushImmRegRam (TranslatorMain* self, Command* cur_cmd);
+void TranslatePushImmRegRam (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslatePopImmRegRam (TranslatorMain* self, Command* cur_cmd);
+void TranslatePopImmRegRam (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslatePushImmRam (TranslatorMain* self, Command* cur_cmd);
+void TranslatePushImmRam (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslatePopImmRam (TranslatorMain* self, Command* cur_cmd);
+void TranslatePopImmRam (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslateOut (TranslatorMain* self, Command* cur_cmd);
+void TranslateOut (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslateBaseMath (TranslatorMain* self, Command* cur_cmd);
+void TranslateBaseMath (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslatePushImm (TranslatorMain* self, Command* cur_cmd);
+void TranslatePushImm (TranslatorInfo* self, Command* cur_cmd);
 
 int CalcVariationSum (Command* cur_cmd);
 
-void LoadToX86Buffer (TranslatorMain* self, char* op_code, size_t len);
+void LoadToX86Buffer (TranslatorInfo* self, char* op_code, size_t len);
 
-void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd);
+void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslatePop (TranslatorMain* self, Command* cur_cmd);
+void TranslatePop (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslatePopReg (TranslatorMain* self, Command* cur_cmd);
+void TranslatePopReg (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslatePushReg (TranslatorMain* self, Command* cur_cmd);
+void TranslatePushReg (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslatePushRegRam (TranslatorMain* self, Command* cur_cmd);
+void TranslatePushRegRam (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslatePopRegRam (TranslatorMain* self, Command* cur_cmd);
+void TranslatePopRegRam (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslateJmpCall (TranslatorMain* self, Command* cur_cmd);
+void TranslateJmpCall (TranslatorInfo* self, Command* cur_cmd);
 
-void TranslateRet (TranslatorMain* self, Command* jmp_cmd);
+void TranslateRet (TranslatorInfo* self, Command* jmp_cmd);
 
-void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd);
+void TranslateConditionJmp (TranslatorInfo* self, Command* jmp_cmd);
 
 void DumpCurBuffer (char* cur_buff, size_t len);
 

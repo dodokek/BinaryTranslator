@@ -7,9 +7,7 @@ extern "C" void DodoPrint (const char* template_string, ...);
 
 int main()
 {
-    // fprintf (LOG_FILE, "bebra");
-
-    TranslatorMain TranslatorInfo = {};
+    TranslatorInfo TranslatorInfo = {};
     TranslatorCtor (&TranslatorInfo);
 
     ParseOnStructs (&TranslatorInfo);
@@ -26,7 +24,7 @@ int main()
     RunCode (&TranslatorInfo);
 }
 
-void RunCode (TranslatorMain* self)
+void RunCode (TranslatorInfo* self)
 {
     int flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_EXEC);
         // flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_WRITE);
@@ -48,7 +46,7 @@ void RunCode (TranslatorMain* self)
 }
 
 
-void StartTranslation (TranslatorMain* self)
+void StartTranslation (TranslatorInfo* self)
 {
     LOG ("---------- Begin translation -------------\n");
 
@@ -58,12 +56,15 @@ void StartTranslation (TranslatorMain* self)
     char header[] = { 
                     //   0x56, 0x41, 0x52,                  // push rsi; push r10
                       0x49, 0xBA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // mov r10, ptr of ram begin
-    }; 
+    };
 
+    self->memory_buffer[0] = 'k';
+    self->memory_buffer[1] = 'r';
 
     memcpy (header+2, &(self->memory_buffer), sizeof (uint64_t));
     
-    // printf ("Memory buff filled: %x\n", self->memory_buffer);
+    printf ("Memory buff filled: %x\n", self->memory_buffer);
+    printf ("header+2: %x\n", *(uint64_t*)(header + 2));
     
 
     LoadToX86Buffer (self, header, sizeof (header));
@@ -124,12 +125,12 @@ void StartTranslation (TranslatorMain* self)
 }
 
 
-void LoadToX86Buffer (TranslatorMain* self, char* op_code, size_t len)
+void LoadToX86Buffer (TranslatorInfo* self, char* op_code, size_t len)
 {
 
     DumpCurBuffer (op_code, len);
 
-    memcpy (self->dst_x86.content + self->dst_x86.len, (void*) op_code, len);
+    memcpy (self->dst_x86.content + self->dst_x86.len, op_code, len);
     self->dst_x86.len += len;
 
     // self->dst_x86.content[self->dst_x86.len] = 0x90; // nop at the end
@@ -137,9 +138,11 @@ void LoadToX86Buffer (TranslatorMain* self, char* op_code, size_t len)
 }
 
 
-void HandlePushPopVariation (TranslatorMain* self, Command* cur_cmd)
+void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
 {
     int variation = CalcVariationSum (cur_cmd);
+
+    //
 
     switch (variation)
     {
@@ -204,7 +207,7 @@ void CursedOut (double num)
 }
 
 
-void TranslateOut (TranslatorMain* self, Command* cur_cmd)
+void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = {
 
@@ -233,7 +236,7 @@ void TranslateOut (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-void TranslateBaseMath (TranslatorMain* self, Command* cur_cmd)
+void TranslateBaseMath (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 0xF2, 0x0F, 0x10, 0x04, 0x24,       // movsd xmm0, [rsp]
                           0xF2, 0x0F, 0x10, 0x4C, 0x24, 0x08, // movsd xmm1, [rsp+8]
@@ -272,7 +275,7 @@ void TranslateBaseMath (TranslatorMain* self, Command* cur_cmd)
     LoadToX86Buffer (self, x86_addition, sizeof (x86_addition));
 }
 
-void TranslatePop (TranslatorMain* self, Command* cur_cmd)
+void TranslatePop (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 0x5F }; // pop rdi
 
@@ -280,7 +283,7 @@ void TranslatePop (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-void TranslatePopReg (TranslatorMain* self, Command* cur_cmd)
+void TranslatePopReg (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 0x90 }; // pop r_x
 
@@ -311,7 +314,7 @@ void TranslatePopReg (TranslatorMain* self, Command* cur_cmd)
     LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
-void TranslatePushRegRam (TranslatorMain* self, Command* cur_cmd)
+void TranslatePushRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 0x48, 0x8B, 0x00,  // mov rsi, [r_x]
                           0x56              // push rsi
@@ -341,7 +344,7 @@ void TranslatePushRegRam (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-void TranslatePopRegRam (TranslatorMain* self, Command* cur_cmd)
+void TranslatePopRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 0x5E,             // pop rsi
                           0x48, 0x89, 0x00  // mov [r_x], rsi
@@ -371,7 +374,7 @@ void TranslatePopRegRam (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-void TranslatePushReg (TranslatorMain* self, Command* cur_cmd)
+void TranslatePushReg (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 0x90 }; // push r_x
 
@@ -399,7 +402,7 @@ void TranslatePushReg (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-void TranslatePushImm (TranslatorMain* self, Command* cur_cmd)
+void TranslatePushImm (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 
                           0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b double - filled down below
@@ -412,7 +415,7 @@ void TranslatePushImm (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-void TranslatePushImmRam (TranslatorMain* self, Command* cur_cmd)
+void TranslatePushImmRam (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 
                         0x49, 0x8B, 0xBA,            // mov rdi, [r10 + ?]
@@ -427,7 +430,7 @@ void TranslatePushImmRam (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-void TranslatePopImmRam (TranslatorMain* self, Command* cur_cmd)
+void TranslatePopImmRam (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 
                         0x5F,                        // pop rdi
@@ -443,7 +446,7 @@ void TranslatePopImmRam (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-void TranslatePushImmRegRam (TranslatorMain* self, Command* cur_cmd)
+void TranslatePushImmRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 0x4C, 0x01, 0x00,     // add r_x, r11
                           0x48, 0x8B, 0x00, 0x00, 0x00, 0x00, 0x00,  // mov rsi, [r_x + x32 num]
@@ -485,7 +488,7 @@ void TranslatePushImmRegRam (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-void TranslatePopImmRegRam (TranslatorMain* self, Command* cur_cmd)
+void TranslatePopImmRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
     char x86_buffer[] = { 0x48, 0x89, 0x00, 0x00, 0x00, 0x00, 0x00,  // mov rsi, [r_x + x32 num]
                           0x56                                       // push rsi
@@ -519,17 +522,15 @@ void TranslatePopImmRegRam (TranslatorMain* self, Command* cur_cmd)
 }
 
 
-
-
-
-
 int CalcVariationSum (Command* cur_cmd)
 {
+    // | << 1 | << 2 
+
     return cur_cmd->is_immed + cur_cmd->use_reg * 3 + cur_cmd->use_mem * 5;
 }
 
 
-void TranslateJmpCall (TranslatorMain* self, Command* jmp_cmd)
+void TranslateJmpCall (TranslatorInfo* self, Command* jmp_cmd)
 {
     char x86_buffer[] = {0x00, 0x00, 0x00, 0x00, 0x00}; // jmp/call 00 00 00 00 - rel adress x32 
 
@@ -545,7 +546,7 @@ void TranslateJmpCall (TranslatorMain* self, Command* jmp_cmd)
 }
 
 
-void TranslateRet (TranslatorMain* self, Command* jmp_cmd)
+void TranslateRet (TranslatorInfo* self, Command* jmp_cmd)
 {
     char x86_buffer[] = { 0xC3 };
 
@@ -553,7 +554,7 @@ void TranslateRet (TranslatorMain* self, Command* jmp_cmd)
 }
 
 
-void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd)
+void TranslateConditionJmp (TranslatorInfo* self, Command* jmp_cmd)
 {
     int rel_ptr = 0;
  
@@ -601,7 +602,7 @@ void TranslateConditionJmp (TranslatorMain* self, Command* jmp_cmd)
 }
 
 
-void TranslatorCtor (TranslatorMain* self)
+void TranslatorCtor (TranslatorInfo* self)
 {
     self->src_cmds.content = nullptr;
     self->src_cmds.len = 0;
@@ -617,7 +618,7 @@ void TranslatorCtor (TranslatorMain* self)
 }
 
 
-void ParseOnStructs (TranslatorMain* self)
+void ParseOnStructs (TranslatorInfo* self)
 {   
     FILE* input_file = get_file (INPUT_FILE_PATH, "rb");
     ReadFileToStruct (self, input_file);
@@ -644,7 +645,7 @@ void ParseOnStructs (TranslatorMain* self)
 }
 
 
-int CmdToStruct (const char* code, TranslatorMain* self)
+int CmdToStruct (const char* code, TranslatorInfo* self)
 {
 
     #define DEF_CMD(name, id)            \
@@ -671,7 +672,7 @@ int CmdToStruct (const char* code, TranslatorMain* self)
 }
 
 
-int FillCmdInfo (const char* code, TranslatorMain* self)
+int FillCmdInfo (const char* code, TranslatorInfo* self)
 {
     int name = *code & CMD_BITMASK; 
     int cmd = *code;
@@ -703,7 +704,7 @@ int FillCmdInfo (const char* code, TranslatorMain* self)
 }
 
 
-void FillPushPopStruct (TranslatorMain* self, Command* new_cmd,
+void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
                         const char* code, int cmd, int name)
 {
     new_cmd->name = (EnumCommands) name;
@@ -779,7 +780,7 @@ bool IsJump (int cmd)
 }
 
 
-void FillJumpLables (TranslatorMain* self)
+void FillJumpLables (TranslatorInfo* self)
 {
     LOG ("\n\n---------- Filling labels --------\n\n");
 
@@ -820,7 +821,7 @@ void DumpCurBuffer (char* cur_buff, size_t len)
 }
 
 
-int FindJumpIp (TranslatorMain* self, int orig_ip)
+int FindJumpIp (TranslatorInfo* self, int orig_ip)
 {
     for (int i = 0; i < self->cmds_counter; i++)
     {
@@ -837,7 +838,7 @@ int FindJumpIp (TranslatorMain* self, int orig_ip)
 }
 
 
-int AllocateCmdArrays (TranslatorMain* self)
+int AllocateCmdArrays (TranslatorInfo* self)
 {
     self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
 
@@ -858,7 +859,7 @@ int AllocateCmdArrays (TranslatorMain* self)
 }
 
 
-void DumpRawCmds (TranslatorMain* self)
+void DumpRawCmds (TranslatorInfo* self)
 {
     LOG ("\n================ Begin of struct dump ==================\n");
 
@@ -888,7 +889,7 @@ void DumpRawCmds (TranslatorMain* self)
 }
 
 
-void Dump86Buffer (TranslatorMain* self)
+void Dump86Buffer (TranslatorInfo* self)
 {
     LOG ("\n\n====== x86 buffer dump begin =======\n");
 
@@ -930,7 +931,7 @@ char* GetNameFromId (EnumCommands id)
 }
 
 
-void ReadFileToStruct (TranslatorMain* self, FILE* file)
+void ReadFileToStruct (TranslatorInfo* self, FILE* file)
 {
     assert (file != nullptr);
 
