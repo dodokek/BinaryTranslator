@@ -16,6 +16,8 @@
 #define LOG(...) fprintf (LOG_FILE, __VA_ARGS__);
 // #define LOG(...) printf (__VA_ARGS__);
 
+#define BYTE(X) 8*X
+
 // ===============================================
 
 
@@ -28,7 +30,7 @@ const int MAX_LABELS = 100;
 
 const int MAX_OPCODE_LEN = 6;
 
-const char* INPUT_FILE_PATH = "../data/cmds.bin";
+const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
 
 const int HEADER_OFFSET = 8;
 
@@ -39,6 +41,59 @@ const char* NotFound = "Not found\n";
 const int MEMORY_SIZE = 0xFFFF;
 
 // ===============================================
+
+
+// ===============================================
+// Commands     ||
+//              \/
+
+
+enum OPCODES_x86 : u_int64_t // everything reversed
+{
+    PUSH_RSI = 0x56,
+    PUSH_RDI = 0x57,
+
+    POP_RSI = 0x53,
+    POP_RDI = 0x5F,
+
+    CMP_RDI_RSI = 0xf73948,
+
+    MOV_RSI_DBL = 0x0000000000000000BE48, // mov rsi, ? (double num)
+                  // first 32bits changing according to number 
+
+    PUSH_REG = 0x50, // by adding the index of register, getting different variations
+    POP_REG = 0x58,
+    
+    //  0, 1, 2, 3 depends on register
+};
+
+
+enum OPCODE_MASKS : uint64_t
+{
+    JE_MASK = 0x84,
+    JNE_MASK = 0x85,
+    JG_MASK = 0x8c,
+    JAE_MASK = 0x8d,
+    JGE_MASK = 0x8e,
+    JA_MASK = 0x8f,
+
+};
+
+
+enum OPCODE_SIZES
+{
+    SIZE_PUSH_RSI = 1,
+    SIZE_PUSH_RDI = 1,
+    SIZE_POP_RSI = 1,
+    SIZE_POP_RDI = 1,
+
+    SIZE_CMP_RSI_RDI = 3,
+    SIZE_MOV_RSI_IMM = 10,
+
+    SIZE_PUSH_REG = 1,
+    SIZE_POP_REG = 1,
+
+};
 
 
 // ===============================================
@@ -130,6 +185,13 @@ enum Registers
 
 typedef double elem_t;
 
+struct Opcode
+{
+    uint64_t code;
+    size_t size;
+};
+
+
 struct InstructionSizes
 {
     EnumCommands id;
@@ -207,6 +269,8 @@ struct TranslatorInfo
 // ===============================================
 // Functions ||
 //           \/
+
+void WriteCmd (TranslatorInfo* self, Opcode cmd);
 
 void FillJumpLables (TranslatorInfo* self);
 

@@ -63,8 +63,8 @@ void StartTranslation (TranslatorInfo* self)
 
     memcpy (header+2, &(self->memory_buffer), sizeof (uint64_t));
     
-    printf ("Memory buff filled: %x\n", self->memory_buffer);
-    printf ("header+2: %x\n", *(uint64_t*)(header + 2));
+    // printf ("Memory buff filled: %x\n", self->memory_buffer);
+    // printf ("header+2: %x\n", *(uint64_t*)(header + 2));
     
 
     LoadToX86Buffer (self, header, sizeof (header));
@@ -120,8 +120,8 @@ void StartTranslation (TranslatorInfo* self)
     // char opcode_buff[] = { 0x48, 0x89, 0xD8}; // mov rax, rbx
     // LoadToX86Buffer (self, opcode_buff, sizeof (opcode_buff));
 
-    // char footer[] = {0x41, 0x5A, 0x5e}; // pop r10; push rsi
-    // LoadToX86Buffer (self, footer, sizeof (footer));
+    char footer[] = {0xC3}; // pop r10; push rsi
+    LoadToX86Buffer (self, footer, sizeof (footer));
 }
 
 
@@ -136,6 +136,16 @@ void LoadToX86Buffer (TranslatorInfo* self, char* op_code, size_t len)
     // self->dst_x86.content[self->dst_x86.len] = 0x90; // nop at the end
     // self->dst_x86.len++;
 }
+
+
+void WriteCmd (TranslatorInfo* self, Opcode cmd)
+{
+    DumpCurBuffer ((char*) &cmd.code, cmd.size);
+
+    *(u_int64_t*) (self->dst_x86.content + self->dst_x86.len) = cmd.code;
+    self->dst_x86.len += cmd.size;
+}
+
 
 
 void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
@@ -404,14 +414,29 @@ void TranslatePushReg (TranslatorInfo* self, Command* cur_cmd)
 
 void TranslatePushImm (TranslatorInfo* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 
-                          0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b double - filled down below
-                          0x56,                                                       // push rsi
-                        }; 
+    // char x86_buffer[] = { 
+    //                       0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b double - filled down below
+    //                       0x56,                                                       // push rsi
+    //                     }; 
 
-    *(double*)(x86_buffer + 2) = cur_cmd->value;
+    // *(double*)(x86_buffer + 2) = cur_cmd->value;
     
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+
+    Opcode mov_rsi = {
+        .code = MOV_RSI_DBL | (uint64_t) cur_cmd->value << BYTE(3),
+        .size = SIZE_MOV_RSI_IMM
+    };
+
+    WriteCmd (self, mov_rsi);
+
+    Opcode push_rsi = {
+        .code = PUSH_RSI,
+        .size = SIZE_PUSH_RSI
+    };
+
+    WriteCmd (self, push_rsi);
+
 }
 
 
