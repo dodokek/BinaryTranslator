@@ -44,6 +44,10 @@ const int MEMORY_SIZE = 4096;
 
 const uint64_t NIL = 0x0;
 
+const uint64_t DWORD_SIZE = 16;
+
+const uint64_t WORD_SIZE = 8;
+
 // ===============================================
 
 
@@ -67,13 +71,33 @@ enum OPCODES_x86 : uint64_t // everything reversed
 
     PUSH_REG = 0x50, // by adding the index of register, getting different variations
     POP_REG = 0x58,
-    
     //  0, 1, 2, 3 depends on register
+
+    ARITHM_XMM0_XMM1 = 0xC1000FF2,  // add(sub, mul, div) xmm0, xmm1
+                        // ^------changing this byte to get right operation    
+
+                //         ,------- xmm 0 - 4
+    MOV_XMM_RSP = 0x002400100FF2,
+                //  ^--[rsp + ?]
+
+                
+    MOV_RSP_XMM = 0x002400110FF2, // same as previous
+
+    ADD_RSP = 0x00C48348,
+    //          ^-- how much add
 };
 
 
 enum OPCODE_MASKS : uint64_t
 {
+    ADD_MASK = 0x58,
+    SUB_MASK = 0x5c,
+    MUL_MASK = 0x59,
+    DIV_MASK = 0x5e,
+
+    XMM0_MASK = 0x44,
+    XMM1_MASK = 0x4c,
+
     JE_MASK = 0x84,
     JNE_MASK = 0x85,
     JG_MASK = 0x8c,
@@ -97,8 +121,11 @@ enum OPCODE_SIZES
     SIZE_PUSH_REG = 1,
     SIZE_POP_REG = 1,
 
-    SIZE_DOUBLE = 8,
+    SIZE_ARITHM_XMM = 4,
+    SIZE_MOV_XMM_RSP = 6,
 
+    SIZE_ADD_RSP = 4,
+    SIZE
 };
 
 

@@ -252,28 +252,54 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
 
 void TranslateBaseMath (TranslatorInfo* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 0xF2, 0x0F, 0x10, 0x04, 0x24,       // movsd xmm0, [rsp]
-                          0xF2, 0x0F, 0x10, 0x4C, 0x24, 0x08, // movsd xmm1, [rsp+8]
-                          0x48, 0x83, 0xC4, 0x10,             // add rsp, 16
-                          0xF2, 0x0F, 0x00, 0xC1              // add, sub, mul or div. third byte is changed
+    // movsd xmm0, [rsp]
+    // movsd xmm1, [rsp+8]
+    // add rsp, 16
+    // add, sub, mul or div. third byte is changed
+    // sub rsp, 8
+    // movsd [rsp], xmm0
+
+    Opcode movsd_xmm0_rsp = {
+        .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
+        .size = SIZE_MOV_XMM_RSP
+    };
+    WriteCmd (self, movsd_xmm0_rsp);
+
+    Opcode movsd_xmm1_rsp_8 = {
+        .code = MOV_XMM_RSP | XMM1_MASK << BYTE(3) | (WORD_SIZE) << BYTE (5),
+        .size = SIZE_MOV_XMM_RSP
+    };
+    WriteCmd (self, movsd_xmm1_rsp_8);
+
+
+    Opcode add_rsp_8 = {
+        .code = ADD_RSP | WORD_SIZE << BYTE (3),
+        .size = SIZE_ADD_RSP
+    };
+    WriteCmd (self, add_rsp_8);
+
+
+    Opcode arithm_xmm0_xmm1 = {
+        .code = ARITHM_XMM0_XMM1,
+        .size = SIZE_ARITHM_XMM
     };
 
     switch (cur_cmd->name)
     {
         case ADD:
-            x86_buffer[17] = 0x58;
+            arithm_xmm0_xmm1.code |= ADD_MASK << BYTE(2);
             break;
 
         case MUL:
-            x86_buffer[17] = 0x59;
+            arithm_xmm0_xmm1.code |= MUL_MASK << BYTE(2);
             break;
 
         case SUB:
-            x86_buffer[17] = 0x5C;
+            arithm_xmm0_xmm1.code |= SUB_MASK << BYTE(2);
             break;
 
         case DIV:
-            x86_buffer[17] = 0x5E;
+            arithm_xmm0_xmm1.code |= DIV_MASK << BYTE(2);
             break;
         
         default:
@@ -281,52 +307,25 @@ void TranslateBaseMath (TranslatorInfo* self, Command* cur_cmd)
             break;
     }
 
-    char x86_addition[] = { 0x48, 0x83, 0xEC, 0x08,        // sub rsp, 8
-                            0xF2, 0x0F, 0x11, 0x04, 0x24   // movsd [rsp], xmm0
+    WriteCmd (self, arithm_xmm0_xmm1);
+
+    Opcode mov_rsp_xmm = {
+        .code = MOV_RSP_XMM | XMM0_MASK << BYTE(3),
+        .size = SIZE_MOV_XMM_RSP
     };
 
-    LoadToX86Buffer (self, x86_buffer,   sizeof (x86_buffer));
-    LoadToX86Buffer (self, x86_addition, sizeof (x86_addition));
+    WriteCmd (self, mov_rsp_xmm);
+
+    // LoadToX86Buffer (self, x86_buffer,   sizeof (x86_buffer));
+    // LoadToX86Buffer (self, x86_addition, sizeof (x86_addition));
 }
+
 
 void TranslatePop (TranslatorInfo* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 0x5F }; // pop rdi
-
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    // No such command in original proc
 }
 
-
-void TranslatePopReg (TranslatorInfo* self, Command* cur_cmd)
-{
-    char x86_buffer[] = { 0x90 }; // pop r_x
-
-
-    switch (cur_cmd->reg_index)
-    {
-    case RAX:
-        *x86_buffer = 0x58;  // pop rax
-        break;
-
-    case RCX:
-        *x86_buffer = 0x59;  // pop rcx
-        break;
-
-    case RDX:
-        *x86_buffer = 0x5A; // pop rdx
-        break;
-
-    case RBX:
-        *x86_buffer = 0x5B; // pop rbx
-        break;
-    
-    default:
-        LOG ("**No such register!**\n");
-        break;
-    }
-
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
-}
 
 void TranslatePushRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
@@ -388,45 +387,30 @@ void TranslatePopRegRam (TranslatorInfo* self, Command* cur_cmd)
 }
 
 
+void TranslatePopReg (TranslatorInfo* self, Command* cur_cmd)
+{
+    Opcode pop_reg = {
+        .code = POP_REG + cur_cmd->reg_index,
+        .size = POP_REG_SIZE
+    };
+
+    WriteCmd (self, pop_reg);
+}
+
+
 void TranslatePushReg (TranslatorInfo* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 0x90 }; // push r_x
+    Opcode pop_reg = {
+        .code = PUSH_REG + cur_cmd->reg_index,
+        .size = PUSH_REG_SIZE
+    };
 
-    switch (cur_cmd->reg_index)
-    {
-        case RAX:
-            *x86_buffer = 0x50;      // push rax
-            break;
-        case RCX:
-            *x86_buffer = 0x51;      // push rcx
-            break;
-        case RDX:
-            *x86_buffer = 0x52;      // push rdx
-            break;
-        case RBX:
-            *x86_buffer = 0x53;      // push rbx
-            break;
-    
-        default:
-            LOG ("**No such register!**\n");
-            break;
-    }
-
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    WriteCmd (self, pop_reg);
 }
 
 
 void TranslatePushImm (TranslatorInfo* self, Command* cur_cmd)
 {
-    // char x86_buffer[] = { 
-    //                       0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b double - filled down below
-    //                       0x56,                                                       // push rsi
-    //                     }; 
-
-    // *(double*)(x86_buffer + 2) = cur_cmd->value;
-    
-    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
-
     Opcode mov_rsi = {
         .code = MOV_RSI,
         .size = SIZE_MOV_RSI
