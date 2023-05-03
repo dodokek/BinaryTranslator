@@ -42,6 +42,8 @@ const char* NotFound = "Not found\n";
 
 const int MEMORY_SIZE = 4096;
 
+const uint64_t NIL = 0x0;
+
 // ===============================================
 
 
@@ -50,7 +52,7 @@ const int MEMORY_SIZE = 4096;
 //              \/
 
 
-enum OPCODES_x86 : u_int64_t // everything reversed
+enum OPCODES_x86 : uint64_t // everything reversed
 {
     PUSH_RSI = 0x56,
     PUSH_RDI = 0x57,
@@ -60,8 +62,8 @@ enum OPCODES_x86 : u_int64_t // everything reversed
 
     CMP_RDI_RSI = 0xf73948,
 
-    MOV_RSI_DBL = 0x0000000000000000BE48, // mov rsi, ? (double num)
-                  // first 32bits changing according to number 
+    MOV_RSI = 0xBE48, // mov rsi, (double num)
+                  // next 8 bytes should be double number wrote as another cmd 
 
     PUSH_REG = 0x50, // by adding the index of register, getting different variations
     POP_REG = 0x58,
@@ -90,10 +92,12 @@ enum OPCODE_SIZES
     SIZE_POP_RDI = 1,
 
     SIZE_CMP_RSI_RDI = 3,
-    SIZE_MOV_RSI_IMM = 10,
+    SIZE_MOV_RSI     = 2,
 
     SIZE_PUSH_REG = 1,
     SIZE_POP_REG = 1,
+
+    SIZE_DOUBLE = 8,
 
 };
 
@@ -271,6 +275,8 @@ struct TranslatorInfo
 // ===============================================
 // Functions ||
 //           \/
+
+void WriteDoubleNum (TranslatorInfo* self, double value);
 
 void WriteCmd (TranslatorInfo* self, Opcode cmd);
 

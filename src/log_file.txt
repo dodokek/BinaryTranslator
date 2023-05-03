@@ -1,0 +1,79 @@
+Ip   8:
+	Id: 1
+Ip  18:
+	Id: 7
+Ip  19:
+End of prog.
+
+================ Begin of struct dump ==================
+
+Command < PUSH > | Orig ip: 8 | x86 ip: 0
+	+Operating width digit, value: 1
+
+Command < OUT > | Orig ip: 18 | x86 ip: 11
+
+================ End of struct dump ==================
+
+
+
+---------- Filling labels --------
+
+
+
+---------- End filling labels --------
+
+
+================ Begin of struct dump ==================
+
+Command < PUSH > | Orig ip: 8 | x86 ip: 0
+	+Operating width digit, value: 1
+
+Command < OUT > | Orig ip: 18 | x86 ip: 11
+
+================ End of struct dump ==================
+
+---------- Begin translation -------------
+
+##########
+	 0: 49 ba 00 70 92 01 00 00 
+	 8: 00 00 
+##########
+
+<0>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 04 24 50 53 51 
+	 8: 52 49 89 e4 48 83 e4 f0 
+	16: e8 9f b9 ad fe 4c 89 e4 
+	24: 5a 59 5b 58 5f 
+##########
+
+
+##########
+	 0: c3 
+##########
+
+
+
+====== x86 buffer dump begin =======
+
+ 0: 49 ba 00 70 92 01 00 00 
+ 8: 00 00 48 be 00 00 00 00 
+16: 00 00 f0 3f 56 f2 0f 10 
+24: 04 24 50 53 51 52 49 89 
+32: e4 48 83 e4 f0 e8 9f b9 
+40: ad fe 4c 89 e4 5a 59 5b 
+48: 58 5f c3 00 
+
+====== x86 buffer dump end =======
+
