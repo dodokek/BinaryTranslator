@@ -85,6 +85,12 @@ enum OPCODES_x86 : uint64_t // everything reversed
 
     ADD_RSP = 0x00C48348,
     //          ^-- how much add
+
+    // mov rdi, [r10 + ?]
+    MOV_RDI_R10 = 0xBA8B49, // this must be followed with uint32 ptr
+
+    // mov [r10 + ?], rdi
+    MOV_R10_RDI = 0xBA8949, // this must be followed with uint32 ptr
 };
 
 
@@ -125,7 +131,7 @@ enum OPCODE_SIZES
     SIZE_MOV_XMM_RSP = 6,
 
     SIZE_ADD_RSP = 4,
-    SIZE
+    SIZE_MOV_RDI_R10 = 3,
 };
 
 
@@ -237,10 +243,10 @@ const struct InstructionSizes InstrSizes[30] =
 {
     {HLT,  1,   1},
     {PUSH, 10,  1}, 
-    {MUL, 1, 28},
-    {ADD, 1, 28},
-    {SUB, 1, 28},
-    {DIV, 1, 28},
+    {MUL, 1, 26},
+    {ADD, 1, 26},
+    {SUB, 1, 26},
+    {DIV, 1, 26},
     {POP, 10,  1},
     {OUT, 1, 29},
     {},
@@ -302,6 +308,8 @@ struct TranslatorInfo
 // ===============================================
 // Functions ||
 //           \/
+
+void WritePtr (TranslatorInfo* self, uint32_t ptr);
 
 void WriteDoubleNum (TranslatorInfo* self, double value);
 

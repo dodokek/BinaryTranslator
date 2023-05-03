@@ -152,6 +152,13 @@ void WriteDoubleNum (TranslatorInfo* self, double value)
 }
 
 
+void WritePtr (TranslatorInfo* self, uint32_t ptr)
+{
+    *(uint32_t*) (self->dst_x86.content + self->dst_x86.len) = ptr;
+    self->dst_x86.len += sizeof (uint32_t);
+}
+
+
 void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
 {
     int variation = CalcVariationSum (cur_cmd);
@@ -254,15 +261,15 @@ void TranslateBaseMath (TranslatorInfo* self, Command* cur_cmd)
 {
     // movsd xmm0, [rsp]
     // movsd xmm1, [rsp+8]
-    // add rsp, 16
+    // add rsp, 8
     // add, sub, mul or div. third byte is changed
-    // sub rsp, 8
     // movsd [rsp], xmm0
 
     Opcode movsd_xmm0_rsp = {
         .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
         .size = SIZE_MOV_XMM_RSP
     };
+    
     WriteCmd (self, movsd_xmm0_rsp);
 
     Opcode movsd_xmm1_rsp_8 = {
@@ -430,32 +437,68 @@ void TranslatePushImm (TranslatorInfo* self, Command* cur_cmd)
 
 void TranslatePushImmRam (TranslatorInfo* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 
-                        0x49, 0x8B, 0xBA,            // mov rdi, [r10 + ?]
-                        0x00, 0x00, 0x00, 0x00,     // ? - offset from begin of ram
+    // mov rdi, [r10 + ?]
+    // push rdi
 
-                        0x57                        // push rdi
-    };   
+    Opcode mov_rdi_r10 = {
+        .code = MOV_RDI_R10,
+        .size = SIZE_MOV_RDI_R10
+    };
 
-    *(int*)(x86_buffer + 3) = cur_cmd->value * 16;
+    WriteCmd (self, mov_rdi_r10);
+    WritePtr (self, (uint32_t) cur_cmd->value * sizeof (double));
+
+    Opcode push_rdi = {
+        .code = PUSH_RDI,
+        .size = SIZE_PUSH_RDI
+    };
+
+    WriteCmd (self, push_rdi);
+
+    // char x86_buffer[] = { 
+    //                     0x49, 0x8B, 0xBA,            // mov rdi, [r10 + ?]
+    //                     0x00, 0x00, 0x00, 0x00,     // ? - offset from begin of ram
+
+    //                     0x57                        // push rdi
+    // };   
+
+    // *(int*)(x86_buffer + 3) = cur_cmd->value * 16;
     
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 
 void TranslatePopImmRam (TranslatorInfo* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 
-                        0x5F,                        // pop rdi
+    // pop rdi
+    // mov [r10 + ?], rdi
+
+    Opcode pop_rdi = {
+        .code = POP_RDI,
+        .size = SIZE_POP_RDI
+    };
+
+    WriteCmd (self, pop_rdi);
+
+    Opcode mov_r10_rdi = {
+        .code = MOV_R10_RDI,
+        .size = SIZE_MOV_RDI_R10
+    };
+
+    WriteCmd (self, mov_r10_rdi);
+    WritePtr (self, (uint32_t) cur_cmd->value * sizeof (double));
+
+    // char x86_buffer[] = { 
+    //                     0x5F,                        
   
-                        0x49, 0x89, 0xBA,            // mov [r10 + ?], rdi
-                        0x00, 0x00, 0x00, 0x00       // ? - offset from begin of ram
+    //                     0x49, 0x89, 0xBA,            // mov [r10 + ?], rdi
+    //                     0x00, 0x00, 0x00, 0x00       // ? - offset from begin of ram
 
-    };   
+    // };   
 
-    *(int*)(x86_buffer + 4) = cur_cmd->value * 16;
+    // *(int*)(x86_buffer + 4) = cur_cmd->value * 16;
     
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 
