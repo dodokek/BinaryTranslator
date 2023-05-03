@@ -414,19 +414,21 @@ void TranslatePushReg (TranslatorInfo* self, Command* cur_cmd)
 
 void TranslatePushImm (TranslatorInfo* self, Command* cur_cmd)
 {
-    // char x86_buffer[] = { 
-    //                       0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b double - filled down below
-    //                       0x56,                                                       // push rsi
-    //                     }; 
+    char x86_buffer[] = { 
+                          0x48, 0xBE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rsi, 64b double - filled down below
+                          0x56,                                                       // push rsi
+                        }; 
 
-    // *(double*)(x86_buffer + 2) = cur_cmd->value;
+    *(double*)(x86_buffer + 2) = cur_cmd->value;
     
-    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 
     Opcode mov_rsi = {
-        .code = MOV_RSI_DBL | (uint64_t) cur_cmd->value << BYTE(3),
+        .code = MOV_RSI_DBL | (((uint64_t) cur_cmd->value) << BYTE(2)),
         .size = SIZE_MOV_RSI_IMM
     };
+
+    printf ("Byte value: %x\n", mov_rsi.code);
 
     WriteCmd (self, mov_rsi);
 
@@ -868,10 +870,10 @@ int AllocateCmdArrays (TranslatorInfo* self)
     self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
 
     self->dst_x86.content = (char*) aligned_alloc (PAGESIZE, self->src_cmds.len * sizeof (char)); // alignment for mprotect
-    memset ((void*) self->dst_x86.content, 0xC3, self->src_cmds.len);      // Filling whole buffer
+    memset ((void*) self->dst_x86.content, 0x00, self->src_cmds.len);      // Filling whole buffer
                                                                            // With ret (0xC3) byte code
 
-    self->memory_buffer = (char*) calloc (MEMORY_SIZE, sizeof(char));
+    self->memory_buffer = (char*) aligned_alloc (MEMORY_ALIGNMENT, MEMORY_SIZE * sizeof(char));
     memset ((void*) self->memory_buffer, 0xAA, MEMORY_SIZE); // filling for debug
 
 

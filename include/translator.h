@@ -24,6 +24,8 @@
 // Constants ||
 //           \/
 
+const int MEMORY_ALIGNMENT = 4096;
+
 const int MAX_IP = 1000;
 
 const int MAX_LABELS = 100;
@@ -38,7 +40,7 @@ const int PAGESIZE = 4096;
 
 const char* NotFound = "Not found\n";
 
-const int MEMORY_SIZE = 0xFFFF;
+const int MEMORY_SIZE = 4096;
 
 // ===============================================
 
