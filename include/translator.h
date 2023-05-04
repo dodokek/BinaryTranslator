@@ -58,6 +58,8 @@ const uint64_t WORD_SIZE = 8;
 
 enum OPCODES_x86 : uint64_t // everything reversed
 {
+    MOV_R10 = 0xBA49,
+
     CALL_OP = 0xE8,
     RET_OP = 0xC3,
 
@@ -142,6 +144,7 @@ enum OPCODE_SIZES
 
     SIZE_CMP_RSI_RDI = 3,
     SIZE_MOV_RSI     = 2,
+    SIZE_MOV_R10 = 2,
 
     SIZE_PUSH_REG = 1,
     SIZE_POP_REG = 1,
@@ -170,6 +173,8 @@ enum EnumCommands
     HLT = 0,
 
     #include "../codegen/cmds.h"
+
+    NONE = -1,
 };
 
 #undef DEF_CMD
@@ -187,9 +192,8 @@ enum BitMasks
 
 enum OffsetsAndFlags
 {
-    MULTI_BYTE_OFFSET = 9,
     BYTE_OFFSET = 1,
-    JMP_OFFSET = 6,
+    NONE_S = 0,
 
     END_OF_PROG = -1,
 };
@@ -205,14 +209,14 @@ enum ExitCodes
 enum PushPopVariations
 {
     VOID = 0,
-    IMM = 1,
-    REG = 3,
-    RAM = 5,
+    IMM = 1 << 5,
+    REG = 1 << 6,
+    RAM = 1 << 7,
 
-    IMM_REG = 4,
-    IMM_RAM = 6,
-    REG_RAM = 8,
-    IMM_REG_RAM = 9,
+    IMM_REG = (1 << 5) + (1 << 6),
+    IMM_RAM = (1 << 5) + (1 << 7),
+    REG_RAM = (1 << 6) + (1 << 7),
+    IMM_REG_RAM = (1 << 5) + (1 << 6) + (1 << 7),
 };
 
 
@@ -246,6 +250,7 @@ enum Registers
 // Structs   ||
 //           \/
 
+
 typedef double elem_t;
 
 struct Opcode
@@ -273,7 +278,7 @@ const struct InstructionSizes InstrSizes[30] =
     {DIV, 1, 26},
     {POP, 10,  1},
     {OUT, 1, 29},
-    {},
+    {NONE, NONE_S, NONE_S}, // made for proper indexation
     {JMP, 10,  5},
     {JG,  10,  11},
     {JGE, 10,  11},
@@ -281,7 +286,7 @@ const struct InstructionSizes InstrSizes[30] =
     {JAE, 10,  11},
     {JE,  10,  11},
     {JNE, 10,  11},
-    {},
+    {NONE, NONE_S, NONE_S},
     {CALL, 10,  5},
     {RET, 1,  1},
 };
@@ -304,9 +309,7 @@ struct Command
     int reg_index;
     elem_t value;
 
-    bool is_immed;
-    bool use_reg;
-    bool use_mem;
+    int checksum;   // used in case of push/pop handle
 };
 
 // static_assert( sizeof(Command ) == 32 );
@@ -332,6 +335,8 @@ struct TranslatorInfo
 // ===============================================
 // Functions ||
 //           \/
+
+void WriteAbsPtr (TranslatorInfo* self, uint64_t ptr);
 
 void WritePtr (TranslatorInfo* self, uint32_t ptr);
 
