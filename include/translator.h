@@ -58,6 +58,8 @@ const uint64_t WORD_SIZE = 8;
 
 enum OPCODES_x86 : uint64_t // everything reversed
 {
+    CALL_OP = 0xE8,
+
     PUSH_RSI = 0x56,
     PUSH_RDI = 0x57,
 
@@ -65,6 +67,13 @@ enum OPCODES_x86 : uint64_t // everything reversed
     POP_RDI = 0x5F,
 
     CMP_RDI_RSI = 0xf73948,
+
+    PUSH_ALL = 0x50515253,
+    POP_ALL = 0x5B5A5958,
+
+    MOV_RBP_RSP = 0xE48949,
+    MOV_RSP_RBP = 0xE4894C,
+    AND_RSP_FF = 0xF0E48348,
 
     MOV_RSI = 0xBE48, // mov rsi, (double num)
                   // next 8 bytes should be double number wrote as another cmd 
@@ -77,7 +86,7 @@ enum OPCODES_x86 : uint64_t // everything reversed
                         // ^------changing this byte to get right operation    
 
                 //         ,------- xmm 0 - 4
-    MOV_XMM_RSP = 0x002400100FF2,
+    MOV_XMM_RSP = 0x002400100FF2, // movsd xmm0-4, [rsp + ?]
                 //  ^--[rsp + ?]
 
                 
@@ -91,6 +100,9 @@ enum OPCODES_x86 : uint64_t // everything reversed
 
     // mov [r10 + ?], rdi
     MOV_R10_RDI = 0xBA8949, // this must be followed with uint32 ptr
+
+
+
 };
 
 
@@ -101,7 +113,7 @@ enum OPCODE_MASKS : uint64_t
     MUL_MASK = 0x59,
     DIV_MASK = 0x5e,
 
-    XMM0_MASK = 0x44,
+    XMM0_MASK = 0x44,   // special for xmm, [rsp + n]
     XMM1_MASK = 0x4c,
 
     JE_MASK = 0x84,
@@ -121,6 +133,9 @@ enum OPCODE_SIZES
     SIZE_POP_RSI = 1,
     SIZE_POP_RDI = 1,
 
+    SIZE_PUSH_POP_All = 4,
+    SIZE_AND_RSP = 4,
+
     SIZE_CMP_RSI_RDI = 3,
     SIZE_MOV_RSI     = 2,
 
@@ -131,7 +146,10 @@ enum OPCODE_SIZES
     SIZE_MOV_XMM_RSP = 6,
 
     SIZE_ADD_RSP = 4,
-    SIZE_MOV_RDI_R10 = 3,
+
+    SIZE_MOV_REG_REG = 3,
+
+    SIZE_JMP = 1,
 };
 
 

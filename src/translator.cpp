@@ -38,9 +38,9 @@ void RunCode (TranslatorInfo* self)
         return;
     }
 
-    int (* god_save_me)(void) = (int (*)(void))(self->dst_x86.content);
+    void (* god_save_me)(void) = (void (*)(void))(self->dst_x86.content);
 
-    int kek = god_save_me();
+    god_save_me();
 
     // printf ("Bruh: %d\n", kek);
 }
@@ -230,30 +230,85 @@ void CursedOut (double num)
 
 void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
 {
-    char x86_buffer[] = {
-
-                        0xF2, 0x0F, 0x10, 0x04, 0x24,   // movsd xmm0, qword [rsp]
-                        0x50, 0x53, 0x51, 0x52,         // push rax - ... - rdx       
-
-                        0x49, 0x89, 0xE4,                // mov rbp, rsp
-
-                        0x48, 0x83, 0xE4, 0xF0,         // and rsp, -16 - aligning stack
-
-                        0xE8, 0x00, 0x00, 0x00, 0x00,   // call CursedOut
-
-                        0x4C, 0x89, 0xE4,               // mov rsp, rbp
-
-                        0x5A, 0x59, 0x5B, 0x58,         // pop rdx - ... - rax
-
-                        0x5F        // pop rdi
-                    };
-
-    *(uint32_t *)(x86_buffer + 17) = (uint64_t)CursedOut - 
-                                     (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 26 + sizeof (int));
-                                                                                // ( ͡° ͜ʖ ͡°).
+    Opcode movsd_xmm0_rsp = {
+        .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
+        .size = SIZE_MOV_XMM_RSP
+    };
+    Opcode pusha = {
+        .code = PUSH_ALL,
+        .size = SIZE_PUSH_POP_All
+    };
+    Opcode mov_rbp_rsp = {
+        .code = MOV_RBP_RSP,
+        .size = SIZE_MOV_REG_REG
+    };
+    Opcode stack_align = {
+        .code = AND_RSP_FF,
+        .size = SIZE_AND_RSP
+    };
 
 
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    WriteCmd (self, movsd_xmm0_rsp);
+    WriteCmd (self, pusha);
+    WriteCmd (self, mov_rbp_rsp);
+    WriteCmd (self, stack_align);
+
+
+    Opcode call_out = {
+        .code = CALL_OP,
+        .size = SIZE_JMP
+    };
+
+    WriteCmd (self, call_out);
+
+    uint32_t out_ptr = (uint64_t)CursedOut - 
+                   (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 28 + sizeof (int));
+                                      
+    WritePtr (self, out_ptr);
+
+    Opcode mov_rsp_rbp = {
+        .code = MOV_RSP_RBP,
+        .size = SIZE_MOV_REG_REG,
+    };
+
+    Opcode popa = {
+        .code = POP_ALL,
+        .size = SIZE_PUSH_POP_All
+    };
+
+    Opcode pop_rdi = {
+        .code = POP_RDI,
+        .size = SIZE_POP_RDI
+    };
+
+    WriteCmd (self, mov_rsp_rbp);
+    WriteCmd (self, popa);
+    WriteCmd (self, pop_rdi);
+
+    // char x86_buffer[] = {
+
+    //                     0xF2, 0x0F, 0x10, 0x04, 0x24,   // movsd xmm0, qword [rsp]
+    //                     0x50, 0x53, 0x51, 0x52,         // push rax - ... - rdx       
+
+    //                     0x49, 0x89, 0xE4,                // mov rbp, rsp
+
+    //                     0x48, 0x83, 0xE4, 0xF0,         // and rsp, -16 - aligning stack
+
+    //                     0xE8, 0x00, 0x00, 0x00, 0x00,   // call CursedOut
+
+    //                     0x4C, 0x89, 0xE4,               // mov rsp, rbp
+
+    //                     0x5A, 0x59, 0x5B, 0x58,         // pop rdx - ... - rax
+
+    //                     0x5F        // pop rdi
+    //                 };
+
+    // *(uint32_t *)(x86_buffer + 17) = (uint64_t)CursedOut - 
+    //                                  (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 26 + sizeof (int));
+    //                                                                             // ( ͡° ͜ʖ ͡°).
+
+
+    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 
@@ -442,7 +497,7 @@ void TranslatePushImmRam (TranslatorInfo* self, Command* cur_cmd)
 
     Opcode mov_rdi_r10 = {
         .code = MOV_RDI_R10,
-        .size = SIZE_MOV_RDI_R10
+        .size = SIZE_MOV_REG_REG
     };
 
     WriteCmd (self, mov_rdi_r10);
@@ -454,17 +509,6 @@ void TranslatePushImmRam (TranslatorInfo* self, Command* cur_cmd)
     };
 
     WriteCmd (self, push_rdi);
-
-    // char x86_buffer[] = { 
-    //                     0x49, 0x8B, 0xBA,            // mov rdi, [r10 + ?]
-    //                     0x00, 0x00, 0x00, 0x00,     // ? - offset from begin of ram
-
-    //                     0x57                        // push rdi
-    // };   
-
-    // *(int*)(x86_buffer + 3) = cur_cmd->value * 16;
-    
-    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 
@@ -482,23 +526,11 @@ void TranslatePopImmRam (TranslatorInfo* self, Command* cur_cmd)
 
     Opcode mov_r10_rdi = {
         .code = MOV_R10_RDI,
-        .size = SIZE_MOV_RDI_R10
+        .size = SIZE_MOV_REG_REG
     };
 
     WriteCmd (self, mov_r10_rdi);
     WritePtr (self, (uint32_t) cur_cmd->value * sizeof (double));
-
-    // char x86_buffer[] = { 
-    //                     0x5F,                        
-  
-    //                     0x49, 0x89, 0xBA,            // mov [r10 + ?], rdi
-    //                     0x00, 0x00, 0x00, 0x00       // ? - offset from begin of ram
-
-    // };   
-
-    // *(int*)(x86_buffer + 4) = cur_cmd->value * 16;
-    
-    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 

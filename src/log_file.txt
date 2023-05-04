@@ -1,0 +1,209 @@
+Ip   8:
+	Id: 1
+Ip  18:
+	Id: 1
+Ip  28:
+	Id: 6
+Ip  38:
+	Id: 1
+Ip  48:
+	Id: 2
+Ip  49:
+	Id: 7
+Ip  50:
+End of prog.
+
+================ Begin of struct dump ==================
+
+Command < PUSH > | Orig ip: 8 | x86 ip: 0
+	+Operating width digit, value: 2
+
+Command < PUSH > | Orig ip: 18 | x86 ip: 11
+	+Operating width digit, value: 5
+
+Command < POP > | Orig ip: 28 | x86 ip: 22
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 38 | x86 ip: 30
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < MUL > | Orig ip: 48 | x86 ip: 38
+
+Command < OUT > | Orig ip: 49 | x86 ip: 64
+
+================ End of struct dump ==================
+
+
+
+---------- Filling labels --------
+
+
+
+---------- End filling labels --------
+
+
+================ Begin of struct dump ==================
+
+Command < PUSH > | Orig ip: 8 | x86 ip: 0
+	+Operating width digit, value: 2
+
+Command < PUSH > | Orig ip: 18 | x86 ip: 11
+	+Operating width digit, value: 5
+
+Command < POP > | Orig ip: 28 | x86 ip: 22
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 38 | x86 ip: 30
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < MUL > | Orig ip: 48 | x86 ip: 38
+
+Command < OUT > | Orig ip: 49 | x86 ip: 64
+
+================ End of struct dump ==================
+
+---------- Begin translation -------------
+
+##########
+	 0: 49 ba 00 a0 f7 01 00 00 
+	 8: 00 00 
+##########
+
+<0>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+<11>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+4: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: c3 
+##########
+
+
+
+====== x86 buffer dump begin =======
+
+ 0: 49 ba 00 a0 f7 01 00 00 
+ 8: 00 00 48 be 00 00 00 00 
+16: 00 00 00 40 56 48 be 00 
+24: 00 00 00 00 00 14 40 56 
+32: 5f 49 89 ba 08 00 00 00 
+40: 49 8b ba 08 00 00 00 57 
+48: f2 0f 10 44 24 00 f2 0f 
+56: 10 4c 24 08 48 83 c4 08 
+64: f2 0f 59 c1 f2 0f 11 44 
+72: 24 00 f2 0f 10 44 24 00 
+80: 53 52 51 50 49 89 e4 48 
+88: 83 e4 f0 e8 a3 89 48 fe 
+96: 4c 89 e4 58 59 5a 5b 5f 
+104: c3 00 
+
+====== x86 buffer dump end =======
+
