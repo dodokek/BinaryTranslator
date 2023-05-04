@@ -1,48 +1,232 @@
-
 #include "../include/translator.h"
 
-FILE* LOG_FILE = get_file ("log_file.txt", "w");
+#ifdef DEBUG
+    FILE* LOG_FILE = get_file ("log_file.txt", "w");
+#endif
 
-extern "C" void DodoPrint (const char* template_string, ...);
+const char NotFound[] = "Not found\n";
+const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
 
-int main()
+
+//  ===================================================================
+// The JIT  made by
+//                                     
+//         88                      88              
+//         88                      88              
+//         88                      88              
+//  ,adPPYb,88  ,adPPYba,   ,adPPYb,88  ,adPPYba,   
+// a8"    `Y88 a8"     "8a a8"    `Y88 a8"     "8a  
+// 8b       88 8b       d8 8b       88 8b       d8  
+// "8a,   ,d88 "8a,   ,a8" "8a,   ,d88 "8a,   ,a8"  
+//  `"8bbdP"Y8  `"YbbdP"'   `"8bbdP"Y8  `"YbbdP"'   
+//
+//  My final project in Ilya Dednisky's C programming course.
+//  All my gained knowledge was extracted from my brain and thown into
+//  this .cpp file
+//  Please, enjoy.
+//
+//  Dodokek, 2023.
+//  ===================================================================
+
+
+void TranslatorCtor (TranslatorInfo* self)
 {
-    TranslatorInfo TranslatorInfo = {};
-    TranslatorCtor (&TranslatorInfo);
+    self->src_cmds.content = nullptr;
+    self->src_cmds.len = 0;
 
-    ParseOnStructs (&TranslatorInfo);
+    self->dst_x86.content = nullptr;
+    self->dst_x86.len = 0;
 
-    DumpRawCmds (&TranslatorInfo);
+    self->cmds_array = nullptr;
+    self->cmds_counter = 0;
 
-    FillJumpLables (&TranslatorInfo);
-    DumpRawCmds (&TranslatorInfo);
-
-    StartTranslation (&TranslatorInfo);
-
-    Dump86Buffer (&TranslatorInfo);
-
-    RunCode (&TranslatorInfo);
+    self->orig_ip_counter = 0;
+    self->x86_ip_counter = 0;
 }
 
-void RunCode (TranslatorInfo* self)
-{
-    int flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_EXEC);
-        // flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_WRITE);
-        // flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_READ);
-    
-    printf ("Address: %p\n", RunCode);
 
-    if (flag == -1)
+int AllocateCmdArrays (TranslatorInfo* self)
+{
+    self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
+
+    self->dst_x86.content = (char*) aligned_alloc (PAGESIZE, self->src_cmds.len * sizeof (char)); // alignment for mprotect
+    memset ((void*) self->dst_x86.content, 0x00, self->src_cmds.len);      // Filling whole buffer
+                                                                           // With ret (0xC3) byte code
+
+    self->memory_buffer = (char*) aligned_alloc (MEMORY_ALIGNMENT, MEMORY_SIZE * sizeof(char));
+    memset ((void*) self->memory_buffer, 0xAA, MEMORY_SIZE); // filling for debug
+
+
+    if (self->src_cmds.content != nullptr &&
+        self->dst_x86.content  != nullptr &&
+        self->memory_buffer    != nullptr)
+        return SUCCESS;
+    
+    return ALLOCATION_FAILURE;
+}
+
+
+void ParseOnStructs (TranslatorInfo* self)
+{   
+    FILE* input_file = get_file (INPUT_FILE_PATH, "rb");
+    ReadFileToStruct (self, input_file);
+    close_file (input_file, INPUT_FILE_PATH);
+
+    if (AllocateCmdArrays (self) == ALLOCATION_FAILURE)
+        LOG ("Failed to allocate the memory for buffers");
+
+    self->orig_ip_counter = HEADER_OFFSET;
+
+    int counter = 0;
+    while (self->orig_ip_counter < self->src_cmds.len)
     {
-        LOG ("**** mprotect error ****\n");
-        return;
+        LOG ("Ip %3d:\n", self->orig_ip_counter);
+
+        int flag = CmdToStruct (self->src_cmds.content + self->orig_ip_counter, self);
+        
+
+        if (flag == END_OF_PROG)
+            break;   
+
+    }
+}
+
+
+int FillCmdInfo (const char* code, TranslatorInfo* self)
+{
+    int name = *code & CMD_BITMASK; 
+    int cmd = *code;
+
+    Command* new_cmd = (Command*) calloc (1, sizeof (Command));
+
+    new_cmd->orig_ip = self->orig_ip_counter;
+    new_cmd->x86_ip  = self->x86_ip_counter;
+
+    if (name == PUSH || name == POP)
+    {
+        FillPushPopStruct (self, new_cmd, code, cmd, name);
+    }
+    else
+    {
+        if (IsJump (name))
+            new_cmd->value = *(elem_t*)(code + 1);
+
+        new_cmd->name = (EnumCommands) name;
+        
+        self->x86_ip_counter  += InstrSizes[name].x86_size;
+        self->orig_ip_counter += InstrSizes[name].original_size;
     }
 
-    void (* god_save_me)(void) = (void (*)(void))(self->dst_x86.content);
+    self->cmds_array[self->cmds_counter] = new_cmd;
+    self->cmds_counter++;
 
-    god_save_me();
+    return 0;
+}
 
-    // printf ("Bruh: %d\n", kek);
+
+void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
+                        const char* code, int cmd, int name)
+{
+    new_cmd->name = (EnumCommands) name;
+    
+    new_cmd->reg_index = code[sizeof(elem_t) + BYTE_OFFSET];
+    new_cmd->value = *(elem_t*)(code + 1);
+
+    new_cmd->checksum  = 0;
+    new_cmd->checksum |= (cmd & ARG_IMMED); 
+    new_cmd->checksum |= (cmd & ARG_MEM); 
+    new_cmd->checksum |= (cmd & ARG_REG); 
+    
+    self->orig_ip_counter += InstrSizes[name].original_size;
+    
+    switch (new_cmd->checksum)
+    {
+    case IMM:
+        if (name == PUSH)
+            self->x86_ip_counter += PUSH_IMM_SIZE; 
+        else
+            self->x86_ip_counter += POP_REG_SIZE;
+        break;
+
+    case REG:
+        if (name == PUSH)
+            self->x86_ip_counter += PUSH_REG_SIZE; 
+        else
+            self->x86_ip_counter += POP_REG_SIZE;
+        break;
+    
+    case IMM_RAM:
+        if (name == PUSH)
+            self->x86_ip_counter += PUSH_IMM_RAM_SIZE; 
+        else
+            self->x86_ip_counter += POP_IMM_RAM_SIZE;
+        break;
+
+    case REG_RAM:
+        if (name == PUSH)
+            self->x86_ip_counter += PUSH_REG_RAM_SIZE; 
+        else
+            self->x86_ip_counter += POP_REG_RAM_SIZE;
+        break;
+
+    case IMM_REG_RAM:
+        if (name == PUSH)
+            self->x86_ip_counter += PUSH_IMM_REG_RAM_SIZE; 
+        else
+            self->x86_ip_counter += POP_IMM_REG_RAM_SIZE;
+        break;
+
+    default:
+        LOG ("**1: No such variation of Push/Pop** %d\n", new_cmd->checksum);
+        break;
+    }
+}
+
+
+bool IsJump (int cmd)
+{
+    if (cmd == JMP || cmd == JG || cmd == JGE || cmd == JA ||
+        cmd == JAE || cmd == JE || cmd == JNE || cmd == CALL)
+    {
+        LOG ("\tYeah, it is jump\n");
+        return true;
+    }
+    return false;
+}
+
+
+void FillJumpLables (TranslatorInfo* self)
+{
+    LOG ("\n\n---------- Filling labels --------\n\n");
+
+    for (int i = 0; i < self->cmds_counter; i++)
+    {
+        if (IsJump(self->cmds_array[i]->name))
+        {
+            LOG ("%2d: Trying to find x86 ip for ip %lg:\n", i, self->cmds_array[i]->value);
+
+            self->cmds_array[i]->value = FindJumpIp (self, self->cmds_array[i]->value);
+        }
+    }
+
+    LOG ("\n\n---------- End filling labels --------\n\n");
+}
+
+
+int FindJumpIp (TranslatorInfo* self, int orig_ip)
+{
+    for (int i = 0; i < self->cmds_counter; i++)
+    {
+        if (self->cmds_array[i]->orig_ip == orig_ip)
+        {
+            LOG ("\t Found, x86 ip is %d\n", self->cmds_array[i]->x86_ip)
+            return self->cmds_array[i]->x86_ip;
+        }
+    }
+
+    LOG ("\tNot found\n");
+
+    return -1;
 }
 
 
@@ -114,18 +298,29 @@ void StartTranslation (TranslatorInfo* self)
 }
 
 
-void LoadToX86Buffer (TranslatorInfo* self, char* op_code, size_t len)
+void RunCode (TranslatorInfo* self)
 {
+    int flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_EXEC);
+        // flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_WRITE);
+        // flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_READ);
+    
+    printf ("Address: %p\n", RunCode);
 
-    DumpCurBuffer (op_code, len);
+    if (flag == -1)
+    {
+        LOG ("**** mprotect error ****\n");
+        return;
+    }
 
-    memcpy (self->dst_x86.content + self->dst_x86.len, op_code, len);
-    self->dst_x86.len += len;
+    void (* god_save_me)(void) = (void (*)(void))(self->dst_x86.content);
 
-    // self->dst_x86.content[self->dst_x86.len] = 0x90; // nop at the end
-    // self->dst_x86.len++;
+    god_save_me();
+
+    // printf ("Bruh: %d\n", kek);
 }
 
+
+// ======================= Translation Units ==============================
 
 void WriteCmd (TranslatorInfo* self, Opcode cmd)
 {
@@ -135,13 +330,11 @@ void WriteCmd (TranslatorInfo* self, Opcode cmd)
     self->dst_x86.len += cmd.size;
 }
 
-
 void WriteDoubleNum (TranslatorInfo* self, double value)
 {
     *(double*) (self->dst_x86.content + self->dst_x86.len) = value;
     self->dst_x86.len += sizeof (double);
 }
-
 
 void WritePtr (TranslatorInfo* self, uint32_t ptr)
 {
@@ -158,7 +351,6 @@ void WriteAbsPtr (TranslatorInfo* self, uint64_t ptr)
 
 void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
 {
-
     switch (cur_cmd->checksum)
     {
     case VOID:
@@ -197,14 +389,12 @@ void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
 
         break;
     }
-
-    
 }
 
 
 void CursedOut (double num)
 {
-    printf ("I am gay %g %%\n", num);
+    printf ("Output: %g\n", num);
 }
 
 
@@ -500,8 +690,6 @@ void TranslatePopImmRegRam (TranslatorInfo* self, Command* cur_cmd)
 }
 
 
-
-
 void TranslateJmpCall (TranslatorInfo* self, Command* jmp_cmd)
 {
     Opcode jmp_call = {
@@ -592,48 +780,6 @@ void TranslateConditionJmp (TranslatorInfo* self, Command* jmp_cmd)
 }
 
 
-void TranslatorCtor (TranslatorInfo* self)
-{
-    self->src_cmds.content = nullptr;
-    self->src_cmds.len = 0;
-
-    self->dst_x86.content = nullptr;
-    self->dst_x86.len = 0;
-
-    self->cmds_array = nullptr;
-    self->cmds_counter = 0;
-
-    self->orig_ip_counter = 0;
-    self->x86_ip_counter = 0;
-}
-
-
-void ParseOnStructs (TranslatorInfo* self)
-{   
-    FILE* input_file = get_file (INPUT_FILE_PATH, "rb");
-    ReadFileToStruct (self, input_file);
-    close_file (input_file, INPUT_FILE_PATH);
-
-    if (AllocateCmdArrays (self) == ALLOCATION_FAILURE)
-        LOG ("Failed to allocate the memory for buffers");
-
-    self->orig_ip_counter = HEADER_OFFSET;
-
-    int counter = 0;
-    while (self->orig_ip_counter < self->src_cmds.len)
-    {
-        LOG ("Ip %3d:\n", self->orig_ip_counter);
-
-        int flag = CmdToStruct (self->src_cmds.content + self->orig_ip_counter, self);
-        
-
-        if (flag == END_OF_PROG)
-            break;   
-
-    }
-
-}
-
 
 int CmdToStruct (const char* code, TranslatorInfo* self)
 {
@@ -662,125 +808,8 @@ int CmdToStruct (const char* code, TranslatorInfo* self)
 }
 
 
-int FillCmdInfo (const char* code, TranslatorInfo* self)
-{
-    int name = *code & CMD_BITMASK; 
-    int cmd = *code;
+// =========================== DUMP ===============================
 
-    Command* new_cmd = (Command*) calloc (1, sizeof (Command));
-
-    new_cmd->orig_ip = self->orig_ip_counter;
-    new_cmd->x86_ip  = self->x86_ip_counter;
-
-    if (name == PUSH || name == POP)
-    {
-        FillPushPopStruct (self, new_cmd, code, cmd, name);
-    }
-    else
-    {
-        if (IsJump (name))
-            new_cmd->value = *(elem_t*)(code + 1);
-
-        new_cmd->name = (EnumCommands) name;
-        
-        self->x86_ip_counter  += InstrSizes[name].x86_size;
-        self->orig_ip_counter += InstrSizes[name].original_size;
-    }
-
-    self->cmds_array[self->cmds_counter] = new_cmd;
-    self->cmds_counter++;
-
-    return 0;
-}
-
-
-void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
-                        const char* code, int cmd, int name)
-{
-    new_cmd->name = (EnumCommands) name;
-    
-    new_cmd->reg_index = code[sizeof(elem_t) + BYTE_OFFSET];
-    new_cmd->value = *(elem_t*)(code + 1);
-
-    new_cmd->checksum  = 0;
-    new_cmd->checksum |= (cmd & ARG_IMMED); 
-    new_cmd->checksum |= (cmd & ARG_MEM); 
-    new_cmd->checksum |= (cmd & ARG_REG); 
-    
-    self->orig_ip_counter += InstrSizes[name].original_size;
-    
-    switch (new_cmd->checksum)
-    {
-    case IMM:
-        if (name == PUSH)
-            self->x86_ip_counter += PUSH_IMM_SIZE; 
-        else
-            self->x86_ip_counter += POP_REG_SIZE;
-        break;
-
-    case REG:
-        if (name == PUSH)
-            self->x86_ip_counter += PUSH_REG_SIZE; 
-        else
-            self->x86_ip_counter += POP_REG_SIZE;
-        break;
-    
-    case IMM_RAM:
-        if (name == PUSH)
-            self->x86_ip_counter += PUSH_IMM_RAM_SIZE; 
-        else
-            self->x86_ip_counter += POP_IMM_RAM_SIZE;
-        break;
-
-    case REG_RAM:
-        if (name == PUSH)
-            self->x86_ip_counter += PUSH_REG_RAM_SIZE; 
-        else
-            self->x86_ip_counter += POP_REG_RAM_SIZE;
-        break;
-
-    case IMM_REG_RAM:
-        if (name == PUSH)
-            self->x86_ip_counter += PUSH_IMM_REG_RAM_SIZE; 
-        else
-            self->x86_ip_counter += POP_IMM_REG_RAM_SIZE;
-        break;
-
-    default:
-        LOG ("**1: No such variation of Push/Pop** %d\n", new_cmd->checksum);
-        break;
-    }
-}
-
-
-bool IsJump (int cmd)
-{
-    if (cmd == JMP || cmd == JG || cmd == JGE || cmd == JA ||
-        cmd == JAE || cmd == JE || cmd == JNE || cmd == CALL)
-    {
-        LOG ("\tYeah, it is jump\n");
-        return true;
-    }
-    return false;
-}
-
-
-void FillJumpLables (TranslatorInfo* self)
-{
-    LOG ("\n\n---------- Filling labels --------\n\n");
-
-    for (int i = 0; i < self->cmds_counter; i++)
-    {
-        if (IsJump(self->cmds_array[i]->name))
-        {
-            LOG ("%2d: Trying to find x86 ip for ip %lg:\n", i, self->cmds_array[i]->value);
-
-            self->cmds_array[i]->value = FindJumpIp (self, self->cmds_array[i]->value);
-        }
-    }
-
-    LOG ("\n\n---------- End filling labels --------\n\n");
-}
 
 
 void DumpCurBuffer (char* cur_buff, size_t len)
@@ -805,43 +834,6 @@ void DumpCurBuffer (char* cur_buff, size_t len)
 
 }
 
-
-int FindJumpIp (TranslatorInfo* self, int orig_ip)
-{
-    for (int i = 0; i < self->cmds_counter; i++)
-    {
-        if (self->cmds_array[i]->orig_ip == orig_ip)
-        {
-            LOG ("\t Found, x86 ip is %d\n", self->cmds_array[i]->x86_ip)
-            return self->cmds_array[i]->x86_ip;
-        }
-    }
-
-    LOG ("\tNot found\n");
-
-    return -1;
-}
-
-
-int AllocateCmdArrays (TranslatorInfo* self)
-{
-    self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
-
-    self->dst_x86.content = (char*) aligned_alloc (PAGESIZE, self->src_cmds.len * sizeof (char)); // alignment for mprotect
-    memset ((void*) self->dst_x86.content, 0x00, self->src_cmds.len);      // Filling whole buffer
-                                                                           // With ret (0xC3) byte code
-
-    self->memory_buffer = (char*) aligned_alloc (MEMORY_ALIGNMENT, MEMORY_SIZE * sizeof(char));
-    memset ((void*) self->memory_buffer, 0xAA, MEMORY_SIZE); // filling for debug
-
-
-    if (self->src_cmds.content != nullptr &&
-        self->dst_x86.content  != nullptr &&
-        self->memory_buffer    != nullptr)
-        return SUCCESS;
-    
-    return ALLOCATION_FAILURE;
-}
 
 
 void DumpRawCmds (TranslatorInfo* self)
@@ -928,8 +920,6 @@ void ReadFileToStruct (TranslatorInfo* self, FILE* file)
 
     self->src_cmds.content = buffer;
     self->src_cmds.len = (int) fread (buffer, sizeof(char), file_len, file);
-
-    // LOG ("Got buffer: %s\n", buffer);
 
     return;
 }

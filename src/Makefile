@@ -15,7 +15,7 @@ IFLAGS = -I./../include/
 SRC_DIR = ./
 OBJ_DIR = ./lib/
 
-SRC   = file_utils.cpp translator.cpp 
+SRC   = file_utils.cpp translator.cpp main.cpp
 OBJ   = $(patsubst %.cpp, $(OBJ_DIR)%.o, $(SRC)) 
 
 #linking

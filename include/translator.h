@@ -12,9 +12,14 @@
 // ===============================================
 // Defines   ||
 //           \/
+#define DEBUG 1
 
-#define LOG(...) fprintf (LOG_FILE, __VA_ARGS__);
-// #define LOG(...) printf (__VA_ARGS__);
+#ifdef DEBUG
+    #define LOG(...) fprintf (LOG_FILE, __VA_ARGS__);
+#else
+    #define LOG(...) ;
+#endif
+
 
 #define BYTE(X) 8*X
 
@@ -32,13 +37,11 @@ const int MAX_LABELS = 100;
 
 const int MAX_OPCODE_LEN = 6;
 
-const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
 
 const int HEADER_OFFSET = 8;
 
 const int PAGESIZE = 4096;
 
-const char* NotFound = "Not found\n";
 
 const int MEMORY_SIZE = 4096;
 
@@ -335,6 +338,8 @@ struct TranslatorInfo
 // ===============================================
 // Functions ||
 //           \/
+
+extern "C" void DodoPrint (const char* template_string, ...);
 
 void WriteAbsPtr (TranslatorInfo* self, uint64_t ptr);
 
