@@ -280,7 +280,7 @@ const struct InstructionSizes InstrSizes[30] =
     {SUB, 1, 26},
     {DIV, 1, 26},
     {POP, 10,  1},
-    {OUT, 1, 29},
+    {OUT, 1, 30},
     {NONE, NONE_S, NONE_S}, // made for proper indexation
     {JMP, 10,  5},
     {JG,  10,  11},
@@ -315,8 +315,6 @@ struct Command
     int checksum;   // used in case of push/pop handle
 };
 
-// static_assert( sizeof(Command ) == 32 );
-
 
 struct TranslatorInfo
 {
@@ -338,8 +336,6 @@ struct TranslatorInfo
 // ===============================================
 // Functions ||
 //           \/
-
-extern "C" void DodoPrint (const char* template_string, ...);
 
 void WriteAbsPtr (TranslatorInfo* self, uint64_t ptr);
 

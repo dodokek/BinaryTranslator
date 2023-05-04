@@ -19,7 +19,7 @@ SRC   = file_utils.cpp translator.cpp main.cpp
 OBJ   = $(patsubst %.cpp, $(OBJ_DIR)%.o, $(SRC)) 
 
 #linking
-all : $(OBJ) printf.o 
+all : $(OBJ)
 	$(CC) $(IFLAGS) $(CFLAGS) $^ -no-pie -o $(OUTPUT_FILE_NAME)
 
 #main
@@ -27,8 +27,6 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cpp
 	mkdir -p $(@D)
 	$(CC) $(IFLAGS) $(CFLAGS) -c $^ -o $@
 
-printf.o : printf.s 
-	nasm -f elf64 -g printf.s -o printf.o
 
 clear: 
 	rm -f $(OBJ_DIR)*.o

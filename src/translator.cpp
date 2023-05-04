@@ -298,26 +298,7 @@ void StartTranslation (TranslatorInfo* self)
 }
 
 
-void RunCode (TranslatorInfo* self)
-{
-    int flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_EXEC);
-        // flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_WRITE);
-        // flag = mprotect (self->dst_x86.content, self->dst_x86.len + 1, PROT_READ);
-    
-    printf ("Address: %p\n", RunCode);
 
-    if (flag == -1)
-    {
-        LOG ("**** mprotect error ****\n");
-        return;
-    }
-
-    void (* god_save_me)(void) = (void (*)(void))(self->dst_x86.content);
-
-    god_save_me();
-
-    // printf ("Bruh: %d\n", kek);
-}
 
 
 // ======================= Translation Units ==============================
@@ -394,7 +375,7 @@ void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
 
 void CursedOut (double num)
 {
-    printf ("Output: %g\n", num);
+    printf ("=====\nOutput: %g\n=====\n", num);
 }
 
 
@@ -535,61 +516,61 @@ void TranslatePop (TranslatorInfo* self, Command* cur_cmd)
 
 void TranslatePushRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 0x48, 0x8B, 0x00,  // mov rsi, [r_x]
-                          0x56              // push rsi
-     }; 
+    // char x86_buffer[] = { 0x48, 0x8B, 0x00,  // mov rsi, [r_x]
+    //                       0x56              // push rsi
+    //  }; 
 
-    switch (cur_cmd->reg_index)
-    {
-        case RAX:
-            x86_buffer[2] = 0x30;      // mov rsi, [rax]
-            break;
-        case RCX:
-            x86_buffer[2] = 0x31;      // mov rsi, [rcx]
-            break;
-        case RDX:
-            x86_buffer[2] = 0x32;      // mov rsi, [rdx]
-            break;
-        case RBX:
-            x86_buffer[2] = 0x33;      // mov rsi, [rbx]
-            break;
+    // switch (cur_cmd->reg_index)
+    // {
+    //     case RAX:
+    //         x86_buffer[2] = 0x30;      // mov rsi, [rax]
+    //         break;
+    //     case RCX:
+    //         x86_buffer[2] = 0x31;      // mov rsi, [rcx]
+    //         break;
+    //     case RDX:
+    //         x86_buffer[2] = 0x32;      // mov rsi, [rdx]
+    //         break;
+    //     case RBX:
+    //         x86_buffer[2] = 0x33;      // mov rsi, [rbx]
+    //         break;
     
-        default:
-            LOG ("**No such register!**\n");
-            break;
-    }
+    //     default:
+    //         LOG ("**No such register!**\n");
+    //         break;
+    // }
 
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 
 void TranslatePopRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
-    char x86_buffer[] = { 0x5E,             // pop rsi
-                          0x48, 0x89, 0x00  // mov [r_x], rsi
-     }; 
+    // char x86_buffer[] = { 0x5E,             // pop rsi
+    //                       0x48, 0x89, 0x00  // mov [r_x], rsi
+    //  }; 
 
-    switch (cur_cmd->reg_index)
-    {
-        case RAX:
-            x86_buffer[3] = 0x30;      // mov rsi, [rax]
-            break;
-        case RCX:
-            x86_buffer[3] = 0x31;      // mov rsi, [rcx]
-            break;
-        case RDX:
-            x86_buffer[3] = 0x32;      // mov rsi, [rdx]
-            break;
-        case RBX:
-            x86_buffer[3] = 0x33;      // mov rsi, [rbx]
-            break;
+    // switch (cur_cmd->reg_index)
+    // {
+    //     case RAX:
+    //         x86_buffer[3] = 0x30;      // mov rsi, [rax]
+    //         break;
+    //     case RCX:
+    //         x86_buffer[3] = 0x31;      // mov rsi, [rcx]
+    //         break;
+    //     case RDX:
+    //         x86_buffer[3] = 0x32;      // mov rsi, [rdx]
+    //         break;
+    //     case RBX:
+    //         x86_buffer[3] = 0x33;      // mov rsi, [rbx]
+    //         break;
     
-        default:
-            LOG ("**No such register!**\n");
-            break;
-    }
+    //     default:
+    //         LOG ("**No such register!**\n");
+    //         break;
+    // }
 
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 
