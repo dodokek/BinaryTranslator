@@ -247,7 +247,6 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
         .size = SIZE_AND_RSP
     };
 
-
     WriteCmd (self, movsd_xmm0_rsp);
     WriteCmd (self, pusha);
     WriteCmd (self, mov_rbp_rsp);
@@ -284,31 +283,6 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
     WriteCmd (self, mov_rsp_rbp);
     WriteCmd (self, popa);
     WriteCmd (self, pop_rdi);
-
-    // char x86_buffer[] = {
-
-    //                     0xF2, 0x0F, 0x10, 0x04, 0x24,   // movsd xmm0, qword [rsp]
-    //                     0x50, 0x53, 0x51, 0x52,         // push rax - ... - rdx       
-
-    //                     0x49, 0x89, 0xE4,                // mov rbp, rsp
-
-    //                     0x48, 0x83, 0xE4, 0xF0,         // and rsp, -16 - aligning stack
-
-    //                     0xE8, 0x00, 0x00, 0x00, 0x00,   // call CursedOut
-
-    //                     0x4C, 0x89, 0xE4,               // mov rsp, rbp
-
-    //                     0x5A, 0x59, 0x5B, 0x58,         // pop rdx - ... - rax
-
-    //                     0x5F        // pop rdi
-    //                 };
-
-    // *(uint32_t *)(x86_buffer + 17) = (uint64_t)CursedOut - 
-    //                                  (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 26 + sizeof (int));
-    //                                                                             // ( ͡° ͜ʖ ͡°).
-
-
-    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 
@@ -620,63 +594,76 @@ int CalcVariationSum (Command* cur_cmd)
 
 void TranslateJmpCall (TranslatorInfo* self, Command* jmp_cmd)
 {
-    char x86_buffer[] = {0x00, 0x00, 0x00, 0x00, 0x00}; // jmp/call 00 00 00 00 - rel adress x32 
+    Opcode jmp_call = {
+        .size = SIZE_JMP
+    };
 
     if (jmp_cmd->name == CALL)
-        x86_buffer[0] = 0xE8;
+        jmp_call.code = CALL_OP;
     else
-        x86_buffer[0] = 0xE9;
+        jmp_call.code = JMP_OP;
 
-    int rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 1 + sizeof (int));
-    *( int* )(x86_buffer + 1) = rel_ptr;
+    WriteCmd (self, jmp_call);
 
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    uint32_t rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 1 + sizeof (int));
+
+    WritePtr (self, rel_ptr);
 }
 
 
 void TranslateRet (TranslatorInfo* self, Command* jmp_cmd)
 {
-    char x86_buffer[] = { 0xC3 };
+    Opcode ret = {
+        .code = RET_OP,
+        .size = SIZE_RET
+    };
 
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    WriteCmd (self, ret);
 }
 
 
 void TranslateConditionJmp (TranslatorInfo* self, Command* jmp_cmd)
 {
-    int rel_ptr = 0;
- 
-    rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 2 + sizeof(int) + 5);
         
-    char x86_buffer[] = {
-                        0x5E,                   // pop rsi           
-                        0x5F,                   // pop rdi
-                        0x48, 0x39, 0xF7,       // cmp rdi, rsi
-                        0x0F, 0x00,             // j?? 
-                        0x00, 0x00, 0x00, 0x00  // filled in the end
+    Opcode pop_rsi = {
+        .code = POP_RSI,
+        .size = SIZE_POP_RSI
     };
 
-    // filling proper conditional jmp bytecode
+    Opcode pop_rdi = {
+        .code = POP_RDI,
+        .size = SIZE_POP_RDI
+    };
+
+    Opcode cmp_rdi_rsi = {
+        .code = CMP_RDI_RSI,
+        .size = SIZE_CMP_RSI_RDI
+    };
+
+    Opcode cond_jmp = {
+        .code = COND_JMP,
+        .size = SIZE_COND_JMP
+    };
 
     switch (jmp_cmd->name)
     {
         case JE:
-            x86_buffer[6] = 0x84;   // je
+            cond_jmp.code |= JE_MASK << BYTE(1);   
             break;
         case JNE:
-            x86_buffer[6] = 0x85;   // jne
+            cond_jmp.code |= JNE_MASK << BYTE(1);  
             break;
         case JG:
-            x86_buffer[6] = 0x8C;   // jl
+            cond_jmp.code |= JG_MASK << BYTE(1); 
             break;
         case JAE:
-            x86_buffer[6] = 0x8D;   // jge
+            cond_jmp.code |= JAE_MASK << BYTE(1); 
             break;
         case JGE:
-            x86_buffer[6] = 0x8E;   // jle
+            cond_jmp.code |= JGE_MASK << BYTE(1); 
             break;
         case JA:
-            x86_buffer[6] = 0x8F;   // jg
+            cond_jmp.code |= JA_MASK << BYTE(1); 
             break;
     
         default:
@@ -684,9 +671,14 @@ void TranslateConditionJmp (TranslatorInfo* self, Command* jmp_cmd)
             break;
     }
 
-    *( int* )(x86_buffer + 7) = rel_ptr;
+    uint32_t rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 2 + sizeof(int) + 5);
+    
+    WriteCmd (self, pop_rsi);
+    WriteCmd (self, pop_rdi);
+    WriteCmd (self, cmp_rdi_rsi);
+    WriteCmd (self, cond_jmp);
+    WritePtr (self, rel_ptr);
 
-    LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
 }
 
 

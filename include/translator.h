@@ -59,11 +59,15 @@ const uint64_t WORD_SIZE = 8;
 enum OPCODES_x86 : uint64_t // everything reversed
 {
     CALL_OP = 0xE8,
+    RET_OP = 0xC3,
+
+    JMP_OP = 0xE9,
+    COND_JMP = 0x000F,
 
     PUSH_RSI = 0x56,
     PUSH_RDI = 0x57,
 
-    POP_RSI = 0x53,
+    POP_RSI = 0x5E,
     POP_RDI = 0x5F,
 
     CMP_RDI_RSI = 0xf73948,
@@ -150,6 +154,8 @@ enum OPCODE_SIZES
     SIZE_MOV_REG_REG = 3,
 
     SIZE_JMP = 1,
+    SIZE_COND_JMP = 2,
+    SIZE_RET = 1,
 };
 
 
