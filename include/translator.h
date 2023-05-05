@@ -63,6 +63,7 @@ enum OPCODES_x86 : uint64_t // everything reversed
 {
     MOV_R10 = 0xBA49,
 
+
     CALL_OP = 0xE8,
     RET_OP = 0xC3,
 
@@ -110,8 +111,14 @@ enum OPCODES_x86 : uint64_t // everything reversed
     // mov [r10 + ?], rdi
     MOV_R10_RDI = 0xBA8949, // this must be followed with uint32 ptr
 
+    // transforms double precision num in xmm0 to integer in rsi
+    CVTSD2SI_RSI_XMM0 = 0xF02D0F48F2,
 
+    ADD_R10_RSI = 0xF20149,
+    SUB_R10_RSI = 0xF22949,
 
+    SHL_RSI = 0x00E6C148,
+    //          ^-- how much bites to shift
 };
 
 
@@ -162,6 +169,11 @@ enum OPCODE_SIZES
     SIZE_JMP = 1,
     SIZE_COND_JMP = 2,
     SIZE_RET = 1,
+
+    SIZE_CVTSD2SI = 5,
+    SIZE_R10_RSI = 3,
+
+    SIZE_SHL = 4,
 };
 
 
@@ -233,7 +245,7 @@ enum PushPopSizes
     PUSH_REG_SIZE = 1, 
     PUSH_IMM_SIZE = 11, 
     PUSH_IMM_RAM_SIZE = 8,
-    PUSH_REG_RAM_SIZE = 4,
+    PUSH_REG_RAM_SIZE = 30,
     PUSH_IMM_REG_RAM_SIZE = 14, 
 };
 

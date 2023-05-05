@@ -359,6 +359,7 @@ void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
         break;
 
     case REG_RAM:
+        LOG ("Translating push ram\n");
         if (cur_cmd->name == PUSH)
             TranslatePushRegRam (self, cur_cmd);
         else
@@ -516,31 +517,69 @@ void TranslatePop (TranslatorInfo* self, Command* cur_cmd)
 
 void TranslatePushRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
-    // char x86_buffer[] = { 0x48, 0x8B, 0x00,  // mov rsi, [r_x]
-    //                       0x56              // push rsi
-    //  }; 
+    // Translating double data in register to actual integer offset in memory
+    // (double) r?x -> (int) rsi * 8
 
-    // switch (cur_cmd->reg_index)
-    // {
-    //     case RAX:
-    //         x86_buffer[2] = 0x30;      // mov rsi, [rax]
-    //         break;
-    //     case RCX:
-    //         x86_buffer[2] = 0x31;      // mov rsi, [rcx]
-    //         break;
-    //     case RDX:
-    //         x86_buffer[2] = 0x32;      // mov rsi, [rdx]
-    //         break;
-    //     case RBX:
-    //         x86_buffer[2] = 0x33;      // mov rsi, [rbx]
-    //         break;
-    
-    //     default:
-    //         LOG ("**No such register!**\n");
-    //         break;
-    // }
+    Opcode push_reg = {
+        .code = PUSH_REG + cur_cmd->reg_index,
+        .size = PUSH_REG_SIZE
+    };
+    WriteCmd (self, push_reg);
 
-    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    Opcode movsd_xmm0_rsp = {
+        .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
+        .size = SIZE_MOV_XMM_RSP
+    };
+    WriteCmd (self, movsd_xmm0_rsp);
+
+    Opcode add_rsp_8 = {
+        .code = ADD_RSP | WORD_SIZE << BYTE (3),
+        .size = SIZE_ADD_RSP
+    };
+    WriteCmd (self, add_rsp_8);
+
+    Opcode double_to_int = {
+        .code = CVTSD2SI_RSI_XMM0,
+        .size = SIZE_CVTSD2SI
+    };
+    WriteCmd (self, double_to_int);
+
+    Opcode shl_rsi_3 = {
+        .code = SHL_RSI | (3) << BYTE(3),
+        .size = SIZE_SHL
+    };
+    WriteCmd (self, shl_rsi_3);
+
+    Opcode add_r10_rsi = {
+        .code = ADD_R10_RSI,
+        .size = SIZE_R10_RSI
+    };
+    WriteCmd (self, add_r10_rsi);
+
+    // Push to stack part
+
+    Opcode mov_rdi_r10 = {
+        .code = MOV_RDI_R10,
+        .size = SIZE_MOV_REG_REG
+    };
+
+    WriteCmd (self, mov_rdi_r10);
+    WritePtr (self, 0);
+
+    Opcode push_rdi = {
+        .code = PUSH_RDI,
+        .size = SIZE_PUSH_RDI
+    };
+
+    WriteCmd (self, push_rdi);
+
+    // Back to normal mem ptr
+    Opcode sub_r10_rsi = {
+        .code = SUB_R10_RSI,
+        .size = SIZE_R10_RSI
+    };
+    WriteCmd (self, sub_r10_rsi);
+
 }
 
 
@@ -587,12 +626,12 @@ void TranslatePopReg (TranslatorInfo* self, Command* cur_cmd)
 
 void TranslatePushReg (TranslatorInfo* self, Command* cur_cmd)
 {
-    Opcode pop_reg = {
+    Opcode push_reg = {
         .code = PUSH_REG + cur_cmd->reg_index,
         .size = PUSH_REG_SIZE
     };
 
-    WriteCmd (self, pop_reg);
+    WriteCmd (self, push_reg);
 }
 
 
