@@ -119,6 +119,10 @@ enum OPCODES_x86 : uint64_t // everything reversed
 
     SHL_RSI = 0x00E6C148,
     //          ^-- how much bites to shift
+
+    SQRTPD_XMM0_XMM0 = 0xC0510F66,
+
+
 };
 
 
@@ -174,6 +178,7 @@ enum OPCODE_SIZES
     SIZE_R10_RSI = 3,
 
     SIZE_SHL = 4,
+    SIZE_SQRT = 4,
 };
 
 
@@ -304,6 +309,7 @@ const struct InstructionSizes InstrSizes[30] =
     {NONE, NONE_S, NONE_S},
     {CALL, 10,  5},
     {RET, 1,  1},
+    {SQR, 1, 16}
 };
 
 
@@ -389,6 +395,8 @@ void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
 bool IsJump (int cmd);
 
 //-- Translation Units:
+
+void TranslateSqr (TranslatorInfo* self, Command* cur_cmd);
 
 void RegToRsiOffset(TranslatorInfo* self, Command* cur_cmd);
 

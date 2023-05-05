@@ -6,6 +6,7 @@
 
 const char NotFound[] = "Not found\n";
 const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
+// const char* INPUT_FILE_PATH = "../data/fact_example.bin";
 
 
 //  ===================================================================
@@ -270,6 +271,10 @@ void StartTranslation (TranslatorInfo* self)
             TranslateBaseMath (self, self->cmds_array[cmd_indx]);
             break;
 
+        case SQR:
+            TranslateSqr (self, self->cmds_array[cmd_indx]);
+            break;
+
         case OUT:
             LOG ("Translating OUT");
             TranslateOut (self, self->cmds_array[cmd_indx]);
@@ -430,6 +435,34 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
     WriteCmd (self, mov_rsp_rbp);
     WriteCmd (self, popa);
     WriteCmd (self, pop_rdi);
+}
+
+
+void TranslateSqr (TranslatorInfo* self, Command* cur_cmd)
+{
+    // movsd xmm0, [rsp]
+    // sqrt xmm0, xmm0
+    // movsd [rsp], xmm0
+
+    Opcode movsd_xmm0_rsp = {
+        .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
+        .size = SIZE_MOV_XMM_RSP
+    }; 
+
+    Opcode sqrt_xmm0_xmm0 = {
+        .code = SQRTPD_XMM0_XMM0,
+        .size = SIZE_SQRT
+    };
+
+    Opcode movsd_rsp_xmm0 = {
+        .code = MOV_RSP_XMM | XMM0_MASK << BYTE(3),
+        .size = SIZE_MOV_XMM_RSP
+    };
+
+    WriteCmd (self, movsd_xmm0_rsp);
+    WriteCmd (self, sqrt_xmm0_xmm0);
+    WriteCmd (self, movsd_rsp_xmm0);
+
 }
 
 
