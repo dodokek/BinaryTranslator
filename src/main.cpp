@@ -35,7 +35,15 @@ void RunCode (TranslatorInfo* self)
 
     void (* god_save_me)(void) = (void (*)(void))(self->dst_x86.content);
 
-    god_save_me();
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
+    for (int i = 0; i < 1000; i++)
+    {
+        god_save_me();
+    }
+
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    printf ("Elapsed time(mcrs): %lu\n", std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count());
 
     // printf ("Bruh: %d\n", kek);
 }
