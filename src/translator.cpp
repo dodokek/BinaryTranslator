@@ -413,7 +413,7 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
     WriteCmd (self, call_out);
 
     uint32_t out_ptr = (uint64_t)CursedOut - 
-                   (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 28 + sizeof (int));
+                   (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 30 + sizeof (int));
                                       
     WritePtr (self, out_ptr);
 
@@ -517,6 +517,43 @@ void TranslatePop (TranslatorInfo* self, Command* cur_cmd)
 
 void TranslatePushRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
+    RegToRsiOffset (self, cur_cmd);
+
+    Opcode add_r10_rsi = {
+        .code = ADD_R10_RSI,
+        .size = SIZE_R10_RSI 
+    };
+    WriteCmd (self, add_r10_rsi);
+
+    // Push to stack part
+
+    Opcode mov_rdi_r10_mem = {
+        .code = MOV_RDI_R10,
+        .size = SIZE_MOV_REG_REG
+    };
+
+    WriteCmd (self, mov_rdi_r10_mem);
+    WritePtr (self, 0);
+
+    Opcode push_rdi = {
+        .code = PUSH_RDI,
+        .size = SIZE_PUSH_RDI
+    };
+
+    WriteCmd (self, push_rdi);
+
+    // Back to normal mem ptr
+    Opcode sub_r10_rsi = {
+        .code = SUB_R10_RSI,
+        .size = SIZE_R10_RSI
+    };
+    WriteCmd (self, sub_r10_rsi);
+
+}
+
+
+void RegToRsiOffset(TranslatorInfo* self, Command* cur_cmd)
+{
     // Translating double data in register to actual integer offset in memory
     // (double) r?x -> (int) rsi * 8
 
@@ -549,37 +586,6 @@ void TranslatePushRegRam (TranslatorInfo* self, Command* cur_cmd)
         .size = SIZE_SHL
     };
     WriteCmd (self, shl_rsi_3);
-
-    Opcode add_r10_rsi = {
-        .code = ADD_R10_RSI,
-        .size = SIZE_R10_RSI
-    };
-    WriteCmd (self, add_r10_rsi);
-
-    // Push to stack part
-
-    Opcode mov_rdi_r10 = {
-        .code = MOV_RDI_R10,
-        .size = SIZE_MOV_REG_REG
-    };
-
-    WriteCmd (self, mov_rdi_r10);
-    WritePtr (self, 0);
-
-    Opcode push_rdi = {
-        .code = PUSH_RDI,
-        .size = SIZE_PUSH_RDI
-    };
-
-    WriteCmd (self, push_rdi);
-
-    // Back to normal mem ptr
-    Opcode sub_r10_rsi = {
-        .code = SUB_R10_RSI,
-        .size = SIZE_R10_RSI
-    };
-    WriteCmd (self, sub_r10_rsi);
-
 }
 
 

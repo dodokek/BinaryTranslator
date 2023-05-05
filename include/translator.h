@@ -78,8 +78,8 @@ enum OPCODES_x86 : uint64_t // everything reversed
 
     CMP_RDI_RSI = 0xf73948,
 
-    PUSH_ALL = 0x50515253,
-    POP_ALL = 0x5B5A5958,
+    PUSH_ALL = 0x505152535241,
+    POP_ALL = 0x5A415B5A5958,
 
     MOV_RBP_RSP = 0xE48949,
     MOV_RSP_RBP = 0xE4894C,
@@ -149,7 +149,7 @@ enum OPCODE_SIZES
     SIZE_POP_RSI = 1,
     SIZE_POP_RDI = 1,
 
-    SIZE_PUSH_POP_All = 4,
+    SIZE_PUSH_POP_All = 6,
     SIZE_AND_RSP = 4,
 
     SIZE_CMP_RSI_RDI = 3,
@@ -245,7 +245,7 @@ enum PushPopSizes
     PUSH_REG_SIZE = 1, 
     PUSH_IMM_SIZE = 11, 
     PUSH_IMM_RAM_SIZE = 8,
-    PUSH_REG_RAM_SIZE = 30,
+    PUSH_REG_RAM_SIZE = 34,
     PUSH_IMM_REG_RAM_SIZE = 14, 
 };
 
@@ -292,7 +292,7 @@ const struct InstructionSizes InstrSizes[30] =
     {SUB, 1, 26},
     {DIV, 1, 26},
     {POP, 10,  1},
-    {OUT, 1, 30},
+    {OUT, 1, 34},
     {NONE, NONE_S, NONE_S}, // made for proper indexation
     {JMP, 10,  5},
     {JG,  10,  11},
@@ -389,6 +389,8 @@ void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
 bool IsJump (int cmd);
 
 //-- Translation Units:
+
+void RegToRsiOffset(TranslatorInfo* self, Command* cur_cmd);
 
 void TranslatePushImmRegRam (TranslatorInfo* self, Command* cur_cmd);
 
