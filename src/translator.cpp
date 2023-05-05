@@ -162,6 +162,7 @@ void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
             self->x86_ip_counter += POP_IMM_RAM_SIZE;
         break;
 
+    case IMM_REG_RAM:
     case REG_RAM:
         if (name == PUSH)
             self->x86_ip_counter += PUSH_REG_RAM_SIZE; 
@@ -169,12 +170,6 @@ void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
             self->x86_ip_counter += POP_REG_RAM_SIZE;
         break;
 
-    case IMM_REG_RAM:
-        if (name == PUSH)
-            self->x86_ip_counter += PUSH_IMM_REG_RAM_SIZE; 
-        else
-            self->x86_ip_counter += POP_IMM_REG_RAM_SIZE;
-        break;
 
     default:
         LOG ("**1: No such variation of Push/Pop** %d\n", new_cmd->checksum);
@@ -358,6 +353,7 @@ void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
             TranslatePopImmRam (self, cur_cmd);
         break;
 
+    case IMM_REG_RAM:
     case REG_RAM:
         LOG ("Translating push ram\n");
         if (cur_cmd->name == PUSH)
@@ -403,7 +399,6 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
     WriteCmd (self, pusha);
     WriteCmd (self, mov_rbp_rsp);
     WriteCmd (self, stack_align);
-
 
     Opcode call_out = {
         .code = CALL_OP,
@@ -533,7 +528,7 @@ void TranslatePushRegRam (TranslatorInfo* self, Command* cur_cmd)
     };
 
     WriteCmd (self, mov_rdi_r10_mem);
-    WritePtr (self, 0);
+    WritePtr (self, (uint32_t) cur_cmd->value * sizeof (double));
 
     Opcode push_rdi = {
         .code = PUSH_RDI,
@@ -591,31 +586,41 @@ void RegToRsiOffset(TranslatorInfo* self, Command* cur_cmd)
 
 void TranslatePopRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
-    // char x86_buffer[] = { 0x5E,             // pop rsi
-    //                       0x48, 0x89, 0x00  // mov [r_x], rsi
-    //  }; 
 
-    // switch (cur_cmd->reg_index)
-    // {
-    //     case RAX:
-    //         x86_buffer[3] = 0x30;      // mov rsi, [rax]
-    //         break;
-    //     case RCX:
-    //         x86_buffer[3] = 0x31;      // mov rsi, [rcx]
-    //         break;
-    //     case RDX:
-    //         x86_buffer[3] = 0x32;      // mov rsi, [rdx]
-    //         break;
-    //     case RBX:
-    //         x86_buffer[3] = 0x33;      // mov rsi, [rbx]
-    //         break;
-    
-    //     default:
-    //         LOG ("**No such register!**\n");
-    //         break;
-    // }
+    RegToRsiOffset (self, cur_cmd);
 
-    // LoadToX86Buffer (self, x86_buffer, sizeof (x86_buffer));
+    // Adjusting memory pointer
+
+    Opcode add_r10_rsi = {
+        .code = ADD_R10_RSI,
+        .size = SIZE_R10_RSI 
+    };
+    WriteCmd (self, add_r10_rsi);
+
+    // Pop to stack part
+
+    Opcode pop_rdi = {
+        .code = POP_RDI,
+        .size = SIZE_POP_RDI
+    };
+    WriteCmd (self, pop_rdi);
+
+    Opcode mov_r10_mem_rsi = {
+        .code = MOV_R10_RDI,
+        .size = SIZE_MOV_REG_REG
+    };
+
+    WriteCmd (self, mov_r10_mem_rsi);
+    WritePtr (self, (uint32_t) cur_cmd->value * sizeof (double));
+
+    // Back to normal mem ptr
+    Opcode sub_r10_rsi = {
+        .code = SUB_R10_RSI,
+        .size = SIZE_R10_RSI
+    };
+    WriteCmd (self, sub_r10_rsi);
+
+
 }
 
 

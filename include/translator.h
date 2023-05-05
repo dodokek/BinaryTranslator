@@ -239,7 +239,7 @@ enum PushPopSizes
 {
     POP_REG_SIZE = 1, 
     POP_IMM_RAM_SIZE = 8,
-    POP_REG_RAM_SIZE = 4,
+    POP_REG_RAM_SIZE = 34,
     POP_IMM_REG_RAM_SIZE = 14, 
 
     PUSH_REG_SIZE = 1, 
