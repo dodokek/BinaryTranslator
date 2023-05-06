@@ -51,7 +51,7 @@ int AllocateCmdArrays (TranslatorInfo* self)
     self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
 
     self->dst_x86.content = (char*) aligned_alloc (PAGESIZE, self->src_cmds.len * sizeof (char)); // alignment for mprotect
-    memset ((void*) self->dst_x86.content, 0x00, self->src_cmds.len);      // Filling whole buffer
+    memset ((void*) self->dst_x86.content, 0xC3, self->src_cmds.len);      // Filling whole buffer
                                                                            // With ret (0xC3) byte code
 
     self->memory_buffer = (char*) aligned_alloc (MEMORY_ALIGNMENT, MEMORY_SIZE * sizeof(char));

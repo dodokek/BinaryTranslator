@@ -64,6 +64,7 @@ enum OPCODES_x86 : uint64_t // everything reversed
 {
 
 // Watch OPCODE_MASKS if you want to construct one of the following cmds.
+// ATTENTION: all opcodes are written in reverse order.
 
     ARITHM_XMM0_XMM1 = 0xC1000FF2,  // <add, sub, mul, div> xmm0, xmm1
                         // ^------changing this byte to get add/sub/div/mul     
