@@ -43,7 +43,5 @@ void RunCode (TranslatorInfo* self)
     }
 
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    printf ("Elapsed time(mcrs): %lu\n", std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count());
-
-    // printf ("Bruh: %d\n", kek);
+    printf ("Elapsed time(mcr. s): %lu\n", std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count());
 }

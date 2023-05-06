@@ -1,10 +1,10 @@
 #include "../include/translator.h"
 
 #ifdef DEBUG
-    FILE* LOG_FILE = get_file ("log_file.txt", "w");
+    FILE* LOG_FILE = get_file ("../data/log_file.txt", "w");
 #endif
 
-const char NotFound[] = "Not found\n";
+const char  NotFound[] = "Not found\n";
 const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
 // const char* INPUT_FILE_PATH = "../data/fact_example.bin";
 
@@ -289,11 +289,11 @@ void StartTranslation (TranslatorInfo* self)
         }
     }
 
-    Opcode footer = {
+    Opcode ret = {
         .code = RET_OP,
         .size = SIZE_RET
     };
-    WriteCmd (self, footer);
+    WriteCmd (self, ret);
 
 }
 
@@ -375,7 +375,7 @@ void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
 }
 
 
-void CursedOut (double num)
+void DoublePrintf (double num)
 {
     printf ("=====\nOutput: %g\n=====\n", num);
 }
@@ -412,7 +412,7 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
 
     WriteCmd (self, call_out);
 
-    uint32_t out_ptr = (uint64_t)CursedOut - 
+    uint32_t out_ptr = (uint64_t)DoublePrintf - 
                    (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 30 + sizeof (int));
                                       
     WritePtr (self, out_ptr);
@@ -532,8 +532,6 @@ void TranslateBaseMath (TranslatorInfo* self, Command* cur_cmd)
 
     WriteCmd (self, mov_rsp_xmm);
 
-    // LoadToX86Buffer (self, x86_buffer,   sizeof (x86_buffer));
-    // LoadToX86Buffer (self, x86_addition, sizeof (x86_addition));
 }
 
 
