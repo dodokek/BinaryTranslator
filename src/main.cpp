@@ -37,7 +37,7 @@ void RunCode (TranslatorInfo* self)
 
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
-    for (int i = 0; i < 1000; i++)
+    // for (int i = 0; i < 1000; i++)
     {
         god_save_me();
     }

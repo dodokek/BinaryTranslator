@@ -4,9 +4,8 @@
     FILE* LOG_FILE = get_file ("../data/log_file.txt", "w");
 #endif
 
-const char  NotFound[] = "Not found\n";
 // const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
-const char* INPUT_FILE_PATH = "../data/quadratic_example.bin";
+const char* INPUT_FILE_PATH = "../data/quadratic_with_in.bin";
 
 
 //  ===================================================================
@@ -280,6 +279,11 @@ void StartTranslation (TranslatorInfo* self)
             TranslateOut (self, self->cmds_array[cmd_indx]);
             break;
 
+        case IN:
+            LOG ("Translating IN");
+            TranslateIn (self, self->cmds_array[cmd_indx]);
+            break;
+
         case RET:
             LOG ("Translating RET");
             TranslateRet (self, self->cmds_array[cmd_indx]);
@@ -377,8 +381,10 @@ void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
 
 void DoublePrintf (double num)
 {
-    // printf ("=====\nOutput: %g\n=====\n", num);
+    printf ("=====\nOutput: %g\n=====\n", num);
 }
+
+
 
 
 void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
@@ -435,6 +441,72 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
     WriteCmd (self, mov_rsp_rbp);
     WriteCmd (self, popa);
     WriteCmd (self, pop_rdi);
+}
+
+
+void DoubleScanf (double* num)
+{
+    printf ("Enter the number: ");
+    scanf ("%lf", num);
+}
+
+
+void TranslateIn (TranslatorInfo* self, Command* cur_cmd)
+{
+    Opcode push_rdi = {
+        .code = PUSH_RDI,
+        .size = SIZE_PUSH_RDI
+    };
+    WriteCmd (self, push_rdi);
+
+    Opcode lea_rdi_rsp = {
+        .code = LEA_RDI_RSP ,
+        .size = SIZE_LEA_RDI_RSP
+    };
+    WriteCmd (self, lea_rdi_rsp);
+
+
+    Opcode pusha = {
+        .code = PUSH_ALL,
+        .size = SIZE_PUSH_POP_All
+    };
+    Opcode mov_rbp_rsp = {
+        .code = MOV_RBP_RSP,
+        .size = SIZE_MOV_REG_REG
+    };
+    Opcode stack_align = {
+        .code = AND_RSP_FF,
+        .size = SIZE_AND_RSP
+    };
+
+    WriteCmd (self, pusha);
+    WriteCmd (self, mov_rbp_rsp);
+    WriteCmd (self, stack_align);
+
+    Opcode call_in = {
+        .code = CALL_OP,
+        .size = SIZE_JMP
+    };
+
+    WriteCmd (self, call_in);
+
+    uint32_t in_ptr = (uint64_t)DoubleScanf - 
+                       (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 30 + sizeof (int));
+                                      
+    WritePtr (self, in_ptr);
+
+    Opcode mov_rsp_rbp = {
+        .code = MOV_RSP_RBP,
+        .size = SIZE_MOV_REG_REG,
+    };
+
+    Opcode popa = {
+        .code = POP_ALL,
+        .size = SIZE_PUSH_POP_All
+    };
+
+    WriteCmd (self, mov_rsp_rbp);
+    WriteCmd (self, popa);
 }
 
 
@@ -977,10 +1049,10 @@ char* GetNameFromId (EnumCommands id)
         #include "../codegen/cmds.h"    // generating cases for all cmds
 
         default:
-            return (char*) NotFound;
+            LOG ("Not found!\n");
+            return nullptr;
     }
 
-    return (char*) NotFound;
 }
 
 

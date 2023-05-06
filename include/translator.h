@@ -127,7 +127,12 @@ enum OPCODES_x86 : uint64_t // everything reversed
 
     ADD_R10_RSI = 0xF20149,
     SUB_R10_RSI = 0xF22949,
-    SQRTPD_XMM0_XMM0 = 0xC0510F66   // get square root from xmm0 and store it in xmm0
+    SQRTPD_XMM0_XMM0 = 0xC0510F66,   // get square root from xmm0 and store it in xmm0
+
+    
+    LEA_RDI_RSP = 0x00247C8D48 // lea rdi, [rsp + ?]
+            //       ^----------------------------+
+
 };
 
 
@@ -186,6 +191,7 @@ enum OPCODE_SIZES
     SIZE_SQRT = 4,
 
     SIZE_CMP_XMM = 4,
+    SIZE_LEA_RDI_RSP = 5,
 };
 
 
@@ -303,7 +309,7 @@ const struct InstructionSizes InstrSizes[] =
     {JAE, 10,  26},
     {JE,  10,  26},
     {JNE, 10,  26},
-    {NONE, NONE_S, NONE_S},
+    {IN, 1, 33},
     {CALL, 10,  5},
     {RET, 1,  1},
     {SQR, 1, 16}
@@ -392,6 +398,8 @@ void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
 bool IsJump (int cmd);
 
 //-- Translation Units:
+
+void TranslateIn (TranslatorInfo* self, Command* cur_cmd);
 
 void TranslateSqr (TranslatorInfo* self, Command* cur_cmd);
 
