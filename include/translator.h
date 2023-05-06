@@ -113,6 +113,7 @@ enum OPCODES_x86 : uint64_t // everything reversed
     POP_RDI = 0x5F,     // pop rdi
 
     CMP_RDI_RSI = 0xf73948, // cmd rdi, rsi
+    CMP_XMM0_XMM1 = 0xC12E0F66, // ucomisd xmm0, xmm1
 
     PUSH_ALL = 0x505152535241,  // push r10 - rax - ... - rdx
     POP_ALL = 0x5A415B5A5958,   // pop rdx - ... rax - r10
@@ -142,10 +143,10 @@ enum OPCODE_MASKS : uint64_t
 
     JE_MASK = 0x84,     // Conditional jumps
     JNE_MASK = 0x85,
-    JG_MASK = 0x8c,
-    JAE_MASK = 0x8d,
-    JGE_MASK = 0x8e,
-    JA_MASK = 0x8f,
+    JG_MASK = 0x8f,
+    JAE_MASK = 0x83,
+    JGE_MASK = 0x8d,
+    JA_MASK = 0x87,
 
 };
 
@@ -183,6 +184,8 @@ enum OPCODE_SIZES
 
     SIZE_SHL = 4,
     SIZE_SQRT = 4,
+
+    SIZE_CMP_XMM = 4,
 };
 
 
@@ -294,12 +297,12 @@ const struct InstructionSizes InstrSizes[] =
     {OUT, 1, 34},
     {NONE, NONE_S, NONE_S}, // made for proper indexation
     {JMP, 10,  5},
-    {JG,  10,  11},
-    {JGE, 10,  11},
-    {JA,  10,  11},
-    {JAE, 10,  11},
-    {JE,  10,  11},
-    {JNE, 10,  11},
+    {JG,  10,  26},
+    {JGE, 10,  26},
+    {JA,  10,  26},
+    {JAE, 10,  26},
+    {JE,  10,  26},
+    {JNE, 10,  26},
     {NONE, NONE_S, NONE_S},
     {CALL, 10,  5},
     {RET, 1,  1},

@@ -5,8 +5,8 @@
 #endif
 
 const char  NotFound[] = "Not found\n";
-const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
-// const char* INPUT_FILE_PATH = "../data/fact_example.bin";
+// const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
+const char* INPUT_FILE_PATH = "../data/quadratic_example.bin";
 
 
 //  ===================================================================
@@ -377,7 +377,7 @@ void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
 
 void DoublePrintf (double num)
 {
-    printf ("=====\nOutput: %g\n=====\n", num);
+    // printf ("=====\nOutput: %g\n=====\n", num);
 }
 
 
@@ -683,14 +683,14 @@ void TranslatePushImm (TranslatorInfo* self, Command* cur_cmd)
         .code = MOV_RSI,
         .size = SIZE_MOV_RSI
     };
+    WriteCmd (self, mov_rsi);
+    WriteDoubleNum (self, cur_cmd->value);
 
     Opcode push_rsi = {
         .code = PUSH_RSI,
         .size = SIZE_PUSH_RSI
     };
 
-    WriteCmd (self, mov_rsi);
-    WriteDoubleNum (self, cur_cmd->value);
     WriteCmd (self, push_rsi);
 
 }
@@ -784,21 +784,38 @@ void TranslateRet (TranslatorInfo* self, Command* jmp_cmd)
 
 void TranslateConditionJmp (TranslatorInfo* self, Command* jmp_cmd)
 {
+
+    // mov xmm0, [rsp]
+    // mov xmm1, [rsp+8]
+    // add rsp, 16
+    // ucomisd xmm0, xmm1
+    // j?? ptr
+
         
-    Opcode pop_rsi = {
-        .code = POP_RSI,
-        .size = SIZE_POP_RSI
+    Opcode movsd_xmm0_rsp = {
+        .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
+        .size = SIZE_MOV_XMM_RSP
     };
+    
+    WriteCmd (self, movsd_xmm0_rsp);
 
-    Opcode pop_rdi = {
-        .code = POP_RDI,
-        .size = SIZE_POP_RDI
+    Opcode movsd_xmm1_rsp_8 = {
+        .code = MOV_XMM_RSP | XMM1_MASK << BYTE(3) | (WORD_SIZE) << BYTE (5),
+        .size = SIZE_MOV_XMM_RSP
     };
+    WriteCmd (self, movsd_xmm1_rsp_8);
 
-    Opcode cmp_rdi_rsi = {
-        .code = CMP_RDI_RSI,
-        .size = SIZE_CMP_RSI_RDI
+    Opcode add_rsp_16 = {
+        .code = ADD_RSP | (WORD_SIZE * 2) << BYTE (3),
+        .size = SIZE_ADD_RSP
     };
+    WriteCmd (self, add_rsp_16);
+
+    Opcode cmp_xmm0_xmm1 = {
+        .code = CMP_XMM0_XMM1,
+        .size = SIZE_CMP_XMM,
+    };
+    WriteCmd (self, cmp_xmm0_xmm1);
 
     Opcode cond_jmp = {
         .code = COND_JMP,
@@ -831,11 +848,8 @@ void TranslateConditionJmp (TranslatorInfo* self, Command* jmp_cmd)
             break;
     }
 
-    uint32_t rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 2 + sizeof(int) + 5);
+    uint32_t rel_ptr = jmp_cmd->value - (jmp_cmd->x86_ip + 2 + sizeof(int) + 20);
     
-    WriteCmd (self, pop_rsi);
-    WriteCmd (self, pop_rdi);
-    WriteCmd (self, cmp_rdi_rsi);
     WriteCmd (self, cond_jmp);
     WritePtr (self, rel_ptr);
 

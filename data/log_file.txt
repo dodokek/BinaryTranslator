@@ -1,116 +1,687 @@
 Ip   8:
 	Id: 1
 Ip  18:
-	Id: 6
+	Id: 1
 Ip  28:
 	Id: 1
 Ip  38:
 	Id: 6
 Ip  48:
+	Id: 6
+Ip  58:
+	Id: 6
+Ip  68:
+	Id: 1
+Ip  78:
+	Id: 1
+Ip  88:
+	Id: 15
+	Yeah, it is jump
+Ip  98:
 	Id: 17
 	Yeah, it is jump
-Ip  58:
+Ip 108:
 	Id: 18
-Ip  59:
+Ip 109:
 	Id: 1
-Ip  69:
+Ip 119:
 	Id: 1
-Ip  79:
-	Id: 2
-Ip  80:
-	Id: 6
-Ip  90:
-	Id: 1
-Ip 100:
-	Id: 1
-Ip 110:
-	Id: 4
-Ip 111:
-	Id: 6
-Ip 121:
-	Id: 1
-Ip 131:
-	Id: 1
-Ip 141:
-	Id: 14
+Ip 129:
+	Id: 15
 	Yeah, it is jump
+Ip 139:
+	Id: 17
+	Yeah, it is jump
+Ip 149:
+	Id: 18
+Ip 150:
+	Id: 18
 Ip 151:
 	Id: 17
 	Yeah, it is jump
 Ip 161:
+	Id: 1
+Ip 171:
+	Id: 1
+Ip 181:
+	Id: 12
+	Yeah, it is jump
+Ip 191:
+	Id: 1
+Ip 201:
+	Id: 1
+Ip 211:
+	Id: 14
+	Yeah, it is jump
+Ip 221:
+	Id: 17
+	Yeah, it is jump
+Ip 231:
 	Id: 18
-Ip 162:
+Ip 232:
+	Id: 1
+Ip 242:
+	Id: 1
+Ip 252:
+	Id: 2
+Ip 253:
+	Id: 1
+Ip 263:
+	Id: 2
+Ip 264:
+	Id: 1
+Ip 274:
+	Id: 2
+Ip 275:
+	Id: 6
+Ip 285:
+	Id: 1
+Ip 295:
+	Id: 1
+Ip 305:
+	Id: 2
+Ip 306:
+	Id: 6
+Ip 316:
+	Id: 1
+Ip 326:
+	Id: 1
+Ip 336:
+	Id: 3
+Ip 337:
+	Id: 6
+Ip 347:
+	Id: 18
+Ip 348:
+	Id: 1
+Ip 358:
+	Id: 1
+Ip 368:
+	Id: 14
+	Yeah, it is jump
+Ip 378:
+	Id: 1
+Ip 388:
+	Id: 7
+Ip 389:
+	Id: 18
+Ip 390:
+	Id: 1
+Ip 400:
+	Id: 1
+Ip 410:
+	Id: 2
+Ip 411:
+	Id: 1
+Ip 421:
+	Id: 1
+Ip 431:
+	Id: 2
+Ip 432:
+	Id: 5
+Ip 433:
+	Id: 7
+Ip 434:
+	Id: 18
+Ip 435:
+	Id: 1
+Ip 445:
+	Id: 1
+Ip 455:
+	Id: 14
+	Yeah, it is jump
+Ip 465:
+	Id: 1
+Ip 475:
+	Id: 1
+Ip 485:
+	Id: 14
+	Yeah, it is jump
+Ip 495:
+	Id: 1
+Ip 505:
+	Id: 1
+Ip 515:
+	Id: 1
+Ip 525:
+	Id: 2
+Ip 526:
+	Id: 5
+Ip 527:
+	Id: 7
+Ip 528:
+	Id: 18
+Ip 529:
+	Id: 1
+Ip 539:
+	Id: 1
+Ip 549:
+	Id: 14
+	Yeah, it is jump
+Ip 559:
+	Id: 1
+Ip 569:
+	Id: 1
+Ip 579:
+	Id: 1
+Ip 589:
+	Id: 2
+Ip 590:
+	Id: 5
+Ip 591:
+	Id: 19
+Ip 592:
+	Id: 6
+Ip 602:
+	Id: 1
+Ip 612:
+	Id: 1
+Ip 622:
+	Id: 2
+Ip 623:
+	Id: 6
+Ip 633:
+	Id: 1
+Ip 643:
+	Id: 1
+Ip 653:
+	Id: 7
+Ip 654:
+	Id: 7
+Ip 655:
+	Id: 18
+Ip 656:
+	Id: 1
+Ip 666:
+	Id: 1
+Ip 676:
+	Id: 2
+Ip 677:
+	Id: 6
+Ip 687:
+	Id: 1
+Ip 697:
+	Id: 1
+Ip 707:
+	Id: 2
+Ip 708:
+	Id: 6
+Ip 718:
+	Id: 1
+Ip 728:
+	Id: 19
+Ip 729:
+	Id: 6
+Ip 739:
+	Id: 1
+Ip 749:
+	Id: 1
+Ip 759:
+	Id: 1
+Ip 769:
+	Id: 3
+Ip 770:
+	Id: 5
+Ip 771:
+	Id: 6
+Ip 781:
+	Id: 1
+Ip 791:
+	Id: 1
+Ip 801:
+	Id: 1
+Ip 811:
+	Id: 4
+Ip 812:
+	Id: 5
+Ip 813:
+	Id: 6
+Ip 823:
+	Id: 1
+Ip 833:
+	Id: 1
+Ip 843:
+	Id: 7
+Ip 844:
+	Id: 7
+Ip 845:
+	Id: 18
+Ip 846:
+	Id: 1
+Ip 856:
+	Id: 7
+Ip 857:
+	Id: 18
+Ip 858:
 End of prog.
 
 ================ Begin of struct dump ==================
 
 Command < PUSH > | Orig ip: 8 | x86 ip: 0
 Checksum: 32
+	+Operating width digit, value: 1
+
+Command < PUSH > | Orig ip: 18 | x86 ip: 11
+Checksum: 32
+	+Operating width digit, value: 4
+
+Command < PUSH > | Orig ip: 28 | x86 ip: 22
+Checksum: 32
+	+Operating width digit, value: 3
+
+Command < POP > | Orig ip: 38 | x86 ip: 33
+Checksum: 64
+	+Using register, its id: 2
+
+Command < POP > | Orig ip: 48 | x86 ip: 34
+Checksum: 64
+	+Using register, its id: 1
+
+Command < POP > | Orig ip: 58 | x86 ip: 35
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Orig ip: 68 | x86 ip: 36
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Orig ip: 78 | x86 ip: 37
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JNE > | Orig ip: 88 | x86 ip: 48
+	Yeah, it is jump
+	+Wants to jump into 109
+
+Command < CALL > | Orig ip: 98 | x86 ip: 74
+	Yeah, it is jump
+	+Wants to jump into 435
+
+Command < RET > | Orig ip: 108 | x86 ip: 79
+
+Command < PUSH > | Orig ip: 109 | x86 ip: 80
+Checksum: 64
+	+Using register, its id: 1
+
+Command < PUSH > | Orig ip: 119 | x86 ip: 81
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JNE > | Orig ip: 129 | x86 ip: 92
+	Yeah, it is jump
+	+Wants to jump into 151
+
+Command < CALL > | Orig ip: 139 | x86 ip: 118
+	Yeah, it is jump
+	+Wants to jump into 529
+
+Command < RET > | Orig ip: 149 | x86 ip: 123
+
+Command < RET > | Orig ip: 150 | x86 ip: 124
+
+Command < CALL > | Orig ip: 151 | x86 ip: 125
+	Yeah, it is jump
+	+Wants to jump into 232
+
+Command < PUSH > | Orig ip: 161 | x86 ip: 130
+Checksum: 64
+	+Using register, its id: 3
+
+Command < PUSH > | Orig ip: 171 | x86 ip: 131
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JA > | Orig ip: 181 | x86 ip: 142
+	Yeah, it is jump
+	+Wants to jump into 348
+
+Command < PUSH > | Orig ip: 191 | x86 ip: 168
+Checksum: 64
+	+Using register, its id: 3
+
+Command < PUSH > | Orig ip: 201 | x86 ip: 169
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JE > | Orig ip: 211 | x86 ip: 180
+	Yeah, it is jump
+	+Wants to jump into 390
+
+Command < CALL > | Orig ip: 221 | x86 ip: 206
+	Yeah, it is jump
+	+Wants to jump into 656
+
+Command < RET > | Orig ip: 231 | x86 ip: 211
+
+Command < PUSH > | Orig ip: 232 | x86 ip: 212
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Orig ip: 242 | x86 ip: 213
+Checksum: 64
+	+Using register, its id: 2
+
+Command < MUL > | Orig ip: 252 | x86 ip: 214
+
+Command < PUSH > | Orig ip: 253 | x86 ip: 240
+Checksum: 32
+	+Operating width digit, value: 4
+
+Command < MUL > | Orig ip: 263 | x86 ip: 251
+
+Command < PUSH > | Orig ip: 264 | x86 ip: 277
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < MUL > | Orig ip: 274 | x86 ip: 288
+
+Command < POP > | Orig ip: 275 | x86 ip: 314
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 285 | x86 ip: 322
+Checksum: 64
+	+Using register, its id: 1
+
+Command < PUSH > | Orig ip: 295 | x86 ip: 323
+Checksum: 64
+	+Using register, its id: 1
+
+Command < MUL > | Orig ip: 305 | x86 ip: 324
+
+Command < POP > | Orig ip: 306 | x86 ip: 350
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 316 | x86 ip: 358
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 326 | x86 ip: 366
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < ADD > | Orig ip: 336 | x86 ip: 374
+
+Command < POP > | Orig ip: 337 | x86 ip: 400
+Checksum: 64
+	+Using register, its id: 3
+
+Command < RET > | Orig ip: 347 | x86 ip: 401
+
+Command < PUSH > | Orig ip: 348 | x86 ip: 402
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Orig ip: 358 | x86 ip: 403
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JE > | Orig ip: 368 | x86 ip: 414
+	Yeah, it is jump
+	+Wants to jump into 846
+
+Command < PUSH > | Orig ip: 378 | x86 ip: 440
+Checksum: 32
+	+Operating width digit, value: 1337
+
+Command < OUT > | Orig ip: 388 | x86 ip: 451
+
+Command < RET > | Orig ip: 389 | x86 ip: 485
+
+Command < PUSH > | Orig ip: 390 | x86 ip: 486
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < PUSH > | Orig ip: 400 | x86 ip: 497
+Checksum: 64
+	+Using register, its id: 0
+
+Command < MUL > | Orig ip: 410 | x86 ip: 498
+
+Command < PUSH > | Orig ip: 411 | x86 ip: 524
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < PUSH > | Orig ip: 421 | x86 ip: 535
+Checksum: 64
+	+Using register, its id: 1
+
+Command < MUL > | Orig ip: 431 | x86 ip: 536
+
+Command < DIV > | Orig ip: 432 | x86 ip: 562
+
+Command < OUT > | Orig ip: 433 | x86 ip: 588
+
+Command < RET > | Orig ip: 434 | x86 ip: 622
+
+Command < PUSH > | Orig ip: 435 | x86 ip: 623
+Checksum: 64
+	+Using register, its id: 1
+
+Command < PUSH > | Orig ip: 445 | x86 ip: 624
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JE > | Orig ip: 455 | x86 ip: 635
+	Yeah, it is jump
+	+Wants to jump into 348
+
+Command < PUSH > | Orig ip: 465 | x86 ip: 661
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Orig ip: 475 | x86 ip: 662
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JE > | Orig ip: 485 | x86 ip: 673
+	Yeah, it is jump
+	+Wants to jump into 846
+
+Command < PUSH > | Orig ip: 495 | x86 ip: 699
+Checksum: 64
+	+Using register, its id: 1
+
+Command < PUSH > | Orig ip: 505 | x86 ip: 700
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < PUSH > | Orig ip: 515 | x86 ip: 711
+Checksum: 64
+	+Using register, its id: 2
+
+Command < MUL > | Orig ip: 525 | x86 ip: 712
+
+Command < DIV > | Orig ip: 526 | x86 ip: 738
+
+Command < OUT > | Orig ip: 527 | x86 ip: 764
+
+Command < RET > | Orig ip: 528 | x86 ip: 798
+
+Command < PUSH > | Orig ip: 529 | x86 ip: 799
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Orig ip: 539 | x86 ip: 800
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JE > | Orig ip: 549 | x86 ip: 811
+	Yeah, it is jump
+	+Wants to jump into 390
+
+Command < PUSH > | Orig ip: 559 | x86 ip: 837
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Orig ip: 569 | x86 ip: 838
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Orig ip: 579 | x86 ip: 839
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < MUL > | Orig ip: 589 | x86 ip: 850
+
+Command < DIV > | Orig ip: 590 | x86 ip: 876
+
+Command < SQR > | Orig ip: 591 | x86 ip: 902
+
+Command < POP > | Orig ip: 592 | x86 ip: 918
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 602 | x86 ip: 926
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 612 | x86 ip: 934
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < MUL > | Orig ip: 622 | x86 ip: 945
+
+Command < POP > | Orig ip: 623 | x86 ip: 971
+Checksum: 160
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 633 | x86 ip: 979
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 643 | x86 ip: 987
+Checksum: 160
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < OUT > | Orig ip: 653 | x86 ip: 995
+
+Command < OUT > | Orig ip: 654 | x86 ip: 1029
+
+Command < RET > | Orig ip: 655 | x86 ip: 1063
+
+Command < PUSH > | Orig ip: 656 | x86 ip: 1064
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Orig ip: 666 | x86 ip: 1065
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < MUL > | Orig ip: 676 | x86 ip: 1076
+
+Command < POP > | Orig ip: 677 | x86 ip: 1102
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 687 | x86 ip: 1110
+Checksum: 64
+	+Using register, its id: 1
+
+Command < PUSH > | Orig ip: 697 | x86 ip: 1111
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < MUL > | Orig ip: 707 | x86 ip: 1122
+
+Command < POP > | Orig ip: 708 | x86 ip: 1148
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 718 | x86 ip: 1156
+Checksum: 64
+	+Using register, its id: 3
+
+Command < SQR > | Orig ip: 728 | x86 ip: 1157
+
+Command < POP > | Orig ip: 729 | x86 ip: 1173
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 739 | x86 ip: 1181
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 749 | x86 ip: 1189
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 759 | x86 ip: 1197
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < ADD > | Orig ip: 769 | x86 ip: 1205
+
+Command < DIV > | Orig ip: 770 | x86 ip: 1231
+
+Command < POP > | Orig ip: 771 | x86 ip: 1257
+Checksum: 160
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 781 | x86 ip: 1265
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 791 | x86 ip: 1273
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 801 | x86 ip: 1281
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < SUB > | Orig ip: 811 | x86 ip: 1289
+
+Command < DIV > | Orig ip: 812 | x86 ip: 1315
+
+Command < POP > | Orig ip: 813 | x86 ip: 1341
+Checksum: 160
 	+Operating width digit, value: 5
+--- Adresses to memory
 
-Command < POP > | Orig ip: 18 | x86 ip: 11
-Checksum: 64
-	+Using register, its id: 2
+Command < PUSH > | Orig ip: 823 | x86 ip: 1349
+Checksum: 160
+	+Operating width digit, value: 4
+--- Adresses to memory
 
-Command < PUSH > | Orig ip: 28 | x86 ip: 12
+Command < PUSH > | Orig ip: 833 | x86 ip: 1357
+Checksum: 160
+	+Operating width digit, value: 5
+--- Adresses to memory
+
+Command < OUT > | Orig ip: 843 | x86 ip: 1365
+
+Command < OUT > | Orig ip: 844 | x86 ip: 1399
+
+Command < RET > | Orig ip: 845 | x86 ip: 1433
+
+Command < PUSH > | Orig ip: 846 | x86 ip: 1434
 Checksum: 32
-	+Operating width digit, value: 1
+	+Operating width digit, value: 228
 
-Command < POP > | Orig ip: 38 | x86 ip: 23
-Checksum: 64
-	+Using register, its id: 0
+Command < OUT > | Orig ip: 856 | x86 ip: 1445
 
-Command < CALL > | Orig ip: 48 | x86 ip: 24
-	Yeah, it is jump
-	+Wants to jump into 59
-
-Command < RET > | Orig ip: 58 | x86 ip: 29
-
-Command < PUSH > | Orig ip: 59 | x86 ip: 30
-Checksum: 64
-	+Using register, its id: 2
-
-Command < PUSH > | Orig ip: 69 | x86 ip: 31
-Checksum: 64
-	+Using register, its id: 0
-
-Command < MUL > | Orig ip: 79 | x86 ip: 32
-
-Command < POP > | Orig ip: 80 | x86 ip: 58
-Checksum: 64
-	+Using register, its id: 0
-
-Command < PUSH > | Orig ip: 90 | x86 ip: 59
-Checksum: 32
-	+Operating width digit, value: 1
-
-Command < PUSH > | Orig ip: 100 | x86 ip: 70
-Checksum: 64
-	+Using register, its id: 2
-
-Command < SUB > | Orig ip: 110 | x86 ip: 71
-
-Command < POP > | Orig ip: 111 | x86 ip: 97
-Checksum: 64
-	+Using register, its id: 2
-
-Command < PUSH > | Orig ip: 121 | x86 ip: 98
-Checksum: 32
-	+Operating width digit, value: 1
-
-Command < PUSH > | Orig ip: 131 | x86 ip: 109
-Checksum: 64
-	+Using register, its id: 2
-
-Command < JE > | Orig ip: 141 | x86 ip: 110
-	Yeah, it is jump
-	+Wants to jump into 161
-
-Command < CALL > | Orig ip: 151 | x86 ip: 121
-	Yeah, it is jump
-	+Wants to jump into 59
-
-Command < RET > | Orig ip: 161 | x86 ip: 126
+Command < RET > | Orig ip: 857 | x86 ip: 1479
 
 ================ End of struct dump ==================
 
@@ -119,14 +690,41 @@ Command < RET > | Orig ip: 161 | x86 ip: 126
 ---------- Filling labels --------
 
 	Yeah, it is jump
- 4: Trying to find x86 ip for ip 59:
-	 Found, x86 ip is 30
+ 8: Trying to find x86 ip for ip 109:
+	 Found, x86 ip is 80
 	Yeah, it is jump
-16: Trying to find x86 ip for ip 161:
-	 Found, x86 ip is 126
+ 9: Trying to find x86 ip for ip 435:
+	 Found, x86 ip is 623
 	Yeah, it is jump
-17: Trying to find x86 ip for ip 59:
-	 Found, x86 ip is 30
+13: Trying to find x86 ip for ip 151:
+	 Found, x86 ip is 125
+	Yeah, it is jump
+14: Trying to find x86 ip for ip 529:
+	 Found, x86 ip is 799
+	Yeah, it is jump
+17: Trying to find x86 ip for ip 232:
+	 Found, x86 ip is 212
+	Yeah, it is jump
+20: Trying to find x86 ip for ip 348:
+	 Found, x86 ip is 402
+	Yeah, it is jump
+23: Trying to find x86 ip for ip 390:
+	 Found, x86 ip is 486
+	Yeah, it is jump
+24: Trying to find x86 ip for ip 656:
+	 Found, x86 ip is 1064
+	Yeah, it is jump
+45: Trying to find x86 ip for ip 846:
+	 Found, x86 ip is 1434
+	Yeah, it is jump
+60: Trying to find x86 ip for ip 348:
+	 Found, x86 ip is 402
+	Yeah, it is jump
+63: Trying to find x86 ip for ip 846:
+	 Found, x86 ip is 1434
+	Yeah, it is jump
+73: Trying to find x86 ip for ip 390:
+	 Found, x86 ip is 486
 
 
 ---------- End filling labels --------
@@ -136,71 +734,429 @@ Command < RET > | Orig ip: 161 | x86 ip: 126
 
 Command < PUSH > | Orig ip: 8 | x86 ip: 0
 Checksum: 32
+	+Operating width digit, value: 1
+
+Command < PUSH > | Orig ip: 18 | x86 ip: 11
+Checksum: 32
+	+Operating width digit, value: 4
+
+Command < PUSH > | Orig ip: 28 | x86 ip: 22
+Checksum: 32
+	+Operating width digit, value: 3
+
+Command < POP > | Orig ip: 38 | x86 ip: 33
+Checksum: 64
+	+Using register, its id: 2
+
+Command < POP > | Orig ip: 48 | x86 ip: 34
+Checksum: 64
+	+Using register, its id: 1
+
+Command < POP > | Orig ip: 58 | x86 ip: 35
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Orig ip: 68 | x86 ip: 36
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Orig ip: 78 | x86 ip: 37
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JNE > | Orig ip: 88 | x86 ip: 48
+	Yeah, it is jump
+	+Wants to jump into 80
+
+Command < CALL > | Orig ip: 98 | x86 ip: 74
+	Yeah, it is jump
+	+Wants to jump into 623
+
+Command < RET > | Orig ip: 108 | x86 ip: 79
+
+Command < PUSH > | Orig ip: 109 | x86 ip: 80
+Checksum: 64
+	+Using register, its id: 1
+
+Command < PUSH > | Orig ip: 119 | x86 ip: 81
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JNE > | Orig ip: 129 | x86 ip: 92
+	Yeah, it is jump
+	+Wants to jump into 125
+
+Command < CALL > | Orig ip: 139 | x86 ip: 118
+	Yeah, it is jump
+	+Wants to jump into 799
+
+Command < RET > | Orig ip: 149 | x86 ip: 123
+
+Command < RET > | Orig ip: 150 | x86 ip: 124
+
+Command < CALL > | Orig ip: 151 | x86 ip: 125
+	Yeah, it is jump
+	+Wants to jump into 212
+
+Command < PUSH > | Orig ip: 161 | x86 ip: 130
+Checksum: 64
+	+Using register, its id: 3
+
+Command < PUSH > | Orig ip: 171 | x86 ip: 131
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JA > | Orig ip: 181 | x86 ip: 142
+	Yeah, it is jump
+	+Wants to jump into 402
+
+Command < PUSH > | Orig ip: 191 | x86 ip: 168
+Checksum: 64
+	+Using register, its id: 3
+
+Command < PUSH > | Orig ip: 201 | x86 ip: 169
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JE > | Orig ip: 211 | x86 ip: 180
+	Yeah, it is jump
+	+Wants to jump into 486
+
+Command < CALL > | Orig ip: 221 | x86 ip: 206
+	Yeah, it is jump
+	+Wants to jump into 1064
+
+Command < RET > | Orig ip: 231 | x86 ip: 211
+
+Command < PUSH > | Orig ip: 232 | x86 ip: 212
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Orig ip: 242 | x86 ip: 213
+Checksum: 64
+	+Using register, its id: 2
+
+Command < MUL > | Orig ip: 252 | x86 ip: 214
+
+Command < PUSH > | Orig ip: 253 | x86 ip: 240
+Checksum: 32
+	+Operating width digit, value: 4
+
+Command < MUL > | Orig ip: 263 | x86 ip: 251
+
+Command < PUSH > | Orig ip: 264 | x86 ip: 277
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < MUL > | Orig ip: 274 | x86 ip: 288
+
+Command < POP > | Orig ip: 275 | x86 ip: 314
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 285 | x86 ip: 322
+Checksum: 64
+	+Using register, its id: 1
+
+Command < PUSH > | Orig ip: 295 | x86 ip: 323
+Checksum: 64
+	+Using register, its id: 1
+
+Command < MUL > | Orig ip: 305 | x86 ip: 324
+
+Command < POP > | Orig ip: 306 | x86 ip: 350
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 316 | x86 ip: 358
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 326 | x86 ip: 366
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < ADD > | Orig ip: 336 | x86 ip: 374
+
+Command < POP > | Orig ip: 337 | x86 ip: 400
+Checksum: 64
+	+Using register, its id: 3
+
+Command < RET > | Orig ip: 347 | x86 ip: 401
+
+Command < PUSH > | Orig ip: 348 | x86 ip: 402
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Orig ip: 358 | x86 ip: 403
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JE > | Orig ip: 368 | x86 ip: 414
+	Yeah, it is jump
+	+Wants to jump into 1434
+
+Command < PUSH > | Orig ip: 378 | x86 ip: 440
+Checksum: 32
+	+Operating width digit, value: 1337
+
+Command < OUT > | Orig ip: 388 | x86 ip: 451
+
+Command < RET > | Orig ip: 389 | x86 ip: 485
+
+Command < PUSH > | Orig ip: 390 | x86 ip: 486
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < PUSH > | Orig ip: 400 | x86 ip: 497
+Checksum: 64
+	+Using register, its id: 0
+
+Command < MUL > | Orig ip: 410 | x86 ip: 498
+
+Command < PUSH > | Orig ip: 411 | x86 ip: 524
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < PUSH > | Orig ip: 421 | x86 ip: 535
+Checksum: 64
+	+Using register, its id: 1
+
+Command < MUL > | Orig ip: 431 | x86 ip: 536
+
+Command < DIV > | Orig ip: 432 | x86 ip: 562
+
+Command < OUT > | Orig ip: 433 | x86 ip: 588
+
+Command < RET > | Orig ip: 434 | x86 ip: 622
+
+Command < PUSH > | Orig ip: 435 | x86 ip: 623
+Checksum: 64
+	+Using register, its id: 1
+
+Command < PUSH > | Orig ip: 445 | x86 ip: 624
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JE > | Orig ip: 455 | x86 ip: 635
+	Yeah, it is jump
+	+Wants to jump into 402
+
+Command < PUSH > | Orig ip: 465 | x86 ip: 661
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Orig ip: 475 | x86 ip: 662
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JE > | Orig ip: 485 | x86 ip: 673
+	Yeah, it is jump
+	+Wants to jump into 1434
+
+Command < PUSH > | Orig ip: 495 | x86 ip: 699
+Checksum: 64
+	+Using register, its id: 1
+
+Command < PUSH > | Orig ip: 505 | x86 ip: 700
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < PUSH > | Orig ip: 515 | x86 ip: 711
+Checksum: 64
+	+Using register, its id: 2
+
+Command < MUL > | Orig ip: 525 | x86 ip: 712
+
+Command < DIV > | Orig ip: 526 | x86 ip: 738
+
+Command < OUT > | Orig ip: 527 | x86 ip: 764
+
+Command < RET > | Orig ip: 528 | x86 ip: 798
+
+Command < PUSH > | Orig ip: 529 | x86 ip: 799
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Orig ip: 539 | x86 ip: 800
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JE > | Orig ip: 549 | x86 ip: 811
+	Yeah, it is jump
+	+Wants to jump into 486
+
+Command < PUSH > | Orig ip: 559 | x86 ip: 837
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Orig ip: 569 | x86 ip: 838
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Orig ip: 579 | x86 ip: 839
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < MUL > | Orig ip: 589 | x86 ip: 850
+
+Command < DIV > | Orig ip: 590 | x86 ip: 876
+
+Command < SQR > | Orig ip: 591 | x86 ip: 902
+
+Command < POP > | Orig ip: 592 | x86 ip: 918
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 602 | x86 ip: 926
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 612 | x86 ip: 934
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < MUL > | Orig ip: 622 | x86 ip: 945
+
+Command < POP > | Orig ip: 623 | x86 ip: 971
+Checksum: 160
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 633 | x86 ip: 979
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 643 | x86 ip: 987
+Checksum: 160
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < OUT > | Orig ip: 653 | x86 ip: 995
+
+Command < OUT > | Orig ip: 654 | x86 ip: 1029
+
+Command < RET > | Orig ip: 655 | x86 ip: 1063
+
+Command < PUSH > | Orig ip: 656 | x86 ip: 1064
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Orig ip: 666 | x86 ip: 1065
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < MUL > | Orig ip: 676 | x86 ip: 1076
+
+Command < POP > | Orig ip: 677 | x86 ip: 1102
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 687 | x86 ip: 1110
+Checksum: 64
+	+Using register, its id: 1
+
+Command < PUSH > | Orig ip: 697 | x86 ip: 1111
+Checksum: 32
+	+Operating width digit, value: -1
+
+Command < MUL > | Orig ip: 707 | x86 ip: 1122
+
+Command < POP > | Orig ip: 708 | x86 ip: 1148
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 718 | x86 ip: 1156
+Checksum: 64
+	+Using register, its id: 3
+
+Command < SQR > | Orig ip: 728 | x86 ip: 1157
+
+Command < POP > | Orig ip: 729 | x86 ip: 1173
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 739 | x86 ip: 1181
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 749 | x86 ip: 1189
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 759 | x86 ip: 1197
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < ADD > | Orig ip: 769 | x86 ip: 1205
+
+Command < DIV > | Orig ip: 770 | x86 ip: 1231
+
+Command < POP > | Orig ip: 771 | x86 ip: 1257
+Checksum: 160
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 781 | x86 ip: 1265
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 791 | x86 ip: 1273
+Checksum: 160
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH > | Orig ip: 801 | x86 ip: 1281
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < SUB > | Orig ip: 811 | x86 ip: 1289
+
+Command < DIV > | Orig ip: 812 | x86 ip: 1315
+
+Command < POP > | Orig ip: 813 | x86 ip: 1341
+Checksum: 160
 	+Operating width digit, value: 5
+--- Adresses to memory
 
-Command < POP > | Orig ip: 18 | x86 ip: 11
-Checksum: 64
-	+Using register, its id: 2
+Command < PUSH > | Orig ip: 823 | x86 ip: 1349
+Checksum: 160
+	+Operating width digit, value: 4
+--- Adresses to memory
 
-Command < PUSH > | Orig ip: 28 | x86 ip: 12
+Command < PUSH > | Orig ip: 833 | x86 ip: 1357
+Checksum: 160
+	+Operating width digit, value: 5
+--- Adresses to memory
+
+Command < OUT > | Orig ip: 843 | x86 ip: 1365
+
+Command < OUT > | Orig ip: 844 | x86 ip: 1399
+
+Command < RET > | Orig ip: 845 | x86 ip: 1433
+
+Command < PUSH > | Orig ip: 846 | x86 ip: 1434
 Checksum: 32
-	+Operating width digit, value: 1
+	+Operating width digit, value: 228
 
-Command < POP > | Orig ip: 38 | x86 ip: 23
-Checksum: 64
-	+Using register, its id: 0
+Command < OUT > | Orig ip: 856 | x86 ip: 1445
 
-Command < CALL > | Orig ip: 48 | x86 ip: 24
-	Yeah, it is jump
-	+Wants to jump into 30
-
-Command < RET > | Orig ip: 58 | x86 ip: 29
-
-Command < PUSH > | Orig ip: 59 | x86 ip: 30
-Checksum: 64
-	+Using register, its id: 2
-
-Command < PUSH > | Orig ip: 69 | x86 ip: 31
-Checksum: 64
-	+Using register, its id: 0
-
-Command < MUL > | Orig ip: 79 | x86 ip: 32
-
-Command < POP > | Orig ip: 80 | x86 ip: 58
-Checksum: 64
-	+Using register, its id: 0
-
-Command < PUSH > | Orig ip: 90 | x86 ip: 59
-Checksum: 32
-	+Operating width digit, value: 1
-
-Command < PUSH > | Orig ip: 100 | x86 ip: 70
-Checksum: 64
-	+Using register, its id: 2
-
-Command < SUB > | Orig ip: 110 | x86 ip: 71
-
-Command < POP > | Orig ip: 111 | x86 ip: 97
-Checksum: 64
-	+Using register, its id: 2
-
-Command < PUSH > | Orig ip: 121 | x86 ip: 98
-Checksum: 32
-	+Operating width digit, value: 1
-
-Command < PUSH > | Orig ip: 131 | x86 ip: 109
-Checksum: 64
-	+Using register, its id: 2
-
-Command < JE > | Orig ip: 141 | x86 ip: 110
-	Yeah, it is jump
-	+Wants to jump into 126
-
-Command < CALL > | Orig ip: 151 | x86 ip: 121
-	Yeah, it is jump
-	+Wants to jump into 30
-
-Command < RET > | Orig ip: 161 | x86 ip: 126
+Command < RET > | Orig ip: 857 | x86 ip: 1479
 
 ================ End of struct dump ==================
 
@@ -221,13 +1177,7 @@ Command < RET > | Orig ip: 161 | x86 ip: 126
 	 0: 56 
 ##########
 
-11:Push/Pop REG
-
-##########
-	 0: 5a 
-##########
-
-<12>:Push IMM
+<11>:Push IMM
 
 ##########
 	 0: 48 be 
@@ -238,10 +1188,76 @@ Command < RET > | Orig ip: 161 | x86 ip: 126
 	 0: 56 
 ##########
 
-23:Push/Pop REG
+<22>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+33:Push/Pop REG
+
+##########
+	 0: 5a 
+##########
+
+34:Push/Pop REG
+
+##########
+	 0: 59 
+##########
+
+35:Push/Pop REG
 
 ##########
 	 0: 58 
+##########
+
+36:Push/Pop REG
+
+##########
+	 0: 50 
+##########
+
+<37>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+8: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 85 
 ##########
 
 Translating Jump or Call
@@ -254,19 +1270,178 @@ Translating RET
 	 0: c3 
 ##########
 
-30:Push/Pop REG
+80:Push/Pop REG
 
 ##########
-	 0: 52 
+	 0: 51 
 ##########
 
-31:Push/Pop REG
+<81>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+13: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 85 
+##########
+
+Translating Jump or Call
+##########
+	 0: e8 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+Translating Jump or Call
+##########
+	 0: e8 
+##########
+
+130:Push/Pop REG
+
+##########
+	 0: 53 
+##########
+
+<131>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+20: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 87 
+##########
+
+168:Push/Pop REG
+
+##########
+	 0: 53 
+##########
+
+<169>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+23: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 84 
+##########
+
+Translating Jump or Call
+##########
+	 0: e8 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+212:Push/Pop REG
 
 ##########
 	 0: 50 
 ##########
 
-8: Translating math
+213:Push/Pop REG
+
+##########
+	 0: 52 
+##########
+
+28: Translating math
 
 ##########
 	 0: f2 0f 10 44 24 00 
@@ -292,13 +1467,7 @@ Translating RET
 	 0: f2 0f 11 44 24 00 
 ##########
 
-58:Push/Pop REG
-
-##########
-	 0: 58 
-##########
-
-<59>:Push IMM
+<240>:Push IMM
 
 ##########
 	 0: 48 be 
@@ -309,13 +1478,1211 @@ Translating RET
 	 0: 56 
 ##########
 
-70:Push/Pop REG
+30: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+<277>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+32: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+322:Push/Pop REG
+
+##########
+	 0: 51 
+##########
+
+323:Push/Pop REG
+
+##########
+	 0: 51 
+##########
+
+36: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+40: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 58 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+400:Push/Pop REG
+
+##########
+	 0: 5b 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+402:Push/Pop REG
 
 ##########
 	 0: 52 
 ##########
 
-12: Translating math
+<403>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+45: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 84 
+##########
+
+<440>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+<486>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+497:Push/Pop REG
+
+##########
+	 0: 50 
+##########
+
+51: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+<524>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+535:Push/Pop REG
+
+##########
+	 0: 51 
+##########
+
+54: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+55: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5e c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+623:Push/Pop REG
+
+##########
+	 0: 51 
+##########
+
+<624>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+60: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 84 
+##########
+
+661:Push/Pop REG
+
+##########
+	 0: 52 
+##########
+
+<662>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+63: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 84 
+##########
+
+699:Push/Pop REG
+
+##########
+	 0: 51 
+##########
+
+<700>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+711:Push/Pop REG
+
+##########
+	 0: 52 
+##########
+
+67: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+68: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5e c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+799:Push/Pop REG
+
+##########
+	 0: 52 
+##########
+
+<800>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+73: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 84 
+##########
+
+837:Push/Pop REG
+
+##########
+	 0: 50 
+##########
+
+838:Push/Pop REG
+
+##########
+	 0: 52 
+##########
+
+<839>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+77: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+78: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5e c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 66 0f 51 c0 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+<934>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+83: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+1064:Push/Pop REG
+
+##########
+	 0: 50 
+##########
+
+<1065>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+92: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+1110:Push/Pop REG
+
+##########
+	 0: 51 
+##########
+
+<1111>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+96: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+1156:Push/Pop REG
+
+##########
+	 0: 53 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 66 0f 51 c0 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+104: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 58 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+105: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5e c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+110: Translating math
 
 ##########
 	 0: f2 0f 10 44 24 00 
@@ -341,13 +2708,148 @@ Translating RET
 	 0: f2 0f 11 44 24 00 
 ##########
 
-97:Push/Pop REG
+111: Translating math
 
 ##########
-	 0: 5a 
+	 0: f2 0f 10 44 24 00 
 ##########
 
-<98>:Push IMM
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5e c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+<1434>:Push IMM
 
 ##########
 	 0: 48 be 
@@ -358,36 +2860,44 @@ Translating RET
 	 0: 56 
 ##########
 
-109:Push/Pop REG
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
 
 ##########
-	 0: 52 
+	 0: 41 52 53 52 51 50 
 ##########
 
-16: Translating jmp
 
 ##########
-	 0: 5e 
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
 ##########
 
 
 ##########
 	 0: 5f 
-##########
-
-
-##########
-	 0: 48 39 f7 
-##########
-
-
-##########
-	 0: 0f 84 
-##########
-
-Translating Jump or Call
-##########
-	 0: e8 
 ##########
 
 Translating RET
@@ -404,24 +2914,193 @@ Translating RET
 
 ====== x86 buffer dump begin =======
 
- 0: 49 ba 00 10 a0 00 00 00 
+ 0: 49 ba 00 60 77 00 00 00 
  8: 00 00 48 be 00 00 00 00 
-16: 00 00 14 40 56 5a 48 be 
-24: 00 00 00 00 00 00 f0 3f 
-32: 56 58 e8 01 00 00 00 c3 
-40: 52 50 f2 0f 10 44 24 00 
-48: f2 0f 10 4c 24 08 48 83 
-56: c4 08 f2 0f 59 c1 f2 0f 
-64: 11 44 24 00 58 48 be 00 
-72: 00 00 00 00 00 f0 3f 56 
-80: 52 f2 0f 10 44 24 00 f2 
-88: 0f 10 4c 24 08 48 83 c4 
-96: 08 f2 0f 5c c1 f2 0f 11 
-104: 44 24 00 5a 48 be 00 00 
-112: 00 00 00 00 f0 3f 56 52 
-120: 5e 5f 48 39 f7 0f 84 05 
-128: 00 00 00 e8 a0 ff ff ff 
-136: c3 c3 00 
+16: 00 00 f0 3f 56 48 be 00 
+24: 00 00 00 00 00 10 40 56 
+32: 48 be 00 00 00 00 00 00 
+40: 08 40 56 5a 59 58 50 48 
+48: be 00 00 00 00 00 00 00 
+56: 00 56 f2 0f 10 44 24 00 
+64: f2 0f 10 4c 24 08 48 83 
+72: c4 10 66 0f 2e c1 0f 85 
+80: 06 00 00 00 e8 20 02 00 
+88: 00 c3 51 48 be 00 00 00 
+96: 00 00 00 00 00 56 f2 0f 
+104: 10 44 24 00 f2 0f 10 4c 
+112: 24 08 48 83 c4 10 66 0f 
+120: 2e c1 0f 85 07 00 00 00 
+128: e8 a4 02 00 00 c3 c3 e8 
+136: 52 00 00 00 53 48 be 00 
+144: 00 00 00 00 00 00 00 56 
+152: f2 0f 10 44 24 00 f2 0f 
+160: 10 4c 24 08 48 83 c4 10 
+168: 66 0f 2e c1 0f 87 ea 00 
+176: 00 00 53 48 be 00 00 00 
+184: 00 00 00 00 00 56 f2 0f 
+192: 10 44 24 00 f2 0f 10 4c 
+200: 24 08 48 83 c4 10 66 0f 
+208: 2e c1 0f 84 18 01 00 00 
+216: e8 55 03 00 00 c3 50 52 
+224: f2 0f 10 44 24 00 f2 0f 
+232: 10 4c 24 08 48 83 c4 08 
+240: f2 0f 59 c1 f2 0f 11 44 
+248: 24 00 48 be 00 00 00 00 
+256: 00 00 10 40 56 f2 0f 10 
+264: 44 24 00 f2 0f 10 4c 24 
+272: 08 48 83 c4 08 f2 0f 59 
+280: c1 f2 0f 11 44 24 00 48 
+288: be 00 00 00 00 00 00 f0 
+296: bf 56 f2 0f 10 44 24 00 
+304: f2 0f 10 4c 24 08 48 83 
+312: c4 08 f2 0f 59 c1 f2 0f 
+320: 11 44 24 00 5f 49 89 ba 
+328: 08 00 00 00 51 51 f2 0f 
+336: 10 44 24 00 f2 0f 10 4c 
+344: 24 08 48 83 c4 08 f2 0f 
+352: 59 c1 f2 0f 11 44 24 00 
+360: 5f 49 89 ba 10 00 00 00 
+368: 49 8b ba 10 00 00 00 57 
+376: 49 8b ba 08 00 00 00 57 
+384: f2 0f 10 44 24 00 f2 0f 
+392: 10 4c 24 08 48 83 c4 08 
+400: f2 0f 58 c1 f2 0f 11 44 
+408: 24 00 5b c3 52 48 be 00 
+416: 00 00 00 00 00 00 00 56 
+424: f2 0f 10 44 24 00 f2 0f 
+432: 10 4c 24 08 48 83 c4 10 
+440: 66 0f 2e c1 0f 84 e2 03 
+448: 00 00 48 be 00 00 00 00 
+456: 00 e4 94 40 56 f2 0f 10 
+464: 44 24 00 41 52 53 52 51 
+472: 50 49 89 e4 48 83 e4 f0 
+480: e8 d8 df c8 ff 4c 89 e4 
+488: 58 59 5a 5b 41 5a 5f c3 
+496: 48 be 00 00 00 00 00 00 
+504: 00 40 56 50 f2 0f 10 44 
+512: 24 00 f2 0f 10 4c 24 08 
+520: 48 83 c4 08 f2 0f 59 c1 
+528: f2 0f 11 44 24 00 48 be 
+536: 00 00 00 00 00 00 f0 bf 
+544: 56 51 f2 0f 10 44 24 00 
+552: f2 0f 10 4c 24 08 48 83 
+560: c4 08 f2 0f 59 c1 f2 0f 
+568: 11 44 24 00 f2 0f 10 44 
+576: 24 00 f2 0f 10 4c 24 08 
+584: 48 83 c4 08 f2 0f 5e c1 
+592: f2 0f 11 44 24 00 f2 0f 
+600: 10 44 24 00 41 52 53 52 
+608: 51 50 49 89 e4 48 83 e4 
+616: f0 e8 4f df c8 ff 4c 89 
+624: e4 58 59 5a 5b 41 5a 5f 
+632: c3 51 48 be 00 00 00 00 
+640: 00 00 00 00 56 f2 0f 10 
+648: 44 24 00 f2 0f 10 4c 24 
+656: 08 48 83 c4 10 66 0f 2e 
+664: c1 0f 84 fd fe ff ff 52 
+672: 48 be 00 00 00 00 00 00 
+680: 00 00 56 f2 0f 10 44 24 
+688: 00 f2 0f 10 4c 24 08 48 
+696: 83 c4 10 66 0f 2e c1 0f 
+704: 84 df 02 00 00 51 48 be 
+712: 00 00 00 00 00 00 f0 bf 
+720: 56 52 f2 0f 10 44 24 00 
+728: f2 0f 10 4c 24 08 48 83 
+736: c4 08 f2 0f 59 c1 f2 0f 
+744: 11 44 24 00 f2 0f 10 44 
+752: 24 00 f2 0f 10 4c 24 08 
+760: 48 83 c4 08 f2 0f 5e c1 
+768: f2 0f 11 44 24 00 f2 0f 
+776: 10 44 24 00 41 52 53 52 
+784: 51 50 49 89 e4 48 83 e4 
+792: f0 e8 9f de c8 ff 4c 89 
+800: e4 58 59 5a 5b 41 5a 5f 
+808: c3 52 48 be 00 00 00 00 
+816: 00 00 00 00 56 f2 0f 10 
+824: 44 24 00 f2 0f 10 4c 24 
+832: 08 48 83 c4 10 66 0f 2e 
+840: c1 0f 84 a1 fe ff ff 50 
+848: 52 48 be 00 00 00 00 00 
+856: 00 f0 bf 56 f2 0f 10 44 
+864: 24 00 f2 0f 10 4c 24 08 
+872: 48 83 c4 08 f2 0f 59 c1 
+880: f2 0f 11 44 24 00 f2 0f 
+888: 10 44 24 00 f2 0f 10 4c 
+896: 24 08 48 83 c4 08 f2 0f 
+904: 5e c1 f2 0f 11 44 24 00 
+912: f2 0f 10 44 24 00 66 0f 
+920: 51 c0 f2 0f 11 44 24 00 
+928: 5f 49 89 ba 18 00 00 00 
+936: 49 8b ba 18 00 00 00 57 
+944: 48 be 00 00 00 00 00 00 
+952: f0 bf 56 f2 0f 10 44 24 
+960: 00 f2 0f 10 4c 24 08 48 
+968: 83 c4 08 f2 0f 59 c1 f2 
+976: 0f 11 44 24 00 5f 49 89 
+984: ba 20 00 00 00 49 8b ba 
+992: 18 00 00 00 57 49 8b ba 
+1000: 20 00 00 00 57 f2 0f 10 
+1008: 44 24 00 41 52 53 52 51 
+1016: 50 49 89 e4 48 83 e4 f0 
+1024: e8 b8 dd c8 ff 4c 89 e4 
+1032: 58 59 5a 5b 41 5a 5f f2 
+1040: 0f 10 44 24 00 41 52 53 
+1048: 52 51 50 49 89 e4 48 83 
+1056: e4 f0 e8 96 dd c8 ff 4c 
+1064: 89 e4 58 59 5a 5b 41 5a 
+1072: 5f c3 50 48 be 00 00 00 
+1080: 00 00 00 00 40 56 f2 0f 
+1088: 10 44 24 00 f2 0f 10 4c 
+1096: 24 08 48 83 c4 08 f2 0f 
+1104: 59 c1 f2 0f 11 44 24 00 
+1112: 5f 49 89 ba 08 00 00 00 
+1120: 51 48 be 00 00 00 00 00 
+1128: 00 f0 bf 56 f2 0f 10 44 
+1136: 24 00 f2 0f 10 4c 24 08 
+1144: 48 83 c4 08 f2 0f 59 c1 
+1152: f2 0f 11 44 24 00 5f 49 
+1160: 89 ba 10 00 00 00 53 f2 
+1168: 0f 10 44 24 00 66 0f 51 
+1176: c0 f2 0f 11 44 24 00 5f 
+1184: 49 89 ba 18 00 00 00 49 
+1192: 8b ba 08 00 00 00 57 49 
+1200: 8b ba 10 00 00 00 57 49 
+1208: 8b ba 18 00 00 00 57 f2 
+1216: 0f 10 44 24 00 f2 0f 10 
+1224: 4c 24 08 48 83 c4 08 f2 
+1232: 0f 58 c1 f2 0f 11 44 24 
+1240: 00 f2 0f 10 44 24 00 f2 
+1248: 0f 10 4c 24 08 48 83 c4 
+1256: 08 f2 0f 5e c1 f2 0f 11 
+1264: 44 24 00 5f 49 89 ba 20 
+1272: 00 00 00 49 8b ba 08 00 
+1280: 00 00 57 49 8b ba 18 00 
+1288: 00 00 57 49 8b ba 10 00 
+1296: 00 00 57 f2 0f 10 44 24 
+1304: 00 f2 0f 10 4c 24 08 48 
+1312: 83 c4 08 f2 0f 5c c1 f2 
+1320: 0f 11 44 24 00 f2 0f 10 
+1328: 44 24 00 f2 0f 10 4c 24 
+1336: 08 48 83 c4 08 f2 0f 5e 
+1344: c1 f2 0f 11 44 24 00 5f 
+1352: 49 89 ba 28 00 00 00 49 
+1360: 8b ba 20 00 00 00 57 49 
+1368: 8b ba 28 00 00 00 57 f2 
+1376: 0f 10 44 24 00 41 52 53 
+1384: 52 51 50 49 89 e4 48 83 
+1392: e4 f0 e8 46 dc c8 ff 4c 
+1400: 89 e4 58 59 5a 5b 41 5a 
+1408: 5f f2 0f 10 44 24 00 41 
+1416: 52 53 52 51 50 49 89 e4 
+1424: 48 83 e4 f0 e8 24 dc c8 
+1432: ff 4c 89 e4 58 59 5a 5b 
+1440: 41 5a 5f c3 48 be 00 00 
+1448: 00 00 00 80 6c 40 56 f2 
+1456: 0f 10 44 24 00 41 52 53 
+1464: 52 51 50 49 89 e4 48 83 
+1472: e4 f0 e8 f6 db c8 ff 4c 
+1480: 89 e4 58 59 5a 5b 41 5a 
+1488: 5f c3 c3 00 
 
 ====== x86 buffer dump end =======
 
