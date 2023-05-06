@@ -110,7 +110,7 @@ int FillCmdInfo (const char* code, TranslatorInfo* self)
     else
     {
         if (IsJump (name))
-            new_cmd->value = *(elem_t*)(code + 1);
+            new_cmd->value = *(elem_t*)(code + BYTE_OFFSET);
 
         new_cmd->name = (EnumCommands) name;
         
@@ -131,7 +131,7 @@ void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
     new_cmd->name = (EnumCommands) name;
     
     new_cmd->reg_index = code[sizeof(elem_t) + BYTE_OFFSET];
-    new_cmd->value = *(elem_t*)(code + 1);
+    new_cmd->value = *(elem_t*)(code + BYTE_OFFSET);
 
     new_cmd->checksum  = 0;
     new_cmd->checksum |= (cmd & ARG_IMMED); 

@@ -62,49 +62,22 @@ const uint64_t WORD_SIZE = 8;
 
 enum OPCODES_x86 : uint64_t // everything reversed
 {
-    MOV_R10 = 0xBA49,
 
+// Watch OPCODE_MASKS if you want to construct one of the following cmds.
 
-    CALL_OP = 0xE8,
-    RET_OP = 0xC3,
-
-    JMP_OP = 0xE9,
-    COND_JMP = 0x000F,
-
-    PUSH_RSI = 0x56,
-    PUSH_RDI = 0x57,
-
-    POP_RSI = 0x5E,
-    POP_RDI = 0x5F,
-
-    CMP_RDI_RSI = 0xf73948,
-
-    PUSH_ALL = 0x505152535241,
-    POP_ALL = 0x5A415B5A5958,
-
-    MOV_RBP_RSP = 0xE48949,
-    MOV_RSP_RBP = 0xE4894C,
-    AND_RSP_FF = 0xF0E48348,
-
-    MOV_RSI = 0xBE48, // mov rsi, (double num)
-                  // next 8 bytes should be double number wrote as another cmd 
-
-    PUSH_REG = 0x50, // by adding the index of register, getting different variations
-    POP_REG = 0x58,
-    //  0, 1, 2, 3 depends on register
-
-    ARITHM_XMM0_XMM1 = 0xC1000FF2,  // add(sub, mul, div) xmm0, xmm1
-                        // ^------changing this byte to get right operation    
+    ARITHM_XMM0_XMM1 = 0xC1000FF2,  // <add, sub, mul, div> xmm0, xmm1
+                        // ^------changing this byte to get add/sub/div/mul     
 
                 //         ,------- xmm 0 - 4
     MOV_XMM_RSP = 0x002400100FF2, // movsd xmm0-4, [rsp + ?]
                 //  ^--[rsp + ?]
 
-                
+                //      ,------- xmm 0 - 4
     MOV_RSP_XMM = 0x002400110FF2, // same as previous
-
-    ADD_RSP = 0x00C48348,
-    //          ^-- how much add
+                //  ^--[rsp + ?]
+    
+    ADD_RSP = 0x00C48348,   // add rsp+?
+    //          ^-- how much to add
 
     // mov rdi, [r10 + ?]
     MOV_RDI_R10 = 0xBA8B49, // this must be followed with uint32 ptr
@@ -114,30 +87,59 @@ enum OPCODES_x86 : uint64_t // everything reversed
 
     // transforms double precision num in xmm0 to integer in rsi
     CVTSD2SI_RSI_XMM0 = 0xF02D0F48F2,
+    
+    SHL_RSI = 0x00E6C148,   // rsi *= 2^(?)
+    //          ^-- how much bites to shift
+
+    PUSH_REG = 0x50, //    push/pop r?x
+    POP_REG = 0x58,  //              ^--- add 0, 1, 2, 3 to get rax, rcx, rdx or rbx 
+
+    COND_JMP = 0x000F,
+            //   ^-- by applying bit mask, can get all types of jmp
+
+// Constant expressions, no need for bit masks
+
+    MOV_R10 = 0xBA49,   // mov r10, <64b ptr>. Begin of memory must be stored in R10
+    CALL_OP = 0xE8,     // call <32b ptr>
+    RET_OP = 0xC3,      // ret
+
+    JMP_OP = 0xE9,      // jmp <32b ptr>
+
+    PUSH_RSI = 0x56,    // push rsi
+    PUSH_RDI = 0x57,    // push rdi
+
+    POP_RSI = 0x5E,     // push rsi
+    POP_RDI = 0x5F,     // pop rdi
+
+    CMP_RDI_RSI = 0xf73948, // cmd rdi, rsi
+
+    PUSH_ALL = 0x505152535241,  // push r10 - rax - ... - rdx
+    POP_ALL = 0x5A415B5A5958,   // pop rdx - ... rax - r10
+
+    MOV_RBP_RSP = 0xE48949,
+    MOV_RSP_RBP = 0xE4894C,
+    AND_RSP_FF = 0xF0E48348,
+
+    MOV_RSI = 0xBE48, // mov rsi, (double num)
+                      // next 8 bytes should be double number
 
     ADD_R10_RSI = 0xF20149,
     SUB_R10_RSI = 0xF22949,
-
-    SHL_RSI = 0x00E6C148,
-    //          ^-- how much bites to shift
-
-    SQRTPD_XMM0_XMM0 = 0xC0510F66,
-
-
+    SQRTPD_XMM0_XMM0 = 0xC0510F66   // get square root from xmm0 and store it in xmm0
 };
 
 
 enum OPCODE_MASKS : uint64_t
 {
-    ADD_MASK = 0x58,
+    ADD_MASK = 0x58,    // Arithm operation with double
     SUB_MASK = 0x5c,
     MUL_MASK = 0x59,
     DIV_MASK = 0x5e,
 
-    XMM0_MASK = 0x44,   // special for xmm, [rsp + n]
+    XMM0_MASK = 0x44,   // masks for work with xmm registers
     XMM1_MASK = 0x4c,
 
-    JE_MASK = 0x84,
+    JE_MASK = 0x84,     // Conditional jumps
     JNE_MASK = 0x85,
     JG_MASK = 0x8c,
     JAE_MASK = 0x8d,
@@ -201,7 +203,7 @@ enum EnumCommands
 #undef DEF_CMD
 
 
-enum BitMasks
+enum BitMasks   // For native assembly
 {
     CMD_BITMASK  = 0b00011111,
     SPEC_BITMASK = 0b11100000,
@@ -227,8 +229,8 @@ enum ExitCodes
 };
 
 
-enum PushPopVariations
-{
+enum PushPopVariations  // For IR of command. 
+{                       
     VOID = 0,
     IMM = 1 << 5,
     REG = 1 << 6,
@@ -246,23 +248,13 @@ enum PushPopSizes
     POP_REG_SIZE = 1, 
     POP_IMM_RAM_SIZE = 8,
     POP_REG_RAM_SIZE = 34,
-    POP_IMM_REG_RAM_SIZE = 14, 
 
     PUSH_REG_SIZE = 1, 
     PUSH_IMM_SIZE = 11, 
     PUSH_IMM_RAM_SIZE = 8,
     PUSH_REG_RAM_SIZE = 34,
-    PUSH_IMM_REG_RAM_SIZE = 14, 
 };
 
-
-enum Registers
-{
-    RAX = 0,
-    RBX,
-    RCX,
-    RDX,
-};
 
 // ===============================================
 
@@ -289,7 +281,7 @@ struct InstructionSizes
     int x86_size;
 };
 
-const struct InstructionSizes InstrSizes[30] =
+const struct InstructionSizes InstrSizes[] =
 {
     {HLT,  1,   1},
     {PUSH, 10,  1}, 
@@ -325,11 +317,11 @@ struct CmdsBuffer
 struct Command 
 {
     EnumCommands name;
-    int orig_ip;
+    int orig_ip;    
     int x86_ip;
     
     int reg_index;
-    elem_t value;
+    elem_t value;   // might be push/pop value, jmp label
 
     int checksum;   // used in case of push/pop handle
 };
@@ -337,16 +329,16 @@ struct Command
 
 struct TranslatorInfo
 {
-    CmdsBuffer src_cmds;
+    CmdsBuffer src_cmds; 
     CmdsBuffer dst_x86;
 
-    Command** cmds_array;
+    Command** cmds_array; 
     int cmds_counter;
 
     int orig_ip_counter;
     int x86_ip_counter;
 
-    char* memory_buffer;
+    char* memory_buffer; // Buffer for commands, addressing to memory  
 };
 
 
