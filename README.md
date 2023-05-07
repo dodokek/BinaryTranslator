@@ -139,11 +139,15 @@ We can see the huge improvement in speed, JIT compilation rules!
 
 ## Conclusion
 
-*Just in time compilation* - an essential part in optimization of product. I get a vast amount of knowledge about CPU architecture and x86-64 commands structure. All this journey... was... pretty good. 
+*Just in time compilation* - an essential part in many project. Despite that I implemented only a small part of real JIT, I aquired useful skills. I get a vast amount of knowledge about CPU architecture and x86-64 commands structure. All this journey... was... pretty good. 
 
 
 ## Useful links
 
+
+I really recommend to read this:
+https://dse.in.tum.de/wp-content/uploads/2022/01/translating_x86_binaries_into_llvm_intermediate_representation.pdf  
+  
 https://learn.microsoft.com/en-us/cpp/build/x64-software-conventions?view=msvc-170#x64-register-usage
 
 https://www.felixcloutier.com/x86/divsd
