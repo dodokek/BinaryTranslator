@@ -1,7 +1,11 @@
-# JIT compilator 
+# Binary translator
 
 ## Overview
-In this project I combined all my skills, that I gained from educating on the 1st course of MIPT. I will translate binary code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Programming language</a> into **x86-64** machine code.
+In this project I combined all my skills, that I gained from educating on the 1st course of MIPT. 
+
+## About
+
+I will translate binary code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Programming language</a> into **x86-64** machine code. Program will walk through the executable and translate each instruction into the corresponding instruction for x86-64 architecture. My translator translates the instructions and puts them in a buffer that is allocated in the C program. Further with the help of mprotect the buffer becomes executable, and code injection occurs.
 
 ## Build
 
@@ -111,7 +115,7 @@ The rest translation of conditional jumps is the same with non-conditional jump.
 ## Performance test
 Using <a href="https://githrsiub.com/dodokek/ProgrammingLanguage">my assembly work implementation</a> I wrote program, wich finds factorial 1000 times. 
 
-After that I executed it with my CPU work implementation on C, then executed it using my JIT compilator.
+I executed it with my CPU work implementation on C. After that I executed it using my Binary translator.
 
 Let's see the improvement in speed:
 
@@ -139,11 +143,17 @@ We can see the huge improvement in speed, JIT compilation rules!
 
 ## Conclusion
 
-*Just in time compilation* - an essential part in optimization of product. I get a vast amount of knowledge about CPU architecture and x86-64 commands structure. All this journey... was... pretty good. 
+*Just in time compilation* - an essential part in many projects. Despite that I implemented only a small part of real JIT, I aquired useful skills. I get a vast amount of knowledge about CPU architecture and x86-64 commands structure. All this journey... was... pretty good. 
 
 
 ## Useful links
 
+
+This one really helped me to understand some important concepts of binary translators: <br>
+https://dse.in.tum.de/wp-content/uploads/2022/01/translating_x86_binaries_into_llvm_intermediate_representation.pdf  
+  
+  
+Information, that helped me in some parts of project: <br>
 https://learn.microsoft.com/en-us/cpp/build/x64-software-conventions?view=msvc-170#x64-register-usage
 
 https://www.felixcloutier.com/x86/divsd
