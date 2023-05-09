@@ -193,15 +193,15 @@ struct Command
     EnumCommands name;
 
     int native_size;
-    int x86_size;
-
     int native_ip;
+
+    int x86_size;
     int x86_ip;
     
     int reg_index;
     elem_t value;   // might be push/pop value, jmp label
 
-    int checksum;   // used in case of push/pop handle
+    int checksum;   // determines, which variation of push/pop is.
     bool is_skip;   // due optimizations, some commands might be deleted.
 };
 

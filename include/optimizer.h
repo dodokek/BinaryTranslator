@@ -6,6 +6,8 @@
 
 void OptimizeCmdFlow (TranslatorInfo* self);
 
+void HandleConstantCalculation (TranslatorInfo* self, int cmd_indx);
+
 void HandleImmStorage (TranslatorInfo* self, int cmd_indx);
 
 void OptimizeMovRegNum (TranslatorInfo* self, Command* cur_cmd, double num_to_mov);
