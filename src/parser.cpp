@@ -17,7 +17,7 @@ void TranslatorCtor (TranslatorInfo* self)
     self->dst_x86.len = 0;
 
     self->cmds_array = nullptr;
-    self->cmds_counter = 0;
+    self->cmd_amount = 0;
 
     self->native_ip_counter = 0;
 }
@@ -122,8 +122,8 @@ int FillCmdInfo (const char* code, TranslatorInfo* self)
         new_cmd->native_size = InstrSizes[name].native_size;
     }
 
-    self->cmds_array[self->cmds_counter] = new_cmd;
-    self->cmds_counter++;
+    self->cmds_array[self->cmd_amount] = new_cmd;
+    self->cmd_amount++;
 
 
     return 0;
@@ -190,8 +190,10 @@ void FillCmdIp (TranslatorInfo* self)
     int native_ip = HEADER_OFFSET;
     int x86_ip = 0;
 
-    for (int i = 0; i < self->cmds_counter; i++)
+    for (int i = 0; i < self->cmd_amount; i++)
     {
+        if (self->cmds_array[i]->is_skip) continue;
+
         self->cmds_array[i]->native_ip = native_ip;
         self->cmds_array[i]->x86_ip    = x86_ip;
 
@@ -217,7 +219,7 @@ void FillJumpLables (TranslatorInfo* self)
 {
     LOG ("\n\n---------- Filling labels --------\n\n");
 
-    for (int i = 0; i < self->cmds_counter; i++)
+    for (int i = 0; i < self->cmd_amount; i++)
     {
         if (IsJump(self->cmds_array[i]->name))
         {
@@ -233,7 +235,7 @@ void FillJumpLables (TranslatorInfo* self)
 
 int FindJumpIp (TranslatorInfo* self, int native_ip)
 {
-    for (int i = 0; i < self->cmds_counter; i++)
+    for (int i = 0; i < self->cmd_amount; i++)
     {
         if (self->cmds_array[i]->native_ip == native_ip)
         {
@@ -280,12 +282,14 @@ void DumpRawCmds (TranslatorInfo* self)
 {
     LOG ("\n================ Begin of struct dump ==================\n");
 
-    for (int i = 0; i < self->cmds_counter; i++)
+    for (int i = 0; i < self->cmd_amount; i++)
     {
         Command* cur_cmd = self->cmds_array[i];
+        if (cur_cmd->is_skip) continue;
 
-        LOG ("\nCommand < %s > | Native/x86 size: %d/%d | x86 ip: %d\n",
-                GetNameFromId(cur_cmd->name), cur_cmd->native_size,
+
+        LOG ("\nCommand < %s: %d > | Native/x86 size: %d/%d | x86 ip: %d\n",
+                GetNameFromId(cur_cmd->name), cur_cmd->name, cur_cmd->native_size,
                 cur_cmd->x86_size, cur_cmd->x86_ip);
         if (cur_cmd->name == PUSH || cur_cmd->name == POP)
         {
@@ -342,7 +346,7 @@ char* GetNameFromId (EnumCommands id)
         #include "../codegen/cmds.h"    // generating cases for all cmds
 
         default:
-            LOG ("Not found!\n");
+            LOG ("Not standart instrucion.");
             return nullptr;
     }
 

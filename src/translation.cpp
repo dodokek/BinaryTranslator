@@ -12,8 +12,10 @@ void StartTranslation (TranslatorInfo* self)
     WriteCmd (self, mov_r10);
     WriteAbsPtr(self, (uint64_t) self->memory_buffer);
 
-    for (int cmd_indx = 0; cmd_indx < self->cmds_counter; cmd_indx++)
-    {
+    for (int cmd_indx = 0; cmd_indx < self->cmd_amount; cmd_indx++)
+    {   
+        if (self->cmds_array[cmd_indx]->is_skip) continue;
+
         switch (self->cmds_array[cmd_indx]->name)
         {
         case PUSH:
@@ -62,6 +64,12 @@ void StartTranslation (TranslatorInfo* self)
         case RET:
             LOG ("Translating RET");
             TranslateRet (self, self->cmds_array[cmd_indx]);
+            break;
+
+        case MOV_REG_NUM_CMD:
+            LOG ("Translating mov reg, num\n");
+            TranslateMovRegNum (self, self->cmds_array[cmd_indx]);
+            break;
 
         default:
             break;
@@ -103,6 +111,18 @@ void WriteAbsPtr (TranslatorInfo* self, uint64_t ptr)
 {
     *(uint64_t*) (self->dst_x86.content + self->dst_x86.len) = ptr;
     self->dst_x86.len += sizeof (uint64_t);
+}
+
+
+void TranslateMovRegNum (TranslatorInfo* self, Command* cur_cmd)
+{
+    Opcode mov_reg_num = {
+        .code = MOV_REG_NUM | (RAX_MASK + cur_cmd->reg_index) << BYTE(1),
+        .size = SIZE_MOV_REG_NUM
+    };
+    WriteCmd (self, mov_reg_num);
+
+    WriteDoubleNum (self, cur_cmd->value);
 }
 
 

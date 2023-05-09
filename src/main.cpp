@@ -12,6 +12,7 @@ int main()
     ParseOnStructs (&TranslatorInfo);
 
     DumpRawCmds (&TranslatorInfo);
+    OptimizeCmdFlow (&TranslatorInfo);
 
     FillCmdIp (&TranslatorInfo);
     FillJumpLables (&TranslatorInfo);

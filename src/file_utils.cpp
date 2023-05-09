@@ -18,10 +18,6 @@ FILE* get_file (const char file_name[], const char* mode)
 }
 
 
-
-
-
-
 FILE* close_file (FILE* file, const char* name)
 {
     assert (file != nullptr);
