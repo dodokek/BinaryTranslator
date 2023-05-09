@@ -98,6 +98,10 @@ enum OPCODES_x86 : uint64_t // everything reversed
     COND_JMP = 0x000F,
             //   ^-- by applying bit mask, can get all types of jmp
 
+    LEA_RDI_RSP = 0x00247C8D48, // lea rdi, [rsp + ?]
+            //       ^----------------------------+
+
+
 // Constant expressions, no need for bit masks
 
     MOV_R10 = 0xBA49,   // mov r10, <64b ptr>. Begin of memory must be stored in R10
@@ -130,9 +134,7 @@ enum OPCODES_x86 : uint64_t // everything reversed
     SQRTPD_XMM0_XMM0 = 0xC0510F66,   // get square root from xmm0 and store it in xmm0
 
     
-    LEA_RDI_RSP = 0x00247C8D48 // lea rdi, [rsp + ?]
-            //       ^----------------------------+
-
+    
 };
 
 
