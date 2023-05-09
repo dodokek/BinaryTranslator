@@ -1,4 +1,8 @@
-#include "../include/translator.h"
+#include "../include/translation.h"
+#include "../include/parser.h"
+#include "../include/optimizer.h"
+
+
 
 int main()
 {
