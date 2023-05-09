@@ -1,6 +1,7 @@
 #include "../include/translation.h"
 #include "../include/parser.h"
 #include "../include/optimizer.h"
+#include "../include/write_in_elf.h"
 
 
 
@@ -21,6 +22,9 @@ int main()
     StartTranslation (&TranslatorInfo);
 
     Dump86Buffer (&TranslatorInfo);
+
+    WriteInelf (&TranslatorInfo);
+
 
     RunCode (&TranslatorInfo);
 }
