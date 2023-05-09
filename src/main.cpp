@@ -9,6 +9,7 @@ int main()
 
     DumpRawCmds (&TranslatorInfo);
 
+    FillCmdIp (&TranslatorInfo);
     FillJumpLables (&TranslatorInfo);
     DumpRawCmds (&TranslatorInfo);
 

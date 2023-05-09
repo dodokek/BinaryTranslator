@@ -289,7 +289,7 @@ struct InstructionSizes
 {
     EnumCommands id;
     
-    int original_size;
+    int native_size;
     int x86_size;
 };
 
@@ -325,11 +325,16 @@ struct CmdsBuffer
 };
 
 
-// IR
+// IR - small but powerful
+
 struct Command 
 {
     EnumCommands name;
-    int orig_ip;    
+
+    int native_size;
+    int x86_size;
+
+    int native_ip;
     int x86_ip;
     
     int reg_index;
@@ -347,8 +352,7 @@ struct TranslatorInfo
     Command** cmds_array; 
     int cmds_counter;
 
-    int orig_ip_counter;
-    int x86_ip_counter;
+    int native_ip_counter;
 
     char* memory_buffer; // Buffer for commands, addressing to memory  
 };
@@ -360,6 +364,10 @@ struct TranslatorInfo
 // Functions ||
 //           \/
 
+void FillCmdIp (TranslatorInfo* self);
+
+void OptimizeCodeFlow (TranslatorInfo* self);
+
 void WriteAbsPtr (TranslatorInfo* self, uint64_t ptr);
 
 void WritePtr (TranslatorInfo* self, uint32_t ptr);
@@ -370,7 +378,7 @@ void WriteCmd (TranslatorInfo* self, Opcode cmd);
 
 void FillJumpLables (TranslatorInfo* self);
 
-int FindJumpIp (TranslatorInfo* self, int orig_ip);
+int FindJumpIp (TranslatorInfo* self, int native_ip);
 
 char* GetNameFromId (EnumCommands id);
 

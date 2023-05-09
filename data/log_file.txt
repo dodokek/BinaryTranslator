@@ -3,21 +3,124 @@ Ip   8:
 Ip  18:
 	Id: 6
 Ip  28:
+	Id: 1
+Ip  38:
+	Id: 6
+Ip  48:
+	Id: 17
+	Yeah, it is jump
+Ip  58:
+	Id: 1
+Ip  68:
+	Id: 7
+Ip  69:
 	Id: 18
-Ip  29:
+Ip  70:
+	Id: 1
+Ip  80:
+	Id: 1
+Ip  90:
+	Id: 2
+Ip  91:
+	Id: 6
+Ip 101:
+	Id: 1
+Ip 111:
+	Id: 1
+Ip 121:
+	Id: 4
+Ip 122:
+	Id: 6
+Ip 132:
+	Id: 1
+Ip 142:
+	Id: 1
+Ip 152:
+	Id: 14
+	Yeah, it is jump
+Ip 162:
+	Id: 17
+	Yeah, it is jump
+Ip 172:
+	Id: 18
+Ip 173:
 End of prog.
 
 ================ Begin of struct dump ==================
 
-Command < PUSH > | Orig ip: 8 | x86 ip: 0
+Command < PUSH > | Native/x86 size: 10/11 | x86 ip: 0
 Checksum: 32
 	+Operating width digit, value: 5
 
-Command < POP > | Orig ip: 18 | x86 ip: 11
+Command < POP > | Native/x86 size: 10/1 | x86 ip: 0
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 1
+
+Command < POP > | Native/x86 size: 10/1 | x86 ip: 0
 Checksum: 64
 	+Using register, its id: 0
 
-Command < RET > | Orig ip: 28 | x86 ip: 12
+Command < CALL > | Native/x86 size: 10/5 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 70
+
+Command < PUSH > | Native/x86 size: 10/1 | x86 ip: 0
+Checksum: 64
+	+Using register, its id: 0
+
+Command < OUT > | Native/x86 size: 1/34 | x86 ip: 0
+
+Command < RET > | Native/x86 size: 1/1 | x86 ip: 0
+
+Command < PUSH > | Native/x86 size: 10/1 | x86 ip: 0
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Native/x86 size: 10/1 | x86 ip: 0
+Checksum: 64
+	+Using register, its id: 0
+
+Command < MUL > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < POP > | Native/x86 size: 10/1 | x86 ip: 0
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 1
+
+Command < PUSH > | Native/x86 size: 10/1 | x86 ip: 0
+Checksum: 64
+	+Using register, its id: 2
+
+Command < SUB > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < POP > | Native/x86 size: 10/1 | x86 ip: 0
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 1
+
+Command < PUSH > | Native/x86 size: 10/1 | x86 ip: 0
+Checksum: 64
+	+Using register, its id: 2
+
+Command < JE > | Native/x86 size: 10/26 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 172
+
+Command < CALL > | Native/x86 size: 10/5 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 70
+
+Command < RET > | Native/x86 size: 1/1 | x86 ip: 0
 
 ================ End of struct dump ==================
 
@@ -25,6 +128,15 @@ Command < RET > | Orig ip: 28 | x86 ip: 12
 
 ---------- Filling labels --------
 
+	Yeah, it is jump
+ 4: Trying to find x86 ip for ip 70:
+	 Found, x86 ip is 65
+	Yeah, it is jump
+18: Trying to find x86 ip for ip 172:
+	 Found, x86 ip is 176
+	Yeah, it is jump
+19: Trying to find x86 ip for ip 70:
+	 Found, x86 ip is 65
 
 
 ---------- End filling labels --------
@@ -32,15 +144,79 @@ Command < RET > | Orig ip: 28 | x86 ip: 12
 
 ================ Begin of struct dump ==================
 
-Command < PUSH > | Orig ip: 8 | x86 ip: 0
+Command < PUSH > | Native/x86 size: 10/11 | x86 ip: 0
 Checksum: 32
 	+Operating width digit, value: 5
 
-Command < POP > | Orig ip: 18 | x86 ip: 11
+Command < POP > | Native/x86 size: 10/1 | x86 ip: 11
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Native/x86 size: 10/11 | x86 ip: 12
+Checksum: 32
+	+Operating width digit, value: 1
+
+Command < POP > | Native/x86 size: 10/1 | x86 ip: 23
 Checksum: 64
 	+Using register, its id: 0
 
-Command < RET > | Orig ip: 28 | x86 ip: 12
+Command < CALL > | Native/x86 size: 10/5 | x86 ip: 24
+	Yeah, it is jump
+	+Wants to jump into 65
+
+Command < PUSH > | Native/x86 size: 10/1 | x86 ip: 29
+Checksum: 64
+	+Using register, its id: 0
+
+Command < OUT > | Native/x86 size: 1/34 | x86 ip: 30
+
+Command < RET > | Native/x86 size: 1/1 | x86 ip: 64
+
+Command < PUSH > | Native/x86 size: 10/1 | x86 ip: 65
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Native/x86 size: 10/1 | x86 ip: 66
+Checksum: 64
+	+Using register, its id: 0
+
+Command < MUL > | Native/x86 size: 1/26 | x86 ip: 67
+
+Command < POP > | Native/x86 size: 10/1 | x86 ip: 93
+Checksum: 64
+	+Using register, its id: 0
+
+Command < PUSH > | Native/x86 size: 10/11 | x86 ip: 94
+Checksum: 32
+	+Operating width digit, value: 1
+
+Command < PUSH > | Native/x86 size: 10/1 | x86 ip: 105
+Checksum: 64
+	+Using register, its id: 2
+
+Command < SUB > | Native/x86 size: 1/26 | x86 ip: 106
+
+Command < POP > | Native/x86 size: 10/1 | x86 ip: 132
+Checksum: 64
+	+Using register, its id: 2
+
+Command < PUSH > | Native/x86 size: 10/11 | x86 ip: 133
+Checksum: 32
+	+Operating width digit, value: 1
+
+Command < PUSH > | Native/x86 size: 10/1 | x86 ip: 144
+Checksum: 64
+	+Using register, its id: 2
+
+Command < JE > | Native/x86 size: 10/26 | x86 ip: 145
+	Yeah, it is jump
+	+Wants to jump into 176
+
+Command < CALL > | Native/x86 size: 10/5 | x86 ip: 171
+	Yeah, it is jump
+	+Wants to jump into 65
+
+Command < RET > | Native/x86 size: 1/1 | x86 ip: 176
 
 ================ End of struct dump ==================
 
@@ -64,7 +240,221 @@ Command < RET > | Orig ip: 28 | x86 ip: 12
 11:Push/Pop REG
 
 ##########
+	 0: 5a 
+##########
+
+<12>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+23:Push/Pop REG
+
+##########
 	 0: 58 
+##########
+
+Translating Jump or Call
+##########
+	 0: e8 
+##########
+
+29:Push/Pop REG
+
+##########
+	 0: 50 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+65:Push/Pop REG
+
+##########
+	 0: 52 
+##########
+
+66:Push/Pop REG
+
+##########
+	 0: 50 
+##########
+
+10: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+93:Push/Pop REG
+
+##########
+	 0: 58 
+##########
+
+<94>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+105:Push/Pop REG
+
+##########
+	 0: 52 
+##########
+
+14: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5c c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+132:Push/Pop REG
+
+##########
+	 0: 5a 
+##########
+
+<133>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+144:Push/Pop REG
+
+##########
+	 0: 52 
+##########
+
+18: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 84 
+##########
+
+Translating Jump or Call
+##########
+	 0: e8 
 ##########
 
 Translating RET
@@ -81,10 +471,30 @@ Translating RET
 
 ====== x86 buffer dump begin =======
 
- 0: 49 ba 00 d0 31 02 00 00 
+ 0: 49 ba 00 60 b9 01 00 00 
  8: 00 00 48 be 00 00 00 00 
-16: 00 00 14 40 56 58 c3 c3 
-24: 00 
+16: 00 00 14 40 56 5a 48 be 
+24: 00 00 00 00 00 00 f0 3f 
+32: 56 58 e8 24 00 00 00 50 
+40: f2 0f 10 44 24 00 41 52 
+48: 53 52 51 50 49 89 e4 48 
+56: 83 e4 f0 e8 82 d7 86 fe 
+64: 4c 89 e4 58 59 5a 5b 41 
+72: 5a 5f c3 52 50 f2 0f 10 
+80: 44 24 00 f2 0f 10 4c 24 
+88: 08 48 83 c4 08 f2 0f 59 
+96: c1 f2 0f 11 44 24 00 58 
+104: 48 be 00 00 00 00 00 00 
+112: f0 3f 56 52 f2 0f 10 44 
+120: 24 00 f2 0f 10 4c 24 08 
+128: 48 83 c4 08 f2 0f 5c c1 
+136: f2 0f 11 44 24 00 5a 48 
+144: be 00 00 00 00 00 00 f0 
+152: 3f 56 52 f2 0f 10 44 24 
+160: 00 f2 0f 10 4c 24 08 48 
+168: 83 c4 10 66 0f 2e c1 0f 
+176: 84 05 00 00 00 e8 91 ff 
+184: ff ff c3 c3 00 
 
 ====== x86 buffer dump end =======
 

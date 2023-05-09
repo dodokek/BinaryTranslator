@@ -40,8 +40,7 @@ void TranslatorCtor (TranslatorInfo* self)
     self->cmds_array = nullptr;
     self->cmds_counter = 0;
 
-    self->orig_ip_counter = 0;
-    self->x86_ip_counter = 0;
+    self->native_ip_counter = 0;
 }
 
 
@@ -75,32 +74,59 @@ void ParseOnStructs (TranslatorInfo* self)
     if (AllocateCmdArrays (self) == ALLOCATION_FAILURE)
         LOG ("Failed to allocate the memory for buffers");
 
-    self->orig_ip_counter = HEADER_OFFSET;
+    self->native_ip_counter = HEADER_OFFSET;
 
-    int counter = 0;
-    while (self->orig_ip_counter < self->src_cmds.len)
+    int ip_counter = 0;
+    while (ip_counter < self->src_cmds.len)
     {
-        LOG ("Ip %3d:\n", self->orig_ip_counter);
+        LOG ("Ip %3d:\n", self->native_ip_counter);
 
-        int flag = CmdToStruct (self->src_cmds.content + self->orig_ip_counter, self);
+        int flag = CmdToStruct (self->src_cmds.content + self->native_ip_counter, self);
         
-
         if (flag == END_OF_PROG)
             break;   
-
+        
+        ip_counter++;
     }
+}
+
+
+int CmdToStruct (const char* code, TranslatorInfo* self)
+{
+
+    #define DEF_CMD(name, id)            \
+        case name:                       \
+            LOG ("\tId: %d\n", name);    \
+            FillCmdInfo (code, self);    \
+            return 0;                    \
+
+    switch (*code & CMD_BITMASK)
+    {
+        #include "../codegen/cmds.h"    // generating cases for all cmds
+
+        case HLT:
+            LOG ("End of prog.\n");
+            return END_OF_PROG;
+
+        default:
+            LOG ("*!**!**!**!* SIGILL %d\n *!**!**!**!*", *code);
+            return END_OF_PROG;
+    }
+
+    #undef DEF_CMD
+
 }
 
 
 int FillCmdInfo (const char* code, TranslatorInfo* self)
 {
+
     int name = *code & CMD_BITMASK; 
     int cmd = *code;
 
-    Command* new_cmd = (Command*) calloc (1, sizeof (Command));
+    self->native_ip_counter += InstrSizes[name].native_size;
 
-    new_cmd->orig_ip = self->orig_ip_counter;
-    new_cmd->x86_ip  = self->x86_ip_counter;
+    Command* new_cmd = (Command*) calloc (1, sizeof (Command));
 
     if (name == PUSH || name == POP)
     {
@@ -113,12 +139,13 @@ int FillCmdInfo (const char* code, TranslatorInfo* self)
 
         new_cmd->name = (EnumCommands) name;
         
-        self->x86_ip_counter  += InstrSizes[name].x86_size;
-        self->orig_ip_counter += InstrSizes[name].original_size;
+        new_cmd->x86_size    = InstrSizes[name].x86_size;
+        new_cmd->native_size = InstrSizes[name].native_size;
     }
 
     self->cmds_array[self->cmds_counter] = new_cmd;
     self->cmds_counter++;
+
 
     return 0;
 }
@@ -137,37 +164,37 @@ void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
     new_cmd->checksum |= (cmd & ARG_MEM); 
     new_cmd->checksum |= (cmd & ARG_REG); 
     
-    self->orig_ip_counter += InstrSizes[name].original_size;
+    new_cmd->native_size = InstrSizes[name].native_size;
     
     switch (new_cmd->checksum)
     {
     case IMM:
         if (name == PUSH)
-            self->x86_ip_counter += PUSH_IMM_SIZE; 
+            new_cmd->x86_size = PUSH_IMM_SIZE; 
         else
-            self->x86_ip_counter += POP_REG_SIZE;
+            new_cmd->x86_size = POP_REG_SIZE;
         break;
 
     case REG:
         if (name == PUSH)
-            self->x86_ip_counter += PUSH_REG_SIZE; 
+            new_cmd->x86_size = PUSH_REG_SIZE; 
         else
-            self->x86_ip_counter += POP_REG_SIZE;
+            new_cmd->x86_size = POP_REG_SIZE;
         break;
     
     case IMM_RAM:
         if (name == PUSH)
-            self->x86_ip_counter += PUSH_IMM_RAM_SIZE; 
+            new_cmd->x86_size = PUSH_IMM_RAM_SIZE; 
         else
-            self->x86_ip_counter += POP_IMM_RAM_SIZE;
+            new_cmd->x86_size = POP_IMM_RAM_SIZE;
         break;
 
     case IMM_REG_RAM:
     case REG_RAM:
         if (name == PUSH)
-            self->x86_ip_counter += PUSH_REG_RAM_SIZE; 
+            new_cmd->x86_size = PUSH_REG_RAM_SIZE; 
         else
-            self->x86_ip_counter += POP_REG_RAM_SIZE;
+            new_cmd->x86_size = POP_REG_RAM_SIZE;
         break;
 
 
@@ -176,6 +203,28 @@ void FillPushPopStruct (TranslatorInfo* self, Command* new_cmd,
         break;
     }
 }
+
+
+void OptimizeCodeFlow (TranslatorInfo* self)
+{
+
+}
+
+
+void FillCmdIp (TranslatorInfo* self)
+{
+    int native_ip = HEADER_OFFSET;
+    int x86_ip = 0;
+
+    for (int i = 0; i < self->cmds_counter; i++)
+    {
+        self->cmds_array[i]->native_ip = native_ip;
+        self->cmds_array[i]->x86_ip    = x86_ip;
+
+        native_ip += self->cmds_array[i]->native_size;
+        x86_ip    += self->cmds_array[i]->x86_size;
+    }
+} 
 
 
 bool IsJump (int cmd)
@@ -208,11 +257,11 @@ void FillJumpLables (TranslatorInfo* self)
 }
 
 
-int FindJumpIp (TranslatorInfo* self, int orig_ip)
+int FindJumpIp (TranslatorInfo* self, int native_ip)
 {
     for (int i = 0; i < self->cmds_counter; i++)
     {
-        if (self->cmds_array[i]->orig_ip == orig_ip)
+        if (self->cmds_array[i]->native_ip == native_ip)
         {
             LOG ("\t Found, x86 ip is %d\n", self->cmds_array[i]->x86_ip)
             return self->cmds_array[i]->x86_ip;
@@ -929,31 +978,7 @@ void TranslateConditionJmp (TranslatorInfo* self, Command* jmp_cmd)
 
 
 
-int CmdToStruct (const char* code, TranslatorInfo* self)
-{
 
-    #define DEF_CMD(name, id)            \
-        case name:                       \
-            LOG ("\tId: %d\n", name);    \
-            FillCmdInfo (code, self);    \
-            return 0;                    \
-
-    switch (*code & CMD_BITMASK)
-    {
-        #include "../codegen/cmds.h"    // generating cases for all cmds
-
-        case HLT:
-            LOG ("End of prog.\n");
-            return END_OF_PROG;
-
-        default:
-            LOG ("*!**!**!**!* SIGILL %d\n *!**!**!**!*", *code);
-            return END_OF_PROG;
-    }
-
-    #undef DEF_CMD
-
-}
 
 
 // =========================== DUMP ===============================
@@ -992,8 +1017,9 @@ void DumpRawCmds (TranslatorInfo* self)
     {
         Command* cur_cmd = self->cmds_array[i];
 
-        LOG ("\nCommand < %s > | Orig ip: %d | x86 ip: %d\n",
-                GetNameFromId(cur_cmd->name), cur_cmd->orig_ip, cur_cmd->x86_ip);
+        LOG ("\nCommand < %s > | Native/x86 size: %d/%d | x86 ip: %d\n",
+                GetNameFromId(cur_cmd->name), cur_cmd->native_size,
+                cur_cmd->x86_size, cur_cmd->x86_ip);
         if (cur_cmd->name == PUSH || cur_cmd->name == POP)
         {
             LOG ("Checksum: %d\n", cur_cmd->checksum);
