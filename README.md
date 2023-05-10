@@ -23,6 +23,10 @@ Step 2: Build the project using Makefile
 ~~~
 
 
+
+
+
+
 ## Translation table
 
 Here is the translation table from *Native assembly* to *x86-64 assembly*
@@ -110,6 +114,37 @@ ucomisd xmm0, xmm1
 The rest translation of conditional jumps is the same with non-conditional jump.
 
 </details>
+
+## Optimizations
+
+Before translation, binary code is transformed into *IR*. Thanks to that, some instrucions might be optimized.
+
+### Immediate's storage optimization
+In native Assembly representation we can see a lot of instruction series like this:
+
+~~~C++
+push 123
+pop rax
+~~~
+
+This obviously can be transformed into:
+
+~~~
+mov rax, 123
+~~~
+
+According to translation table, *x86-64* will be *2 bytes shorter*. The bigger source file would be - the greater performance boost we'll get.
+
+### Arithmetics optimizations
+Any structures like these:
+
+~~~C++
+push 1  |
+push 2  |----> push 1+2
+add     |
+~~~
+
+The same optimization is applied on *sub, mul and div* instructions.
 
 
 ## Performance test
