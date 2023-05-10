@@ -148,7 +148,7 @@ The same optimization is applied on *sub, mul and div* instructions.
 
 
 ## Performance test
-Using <a href="https://githrsiub.com/dodokek/ProgrammingLanguage">my assembly work implementation</a> I wrote program, wich finds factorial 1000 times. 
+Using <a href="https://githrsiub.com/dodokek/ProgrammingLanguage">my assembly work implementation</a> I wrote program, wich finds factorial. 
 
 I executed it with my CPU work implementation on C. After that I executed it using my Binary translator.
 
@@ -158,6 +158,8 @@ Let's see the improvement in speed:
 | :------: | :------:  | :---------------: | 
 | Execution time (mcr. s) | 810       | 36                 |  
 | Relative boost | 1       | 22.5                 |  
+
+> Program was given $5!$ to calculate 1000 times 
 
 
 Let's also test solving of Quadratic equation:
@@ -178,7 +180,9 @@ We can see the huge improvement in speed, JIT compilation rules!
 
 ## Conclusion
 
-*Just in time compilation* - an essential part in many projects. Despite that I implemented only a small part of real JIT, I aquired useful skills. I get a vast amount of knowledge about CPU architecture and x86-64 commands structure. All this journey... was... pretty good. 
+I learned a lot about Binary translators, IR and x86-64 architecture. In future I want to improve IR, so it will have real CFG. A lot of new optimizations might be done with the help of it. 
+
+<br> <br> All this journey from simple Quadratic equation to Binary translator was... pretty good. 
 
 
 ## Useful links
