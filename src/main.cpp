@@ -25,7 +25,7 @@ int main()
 
     // WriteInelf (&TranslatorInfo);
 
-    RunCode (&TranslatorInfo);
+    // RunCode (&TranslatorInfo);
 }
 
 
