@@ -4,8 +4,8 @@
     FILE* LOG_FILE = get_file ("../data/log_file.txt", "w");
 #endif
 
-const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
-// const char* INPUT_FILE_PATH = "../data/quadratic_with_in.bin";
+// const char* INPUT_FILE_PATH = "../../Processor/data/cmds.bin";
+const char* INPUT_FILE_PATH = "../ProgrammingLanguage/execution/proc/data/cmds.bin";
 
 
 void TranslatorCtor (TranslatorInfo* self)

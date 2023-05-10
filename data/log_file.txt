@@ -1,42 +1,1052 @@
 Ip   8:
-	Id: 1
+	Id: 17
+	Yeah, it is jump
 Ip  18:
-	Id: 6
-Ip  28:
 	Id: 18
+Ip  19:
+	Id: 1
 Ip  29:
+	Id: 6
+Ip  39:
+	Id: 1
+Ip  49:
+	Id: 6
+Ip  59:
+	Id: 1
+Ip  69:
+	Id: 6
+Ip  79:
+	Id: 1
+Ip  89:
+	Id: 6
+Ip  99:
+	Id: 1
+Ip 109:
+	Id: 1
+Ip 119:
+	Id: 2
+Ip 120:
+	Id: 1
+Ip 130:
+	Id: 2
+Ip 131:
+	Id: 1
+Ip 141:
+	Id: 1
+Ip 151:
+	Id: 2
+Ip 152:
+	Id: 4
+Ip 153:
+	Id: 6
+Ip 163:
+	Id: 1
+Ip 173:
+	Id: 7
+Ip 174:
+	Id: 1
+Ip 184:
+	Id: 1
+Ip 194:
+	Id: 15
+	Yeah, it is jump
+Ip 204:
+	Id: 1
+Ip 214:
+	Id: 1
+Ip 224:
+	Id: 15
+	Yeah, it is jump
+Ip 234:
+	Id: 1
+Ip 244:
+	Id: 7
+Ip 245:
+	Id: 18
+Ip 246:
+	Id: 9
+	Yeah, it is jump
+Ip 256:
+	Id: 1
+Ip 266:
+	Id: 1
+Ip 276:
+	Id: 1
+Ip 286:
+	Id: 4
+Ip 287:
+	Id: 5
+Ip 288:
+	Id: 6
+Ip 298:
+	Id: 1
+Ip 308:
+	Id: 7
+Ip 309:
+	Id: 18
+Ip 310:
+	Id: 9
+	Yeah, it is jump
+Ip 320:
+	Id: 1
+Ip 330:
+	Id: 6
+Ip 340:
+	Id: 1
+Ip 350:
+	Id: 1
+Ip 360:
+	Id: 15
+	Yeah, it is jump
+Ip 370:
+	Id: 1
+Ip 380:
+	Id: 1
+Ip 390:
+	Id: 2
+Ip 391:
+	Id: 1
+Ip 401:
+	Id: 1
+Ip 411:
+	Id: 4
+Ip 412:
+	Id: 5
+Ip 413:
+	Id: 6
+Ip 423:
+	Id: 1
+Ip 433:
+	Id: 7
+Ip 434:
+	Id: 18
+Ip 435:
+	Id: 9
+	Yeah, it is jump
+Ip 445:
+	Id: 1
+Ip 455:
+	Id: 1
+Ip 465:
+	Id: 12
+	Yeah, it is jump
+Ip 475:
+	Id: 1
+Ip 485:
+	Id: 7
+Ip 486:
+	Id: 1
+Ip 496:
+	Id: 7
+Ip 497:
+	Id: 18
+Ip 498:
+	Id: 9
+	Yeah, it is jump
+Ip 508:
+	Id: 1
+Ip 518:
+	Id: 1
+Ip 528:
+	Id: 2
+Ip 529:
+	Id: 1
+Ip 539:
+	Id: 1
+Ip 549:
+	Id: 4
+Ip 550:
+	Id: 1
+Ip 560:
+	Id: 19
+Ip 561:
+	Id: 3
+Ip 562:
+	Id: 5
+Ip 563:
+	Id: 6
+Ip 573:
+	Id: 1
+Ip 583:
+	Id: 1
+Ip 593:
+	Id: 2
+Ip 594:
+	Id: 1
+Ip 604:
+	Id: 19
+Ip 605:
+	Id: 1
+Ip 615:
+	Id: 1
+Ip 625:
+	Id: 4
+Ip 626:
+	Id: 4
+Ip 627:
+	Id: 5
+Ip 628:
+	Id: 6
+Ip 638:
+	Id: 1
+Ip 648:
+	Id: 7
+Ip 649:
+	Id: 1
+Ip 659:
+	Id: 7
+Ip 660:
+	Id: 18
+Ip 661:
 End of prog.
 
 ================ Begin of struct dump ==================
+
+Command < CALL: 17 > | Native/x86 size: 10/5 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 19
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 3802
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 0
+--- Adresses to memory
 
 Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
 Checksum: 32
 	+Operating width digit, value: 1
 
-Command < POP: 6 > | Native/x86 size: 10/1 | x86 ip: 0
-Checksum: 64
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
 	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 4
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 3
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 4
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JNE: 15 > | Native/x86 size: 10/26 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 320
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JNE: 15 > | Native/x86 size: 10/26 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 256
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 0
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 0
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 0
+
+Command < JMP: 9 > | Native/x86 size: 10/5 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 310
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < DIV: 5 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 5
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 5
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 0
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 0
+
+Command < JMP: 9 > | Native/x86 size: 10/5 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 340
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 1337
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 6
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JNE: 15 > | Native/x86 size: 10/26 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 445
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < DIV: 5 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 5
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 5
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 0
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 0
+
+Command < JMP: 9 > | Native/x86 size: 10/5 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 445
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < JA: 12 > | Native/x86 size: 10/26 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 508
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 6
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 6
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 0
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 0
+
+Command < JMP: 9 > | Native/x86 size: 10/5 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 660
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < SQR: 19 > | Native/x86 size: 1/16 | x86 ip: 0
+
+Command < ADD: 3 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < DIV: 5 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 7
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < SQR: 19 > | Native/x86 size: 1/16 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < DIV: 5 > | Native/x86 size: 1/26 | x86 ip: 0
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 8
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 7
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 0
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 8
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 0
 
 Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 0
 
 ================ End of struct dump ==================
 
 Optimization attempt: mov r?x, num
-	 Storage optimization success: indx 0
+Optimization attempt: mov r?x, num
+Optimization attempt: mov r?x, num
+Optimization attempt: mov r?x, num
+Optimization attempt: mov r?x, num
+Optimization attempt: constant arithmetics
+Optimization attempt: constant arithmetics
+Optimization attempt: constant arithmetics
+Optimization attempt: constant arithmetics
+Optimization attempt: mov r?x, num
+Optimization attempt: mov r?x, num
+Optimization attempt: mov r?x, num
+Optimization attempt: constant arithmetics
+Optimization attempt: constant arithmetics
+Optimization attempt: mov r?x, num
+Optimization attempt: mov r?x, num
+Optimization attempt: mov r?x, num
+Optimization attempt: constant arithmetics
+Optimization attempt: mov r?x, num
+Optimization attempt: constant arithmetics
+Optimization attempt: constant arithmetics
+Optimization attempt: mov r?x, num
+Optimization attempt: mov r?x, num
+Optimization attempt: constant arithmetics
+Optimization attempt: mov r?x, num
+Optimization attempt: constant arithmetics
+Optimization attempt: constant arithmetics
+Optimization attempt: constant arithmetics
+Optimization attempt: mov r?x, num
+Optimization attempt: constant arithmetics
+Optimization attempt: mov r?x, num
+Optimization attempt: constant arithmetics
+Optimization attempt: constant arithmetics
+Optimization attempt: constant arithmetics
 
 
 ---------- Filling labels --------
 
+	Yeah, it is jump
+ 0: Trying to find x86 ip for ip 19:
+	 Found, x86 ip is 6
+	Yeah, it is jump
+24: Trying to find x86 ip for ip 320:
+	 Found, x86 ip is 994
+	Yeah, it is jump
+27: Trying to find x86 ip for ip 256:
+	 Found, x86 ip is 755
+	Yeah, it is jump
+31: Trying to find x86 ip for ip 310:
+	 Found, x86 ip is 989
+	Yeah, it is jump
+41: Trying to find x86 ip for ip 340:
+	 Found, x86 ip is 1039
+	Yeah, it is jump
+46: Trying to find x86 ip for ip 445:
+	 Found, x86 ip is 1386
+	Yeah, it is jump
+58: Trying to find x86 ip for ip 445:
+	 Found, x86 ip is 1386
+	Yeah, it is jump
+61: Trying to find x86 ip for ip 508:
+	 Found, x86 ip is 1599
+	Yeah, it is jump
+67: Trying to find x86 ip for ip 660:
+	 Found, x86 ip is 2291
 
 
 ---------- End filling labels --------
 
 
 ================ Begin of struct dump ==================
-Not standart instrucion.
-Command < (null): 20 > | Native/x86 size: 20/10 | x86 ip: 0
 
-Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 10
+Command < CALL: 17 > | Native/x86 size: 10/5 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 6
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 5
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 6
+Checksum: 32
+	+Operating width digit, value: 3802
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 17
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 0
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 51
+Checksum: 32
+	+Operating width digit, value: 1
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 62
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 96
+Checksum: 32
+	+Operating width digit, value: 4
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 107
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 141
+Checksum: 32
+	+Operating width digit, value: 3
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 152
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 186
+Checksum: 32
+	+Operating width digit, value: 4
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 197
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 231
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 257
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 291
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 317
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 351
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 385
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 411
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 437
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 471
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 505
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 539
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 573
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JNE: 15 > | Native/x86 size: 10/26 | x86 ip: 584
+	Yeah, it is jump
+	+Wants to jump into 994
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 610
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 644
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JNE: 15 > | Native/x86 size: 10/26 | x86 ip: 655
+	Yeah, it is jump
+	+Wants to jump into 755
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 681
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 0
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 715
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 749
+
+Command < JMP: 9 > | Native/x86 size: 10/5 | x86 ip: 750
+	Yeah, it is jump
+	+Wants to jump into 989
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 755
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 789
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 3
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 823
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 834
+
+Command < DIV: 5 > | Native/x86 size: 1/26 | x86 ip: 860
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 886
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 5
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 920
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 5
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 954
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 988
+
+Command < JMP: 9 > | Native/x86 size: 10/5 | x86 ip: 989
+	Yeah, it is jump
+	+Wants to jump into 1039
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 994
+Checksum: 32
+	+Operating width digit, value: 1337
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 1005
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 6
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1039
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 1073
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < JNE: 15 > | Native/x86 size: 10/26 | x86 ip: 1084
+	Yeah, it is jump
+	+Wants to jump into 1386
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1110
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 1144
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 1155
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1181
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 1215
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 1226
+
+Command < DIV: 5 > | Native/x86 size: 1/26 | x86 ip: 1252
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 1278
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 5
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1312
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 5
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 1346
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 1380
+
+Command < JMP: 9 > | Native/x86 size: 10/5 | x86 ip: 1381
+	Yeah, it is jump
+	+Wants to jump into 1386
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 1386
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1397
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < JA: 12 > | Native/x86 size: 10/26 | x86 ip: 1431
+	Yeah, it is jump
+	+Wants to jump into 1599
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1457
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 6
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 1491
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1525
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 6
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 1559
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 1593
+
+Command < JMP: 9 > | Native/x86 size: 10/5 | x86 ip: 1594
+	Yeah, it is jump
+	+Wants to jump into 2291
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 1599
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1610
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 1644
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1670
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 1704
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 1715
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1741
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < SQR: 19 > | Native/x86 size: 1/16 | x86 ip: 1775
+
+Command < ADD: 3 > | Native/x86 size: 1/26 | x86 ip: 1791
+
+Command < DIV: 5 > | Native/x86 size: 1/26 | x86 ip: 1817
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 1843
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 7
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 1877
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1888
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < MUL: 2 > | Native/x86 size: 1/26 | x86 ip: 1922
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1948
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 4
+--- Adresses to memory
+
+Command < SQR: 19 > | Native/x86 size: 1/16 | x86 ip: 1982
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 1998
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 2032
+Checksum: 32
+	+Operating width digit, value: 0
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 2043
+
+Command < SUB: 4 > | Native/x86 size: 1/26 | x86 ip: 2069
+
+Command < DIV: 5 > | Native/x86 size: 1/26 | x86 ip: 2095
+
+Command < POP: 6 > | Native/x86 size: 10/34 | x86 ip: 2121
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 8
+--- Adresses to memory
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 2155
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 7
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 2189
+
+Command < PUSH: 1 > | Native/x86 size: 10/34 | x86 ip: 2223
+Checksum: 224
+	+Using register, its id: 0
+	+Operating width digit, value: 8
+--- Adresses to memory
+
+Command < OUT: 7 > | Native/x86 size: 1/34 | x86 ip: 2257
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 2291
 
 ================ End of struct dump ==================
 
@@ -46,10 +1056,2793 @@ Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 10
 	 0: 49 ba 
 ##########
 
-Translating mov reg, num
+Translating Jump or Call
+##########
+	 0: e8 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+<6>:Push IMM
 
 ##########
-	 0: 48 b8 
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<51>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<96>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<141>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<186>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+12: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+14: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+17: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+18: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5c c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<573>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+24: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 85 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<644>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+27: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 85 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+Translating Jump or Call
+##########
+	 0: e9 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<823>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+35: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5c c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+36: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5e c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+Translating Jump or Call
+##########
+	 0: e9 
+##########
+
+<994>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<1073>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+46: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 85 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<1144>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+49: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<1215>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+52: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5c c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+53: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5e c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+Translating Jump or Call
+##########
+	 0: e9 
+##########
+
+<1386>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+61: Translating jmp
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 10 
+##########
+
+
+##########
+	 0: 66 0f 2e c1 
+##########
+
+
+##########
+	 0: 0f 87 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating RET
+##########
+	 0: c3 
+##########
+
+Translating Jump or Call
+##########
+	 0: e9 
+##########
+
+<1599>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+70: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<1704>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+73: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5c c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 66 0f 51 c0 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+76: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 58 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+77: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5e c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<1877>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+81: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 59 c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 66 0f 51 c0 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+<2032>:Push IMM
+
+##########
+	 0: 48 be 
+##########
+
+
+##########
+	 0: 56 
+##########
+
+86: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5c c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+87: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5c c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+88: Translating math
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: f2 0f 10 4c 24 08 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 0f 5e c1 
+##########
+
+
+##########
+	 0: f2 0f 11 44 24 00 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
+##########
+
+Translating push ram
+
+##########
+	 0: 50 
+##########
+
+
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 48 83 c4 08 
+##########
+
+
+##########
+	 0: f2 48 0f 2d f0 
+##########
+
+
+##########
+	 0: 48 c1 e6 03 
+##########
+
+
+##########
+	 0: 49 01 f2 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+
+##########
+	 0: 49 29 f2 
+##########
+
+Translating OUT
+##########
+	 0: f2 0f 10 44 24 00 
+##########
+
+
+##########
+	 0: 41 52 53 52 51 50 
+##########
+
+
+##########
+	 0: 49 89 e4 
+##########
+
+
+##########
+	 0: 48 83 e4 f0 
+##########
+
+
+##########
+	 0: e8 
+##########
+
+
+##########
+	 0: 4c 89 e4 
+##########
+
+
+##########
+	 0: 58 59 5a 5b 41 5a 
+##########
+
+
+##########
+	 0: 5f 
 ##########
 
 Translating RET
@@ -66,9 +3859,294 @@ Translating RET
 
 ====== x86 buffer dump begin =======
 
- 0: 49 ba 00 d0 df 01 00 00 
- 8: 00 00 48 b8 00 00 00 00 
-16: 00 00 f0 3f c3 c3 00 
+ 0: 49 ba 00 40 27 01 00 00 
+ 8: 00 00 e8 01 00 00 00 c3 
+16: 48 be 00 00 00 00 00 b4 
+24: ad 40 56 50 f2 0f 10 44 
+32: 24 00 48 83 c4 08 f2 48 
+40: 0f 2d f0 48 c1 e6 03 49 
+48: 01 f2 5f 49 89 ba 00 00 
+56: 00 00 49 29 f2 48 be 00 
+64: 00 00 00 00 00 f0 3f 56 
+72: 50 f2 0f 10 44 24 00 48 
+80: 83 c4 08 f2 48 0f 2d f0 
+88: 48 c1 e6 03 49 01 f2 5f 
+96: 49 89 ba 08 00 00 00 49 
+104: 29 f2 48 be 00 00 00 00 
+112: 00 00 10 40 56 50 f2 0f 
+120: 10 44 24 00 48 83 c4 08 
+128: f2 48 0f 2d f0 48 c1 e6 
+136: 03 49 01 f2 5f 49 89 ba 
+144: 10 00 00 00 49 29 f2 48 
+152: be 00 00 00 00 00 00 08 
+160: 40 56 50 f2 0f 10 44 24 
+168: 00 48 83 c4 08 f2 48 0f 
+176: 2d f0 48 c1 e6 03 49 01 
+184: f2 5f 49 89 ba 18 00 00 
+192: 00 49 29 f2 48 be 00 00 
+200: 00 00 00 00 10 40 56 50 
+208: f2 0f 10 44 24 00 48 83 
+216: c4 08 f2 48 0f 2d f0 48 
+224: c1 e6 03 49 01 f2 49 8b 
+232: ba 08 00 00 00 57 49 29 
+240: f2 f2 0f 10 44 24 00 f2 
+248: 0f 10 4c 24 08 48 83 c4 
+256: 08 f2 0f 59 c1 f2 0f 11 
+264: 44 24 00 50 f2 0f 10 44 
+272: 24 00 48 83 c4 08 f2 48 
+280: 0f 2d f0 48 c1 e6 03 49 
+288: 01 f2 49 8b ba 18 00 00 
+296: 00 57 49 29 f2 f2 0f 10 
+304: 44 24 00 f2 0f 10 4c 24 
+312: 08 48 83 c4 08 f2 0f 59 
+320: c1 f2 0f 11 44 24 00 50 
+328: f2 0f 10 44 24 00 48 83 
+336: c4 08 f2 48 0f 2d f0 48 
+344: c1 e6 03 49 01 f2 49 8b 
+352: ba 10 00 00 00 57 49 29 
+360: f2 50 f2 0f 10 44 24 00 
+368: 48 83 c4 08 f2 48 0f 2d 
+376: f0 48 c1 e6 03 49 01 f2 
+384: 49 8b ba 10 00 00 00 57 
+392: 49 29 f2 f2 0f 10 44 24 
+400: 00 f2 0f 10 4c 24 08 48 
+408: 83 c4 08 f2 0f 59 c1 f2 
+416: 0f 11 44 24 00 f2 0f 10 
+424: 44 24 00 f2 0f 10 4c 24 
+432: 08 48 83 c4 08 f2 0f 5c 
+440: c1 f2 0f 11 44 24 00 50 
+448: f2 0f 10 44 24 00 48 83 
+456: c4 08 f2 48 0f 2d f0 48 
+464: c1 e6 03 49 01 f2 5f 49 
+472: 89 ba 20 00 00 00 49 29 
+480: f2 50 f2 0f 10 44 24 00 
+488: 48 83 c4 08 f2 48 0f 2d 
+496: f0 48 c1 e6 03 49 01 f2 
+504: 49 8b ba 20 00 00 00 57 
+512: 49 29 f2 f2 0f 10 44 24 
+520: 00 41 52 53 52 51 50 49 
+528: 89 e4 48 83 e4 f0 e8 51 
+536: f8 18 ff 4c 89 e4 58 59 
+544: 5a 5b 41 5a 5f 50 f2 0f 
+552: 10 44 24 00 48 83 c4 08 
+560: f2 48 0f 2d f0 48 c1 e6 
+568: 03 49 01 f2 49 8b ba 08 
+576: 00 00 00 57 49 29 f2 48 
+584: be 00 00 00 00 00 00 00 
+592: 00 56 f2 0f 10 44 24 00 
+600: f2 0f 10 4c 24 08 48 83 
+608: c4 10 66 0f 2e c1 0f 85 
+616: 80 01 00 00 50 f2 0f 10 
+624: 44 24 00 48 83 c4 08 f2 
+632: 48 0f 2d f0 48 c1 e6 03 
+640: 49 01 f2 49 8b ba 10 00 
+648: 00 00 57 49 29 f2 48 be 
+656: 00 00 00 00 00 00 00 00 
+664: 56 f2 0f 10 44 24 00 f2 
+672: 0f 10 4c 24 08 48 83 c4 
+680: 10 66 0f 2e c1 0f 85 4a 
+688: 00 00 00 50 f2 0f 10 44 
+696: 24 00 48 83 c4 08 f2 48 
+704: 0f 2d f0 48 c1 e6 03 49 
+712: 01 f2 49 8b ba 00 00 00 
+720: 00 57 49 29 f2 f2 0f 10 
+728: 44 24 00 41 52 53 52 51 
+736: 50 49 89 e4 48 83 e4 f0 
+744: e8 7f f7 18 ff 4c 89 e4 
+752: 58 59 5a 5b 41 5a 5f c3 
+760: e9 ea 00 00 00 50 f2 0f 
+768: 10 44 24 00 48 83 c4 08 
+776: f2 48 0f 2d f0 48 c1 e6 
+784: 03 49 01 f2 49 8b ba 10 
+792: 00 00 00 57 49 29 f2 50 
+800: f2 0f 10 44 24 00 48 83 
+808: c4 08 f2 48 0f 2d f0 48 
+816: c1 e6 03 49 01 f2 49 8b 
+824: ba 18 00 00 00 57 49 29 
+832: f2 48 be 00 00 00 00 00 
+840: 00 00 00 56 f2 0f 10 44 
+848: 24 00 f2 0f 10 4c 24 08 
+856: 48 83 c4 08 f2 0f 5c c1 
+864: f2 0f 11 44 24 00 f2 0f 
+872: 10 44 24 00 f2 0f 10 4c 
+880: 24 08 48 83 c4 08 f2 0f 
+888: 5e c1 f2 0f 11 44 24 00 
+896: 50 f2 0f 10 44 24 00 48 
+904: 83 c4 08 f2 48 0f 2d f0 
+912: 48 c1 e6 03 49 01 f2 5f 
+920: 49 89 ba 28 00 00 00 49 
+928: 29 f2 50 f2 0f 10 44 24 
+936: 00 48 83 c4 08 f2 48 0f 
+944: 2d f0 48 c1 e6 03 49 01 
+952: f2 49 8b ba 28 00 00 00 
+960: 57 49 29 f2 f2 0f 10 44 
+968: 24 00 41 52 53 52 51 50 
+976: 49 89 e4 48 83 e4 f0 e8 
+984: |  f6 18 ff 4c 89 e4 58 
+992: 59 5a 5b 41 5a 5f c3 e9 
+1000: 2d 00 00 00 48 be 00 00 
+1008: 00 00 00 e4 94 40 56 50 
+1016: f2 0f 10 44 24 00 48 83 
+1024: c4 08 f2 48 0f 2d f0 48 
+1032: c1 e6 03 49 01 f2 5f 49 
+1040: 89 ba 30 00 00 00 49 29 
+1048: f2 50 f2 0f 10 44 24 00 
+1056: 48 83 c4 08 f2 48 0f 2d 
+1064: f0 48 c1 e6 03 49 01 f2 
+1072: 49 8b ba 20 00 00 00 57 
+1080: 49 29 f2 48 be 00 00 00 
+1088: 00 00 00 00 00 56 f2 0f 
+1096: 10 44 24 00 f2 0f 10 4c 
+1104: 24 08 48 83 c4 10 66 0f 
+1112: 2e c1 0f 85 14 01 00 00 
+1120: 50 f2 0f 10 44 24 00 48 
+1128: 83 c4 08 f2 48 0f 2d f0 
+1136: 48 c1 e6 03 49 01 f2 49 
+1144: 8b ba 08 00 00 00 57 49 
+1152: 29 f2 48 be 00 00 00 00 
+1160: 00 00 00 40 56 f2 0f 10 
+1168: 44 24 00 f2 0f 10 4c 24 
+1176: 08 48 83 c4 08 f2 0f 59 
+1184: c1 f2 0f 11 44 24 00 50 
+1192: f2 0f 10 44 24 00 48 83 
+1200: c4 08 f2 48 0f 2d f0 48 
+1208: c1 e6 03 49 01 f2 49 8b 
+1216: ba 10 00 00 00 57 49 29 
+1224: f2 48 be 00 00 00 00 00 
+1232: 00 00 00 56 f2 0f 10 44 
+1240: 24 00 f2 0f 10 4c 24 08 
+1248: 48 83 c4 08 f2 0f 5c c1 
+1256: f2 0f 11 44 24 00 f2 0f 
+1264: 10 44 24 00 f2 0f 10 4c 
+1272: 24 08 48 83 c4 08 f2 0f 
+1280: 5e c1 f2 0f 11 44 24 00 
+1288: 50 f2 0f 10 44 24 00 48 
+1296: 83 c4 08 f2 48 0f 2d f0 
+1304: 48 c1 e6 03 49 01 f2 5f 
+1312: 49 89 ba 28 00 00 00 49 
+1320: 29 f2 50 f2 0f 10 44 24 
+1328: 00 48 83 c4 08 f2 48 0f 
+1336: 2d f0 48 c1 e6 03 49 01 
+1344: f2 49 8b ba 28 00 00 00 
+1352: 57 49 29 f2 f2 0f 10 44 
+1360: 24 00 41 52 53 52 51 50 
+1368: 49 89 e4 48 83 e4 f0 e8 
+1376: 08 f5 18 ff 4c 89 e4 58 
+1384: 59 5a 5b 41 5a 5f c3 e9 
+1392: 00 00 00 00 48 be 00 00 
+1400: 00 00 00 00 00 00 56 50 
+1408: f2 0f 10 44 24 00 48 83 
+1416: c4 08 f2 48 0f 2d f0 48 
+1424: c1 e6 03 49 01 f2 49 8b 
+1432: ba 20 00 00 00 57 49 29 
+1440: f2 f2 0f 10 44 24 00 f2 
+1448: 0f 10 4c 24 08 48 83 c4 
+1456: 10 66 0f 2e c1 0f 87 8e 
+1464: 00 00 00 50 f2 0f 10 44 
+1472: 24 00 48 83 c4 08 f2 48 
+1480: 0f 2d f0 48 c1 e6 03 49 
+1488: 01 f2 49 8b ba 30 00 00 
+1496: 00 57 49 29 f2 f2 0f 10 
+1504: 44 24 00 41 52 53 52 51 
+1512: 50 49 89 e4 48 83 e4 f0 
+1520: e8 77 f4 18 ff 4c 89 e4 
+1528: 58 59 5a 5b 41 5a 5f 50 
+1536: f2 0f 10 44 24 00 48 83 
+1544: c4 08 f2 48 0f 2d f0 48 
+1552: c1 e6 03 49 01 f2 49 8b 
+1560: ba 30 00 00 00 57 49 29 
+1568: f2 f2 0f 10 44 24 00 41 
+1576: 52 53 52 51 50 49 89 e4 
+1584: 48 83 e4 f0 e8 33 f4 18 
+1592: ff 4c 89 e4 58 59 5a 5b 
+1600: 41 5a 5f c3 e9 b4 02 00 
+1608: 00 48 be 00 00 00 00 00 
+1616: 00 00 40 56 50 f2 0f 10 
+1624: 44 24 00 48 83 c4 08 f2 
+1632: 48 0f 2d f0 48 c1 e6 03 
+1640: 49 01 f2 49 8b ba 08 00 
+1648: 00 00 57 49 29 f2 f2 0f 
+1656: 10 44 24 00 f2 0f 10 4c 
+1664: 24 08 48 83 c4 08 f2 0f 
+1672: 59 c1 f2 0f 11 44 24 00 
+1680: 50 f2 0f 10 44 24 00 48 
+1688: 83 c4 08 f2 48 0f 2d f0 
+1696: 48 c1 e6 03 49 01 f2 49 
+1704: 8b ba 10 00 00 00 57 49 
+1712: 29 f2 48 be 00 00 00 00 
+1720: 00 00 00 00 56 f2 0f 10 
+1728: 44 24 00 f2 0f 10 4c 24 
+1736: 08 48 83 c4 08 f2 0f 5c 
+1744: c1 f2 0f 11 44 24 00 50 
+1752: f2 0f 10 44 24 00 48 83 
+1760: c4 08 f2 48 0f 2d f0 48 
+1768: c1 e6 03 49 01 f2 49 8b 
+1776: ba 20 00 00 00 57 49 29 
+1784: f2 f2 0f 10 44 24 00 66 
+1792: 0f 51 c0 f2 0f 11 44 24 
+1800: 00 f2 0f 10 44 24 00 f2 
+1808: 0f 10 4c 24 08 48 83 c4 
+1816: 08 f2 0f 58 c1 f2 0f 11 
+1824: 44 24 00 f2 0f 10 44 24 
+1832: 00 f2 0f 10 4c 24 08 48 
+1840: 83 c4 08 f2 0f 5e c1 f2 
+1848: 0f 11 44 24 00 50 f2 0f 
+1856: 10 44 24 00 48 83 c4 08 
+1864: f2 48 0f 2d f0 48 c1 e6 
+1872: 03 49 01 f2 5f 49 89 ba 
+1880: 38 00 00 00 49 29 f2 48 
+1888: be 00 00 00 00 00 00 00 
+1896: 40 56 50 f2 0f 10 44 24 
+1904: 00 48 83 c4 08 f2 48 0f 
+1912: 2d f0 48 c1 e6 03 49 01 
+1920: f2 49 8b ba 08 00 00 00 
+1928: 57 49 29 f2 f2 0f 10 44 
+1936: 24 00 f2 0f 10 4c 24 08 
+1944: 48 83 c4 08 f2 0f 59 c1 
+1952: f2 0f 11 44 24 00 50 f2 
+1960: 0f 10 44 24 00 48 83 c4 
+1968: 08 f2 48 0f 2d f0 48 c1 
+1976: e6 03 49 01 f2 49 8b ba 
+1984: 20 00 00 00 57 49 29 f2 
+1992: f2 0f 10 44 24 00 66 0f 
+2000: 51 c0 f2 0f 11 44 24 00 
+2008: 50 f2 0f 10 44 24 00 48 
+2016: 83 c4 08 f2 48 0f 2d f0 
+2024: 48 c1 e6 03 49 01 f2 49 
+2032: 8b ba 10 00 00 00 57 49 
+2040: 29 f2 48 be 00 00 00 00 
+2048: 00 00 00 00 56 f2 0f 10 
+2056: 44 24 00 f2 0f 10 4c 24 
+2064: 08 48 83 c4 08 f2 0f 5c 
+2072: c1 f2 0f 11 44 24 00 f2 
+2080: 0f 10 44 24 00 f2 0f 10 
+2088: 4c 24 08 48 83 c4 08 f2 
+2096: 0f 5c c1 f2 0f 11 44 24 
+2104: 00 f2 0f 10 44 24 00 f2 
+2112: 0f 10 4c 24 08 48 83 c4 
+2120: 08 f2 0f 5e c1 f2 0f 11 
+2128: 44 24 00 50 f2 0f 10 44 
+2136: 24 00 48 83 c4 08 f2 48 
+2144: 0f 2d f0 48 c1 e6 03 49 
+2152: 01 f2 5f 49 89 ba 40 00 
+2160: 00 00 49 29 f2 50 f2 0f 
+2168: 10 44 24 00 48 83 c4 08 
+2176: f2 48 0f 2d f0 48 c1 e6 
+2184: 03 49 01 f2 49 8b ba 38 
+2192: 00 00 00 57 49 29 f2 f2 
+2200: 0f 10 44 24 00 41 52 53 
+2208: 52 51 50 49 89 e4 48 83 
+2216: e4 f0 e8 bd f1 18 ff 4c 
+2224: 89 e4 58 59 5a 5b 41 5a 
+2232: 5f 50 f2 0f 10 44 24 00 
+2240: 48 83 c4 08 f2 48 0f 2d 
+2248: f0 48 c1 e6 03 49 01 f2 
+2256: 49 8b ba 40 00 00 00 57 
+2264: 49 29 f2 f2 0f 10 44 24 
+2272: 00 41 52 53 52 51 50 49 
+2280: 89 e4 48 83 e4 f0 e8 79 
+2288: f1 18 ff 4c 89 e4 58 59 
+2296: 5a 5b 41 5a 5f c3 c3 00 
 
 ====== x86 buffer dump end =======
 
