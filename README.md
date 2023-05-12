@@ -7,6 +7,8 @@ In this project I combined all my skills, that I gained from educating on the 1s
 
 I will translate binary code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Programming language</a> into **x86-64** machine code. Program will walk through the executable and translate each instruction into the corresponding instruction for x86-64 architecture. My translator translates the instructions and puts them in a buffer that is allocated in the C program. Further with the help of mprotect the buffer becomes executable, and code injection occurs.
 
+> Before translation I optimize command's structure to improve the performance a bit. 
+
 ## Build
 
 Step 1: Clone the repo on your PC.
@@ -51,7 +53,7 @@ Here is the translation table from *Native assembly* to *x86-64 assembly*
 
 
 <details>
-<summary>Translation of Arithmetics</summary>
+<summary>Translation of Math</summary>
 
 |   Native       | x86-64      |  
 | ------         | :---------------: | 
@@ -120,7 +122,7 @@ The rest translation of conditional jumps is the same with non-conditional jump.
 Before translation, binary code is transformed into *IR*. Thanks to that, some instrucions might be optimized.
 
 ### Immediate's storage optimization
-In native Assembly representation we can see a lot of instruction series like this:
+In *native Assembly representation* we can see a lot of instruction series like this:
 
 ~~~C++
 push 123
