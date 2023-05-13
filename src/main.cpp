@@ -23,9 +23,9 @@ int main()
 
     Dump86Buffer (&TranslatorInfo);
 
-    // WriteInelf (&TranslatorInfo);
-
     RunCode (&TranslatorInfo);
+
+    TranslatorDtor (&TranslatorInfo);
 }
 
 

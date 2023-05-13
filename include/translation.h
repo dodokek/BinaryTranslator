@@ -81,10 +81,7 @@ enum OPCODES_x86 : uint64_t // everything reversed
 
     ADD_R10_RSI = 0xF20149,
     SUB_R10_RSI = 0xF22949,
-    SQRTPD_XMM0_XMM0 = 0xC0510F66,   // get square root from xmm0 and store it in xmm0
-
-    
-    
+    SQRTPD_XMM0_XMM0 = 0xC0510F66,   // get square root from xmm0 and store it in xmm0   
 };
 
 
@@ -106,7 +103,6 @@ enum OPCODE_MASKS : uint64_t
     JA_MASK = 0x87,
 
     RAX_MASK = 0xb8,
-
 };
 
 

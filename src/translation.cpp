@@ -81,7 +81,6 @@ void StartTranslation (TranslatorInfo* self)
         .size = SIZE_RET
     };
     WriteCmd (self, ret);
-
 }
 
 
@@ -209,7 +208,7 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
     WriteCmd (self, call_out);
 
     uint32_t out_ptr = (uint64_t)DoublePrintf - 
-                   (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 30 + sizeof (int));
+                       (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 30 + sizeof (int));
                                       
     WritePtr (self, out_ptr);
 

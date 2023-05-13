@@ -23,6 +23,22 @@ void TranslatorCtor (TranslatorInfo* self)
 }
 
 
+
+void TranslatorDtor (TranslatorInfo* self)
+{
+    for (int i = 0; i < self->cmd_amount; i++)
+    {
+        free (self->cmds_array[i]);
+        self->cmds_array[i] = nullptr;
+    }
+
+    self->native_ip_counter = 0;
+    
+    free (self->memory_buffer);
+    self->memory_buffer = nullptr;
+}
+
+
 int AllocateCmdArrays (TranslatorInfo* self)
 {
     self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
@@ -32,12 +48,12 @@ int AllocateCmdArrays (TranslatorInfo* self)
                                                                            // With ret (0xC3) byte code
 
     self->memory_buffer = (char*) aligned_alloc (MEMORY_ALIGNMENT, MEMORY_SIZE * sizeof(char));
-    memset ((void*) self->memory_buffer, 0xAA, MEMORY_SIZE); // filling for debug
+    memset ((void*) self->memory_buffer, 0xAA, MEMORY_SIZE); // filling for with 0xAA
 
 
-    if (self->src_cmds.content != nullptr &&
-        self->dst_x86.content  != nullptr &&
-        self->memory_buffer    != nullptr)
+    if (self->src_cmds.content &&
+        self->dst_x86.content  &&
+        self->memory_buffer)
         return SUCCESS;
     
     return ALLOCATION_FAILURE;
@@ -379,5 +395,7 @@ void LogData(char* format, ...)
     
     va_end(argptr);
 }
+
+
 
 

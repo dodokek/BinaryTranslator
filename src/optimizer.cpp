@@ -93,8 +93,6 @@ void HandleImmStorage (TranslatorInfo* self, int cmd_indx)
         LOG ("\t Storage optimization success: indx %d\n", cmd_indx);
         
     }
-
-
 }
 
 

@@ -255,4 +255,6 @@ void ReadFileToStruct (TranslatorInfo* self, FILE* file);
 
 void DumpCurBuffer (char* cur_buff, size_t len);
 
+void TranslatorDtor (TranslatorInfo* self);
+
 #endif
