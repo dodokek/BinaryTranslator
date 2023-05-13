@@ -1,11 +1,13 @@
-# Binary translator
+# The JIT 
 
 ## Overview
-In this project I combined all my skills, that I gained from educating on the 1st course of MIPT. 
+In this project I combined all my skills, that I gained from educating on the 1st year of MIPT. 
 
 ## About
 
-I will translate binary code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Programming language</a> into **x86-64** machine code. Program will walk through the executable and translate each instruction into the corresponding instruction for x86-64 architecture. My translator translates the instructions and puts them in a buffer that is allocated in the C program. Further with the help of mprotect the buffer becomes executable, and code injection occurs.
+I translate binary code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Programming language</a> into **x86-64** machine code. Program walks through the executable and translate each instruction into one or several *x86-64* instructions architecture. <br><br> My translator translates the instructions and puts them in a buffer that is allocated in the C program. Further with the help of *mprotect syscall* the buffer becomes executable, and code injection occurs.
+<br><br>
+With the help of JIT compilation, execution became **~30 times faster**.
 
 > Before translation I optimize command's structure to improve the performance a bit. 
 
@@ -24,6 +26,11 @@ Step 2: Build the project using Makefile
 ~BinaryTranslator/src make
 ~~~
 
+Step 3: Execute
+
+~~~
+~BinaryTranslator/src make run
+~~~
 
 
 
@@ -39,16 +46,16 @@ Here is the translation table from *Native assembly* to *x86-64 assembly*
 
 |   Native       | x86-64      |  
 | ------         | :---------------: | 
-| Push Num       | mov rsi, 0x1ff0...00 (double) <br> push rsi                |  
-| Push reg       | push r_x              |
-| Push [ Num ]      | mov rdi, [r10 + Num] <br> push rdi              |
-| Push [ r_x ]       | mov [r10 + r_x]       |
-| Push [ Num + r_x ]       | add r10, r_x <br> mov rdi, [r10 + Num] <br> sub r10, r_x <br> push rdi|
-| Pop r_x        | pop r_x              |
-| Pop [ r_x ]       | pop rdi <br> mov [r10 + r_x], rdi              |
-| Pop [Num + r_x]       | pop rdi <br> add r10, r_x <br> mov [r10 + Num], rdi <br> sub r10, r_x           |
+| ``` Push Num  ```     | <p style="text-align: left;"> ``` mov rsi, 0x1ff0...00 (double)  ``` <br> ``` push rsi ```   </p>          |  
+|``` Push reg  ```     | <p style="text-align: left;">  ``` push r_x  ```   </p>           |
+|``` Push [ Num ]  ```    | <p style="text-align: left;">  ``` mov rdi, [r10 + Num] ``` <br>  ```push rdi  ```    </p>          |
+| ``` Push [ r_x ]  ```     | <p style="text-align: left;">  ``` mov [r10 + r_x]    ```   </p>  |
+| ``` Push [ Num + r_x ] ```       | <p style="text-align: left;">  ``` add r10, r_x <br> mov rdi, [r10 + Num] ``` <br> ``` sub r10, r_x``` <br> ``` push rdi ``` </p>|
+| ``` Pop r_x ```        | <p style="text-align: left;"> ``` pop r_x  ```   </p>          |
+|``` Pop [ r_x ]  ```     | <p style="text-align: left;"> ``` pop rdi <br> mov [r10 + r_x], rdi   ```   </p>         |
+| ```Pop [Num + r_x]  ```     | <p style="text-align: left;"> ``` pop rdi ```<br> ```add r10, r_x <br> mov [r10 + Num], rdi <br> sub r10, r_x  ```  </p>        |
 
-> **r10** register is used as pointer to begin of the memory.
+> **r10** register is used as pointer to begin of *guest-memory*.
 </details>
 
 
@@ -57,11 +64,12 @@ Here is the translation table from *Native assembly* to *x86-64 assembly*
 
 |   Native       | x86-64      |  
 | ------         | :---------------: | 
-| Add        |  addpd xmm0, xmm1       |
-| Sub        |  subpd xmm0, xmm1       |
-| Mul        |  mulpd xmm0, xmm1       |
-| Div        |  divpd xmm0, xmm1       |
-| Sqr        |  sqrtpd xmm0, xmm1      |
+|``` Add  ```      | ``` addpd xmm0, xmm1  ```     |
+|``` Sub  ```      | ``` subpd xmm0, xmm1  ```     |
+|``` Mul  ```      | ``` mulpd xmm0, xmm1  ```     |
+|``` Div   ```     | ``` divpd xmm0, xmm1  ```     |
+|``` Sqr   ```     | ``` sqrtpd xmm0, xmm1 ```     |
+
 > This operations are followed with moving values from stack to xmm1, xmm0 registers.
 </details>
 
@@ -81,7 +89,7 @@ pusha
 mov rbp, rsp
 and rsp, -16 // aligning stack
 
-call printf
+call DoublePrint // wrapper for standart printf
 
 mov rsp, rbp
 
@@ -99,9 +107,9 @@ pop r10
 Jump, Call, Ret are translated straightforward:
 |   Native       | x86-64      |  
 | ------         | :---------------: | 
-| Jmp <32b rel. ptr.>        |  jmp <32b rel. ptr.>       |
-| Call <32b rel. ptr.>        |  call <32b rel. ptr.>       |
-| Ret        |  ret       |
+|``` Jmp <32b rel. ptr.>  ```      |  ```jmp <32b rel. ptr.> ```      |
+|``` Call <32b rel. ptr.> ```       |  ```call <32b rel. ptr.>  ```     |
+|``` Ret  ```      | ``` ret    ```   |
 
 Conditional Jumps are also translated the same, but in Native assembly we also need to compare two values from stack. Comparison part:
 
@@ -117,9 +125,63 @@ The rest translation of conditional jumps is the same with non-conditional jump.
 
 </details>
 
+## IR - Intermediate Representation
+
+> "In the world, where LLVM exists, we can't go without IR." - Dedinsky, ancient greek philosopher.
+
+Each command of native assembly is translated into it's IR. After first iteration through *source binary file* we get array of structs:
+
+~~~
+Array of structs:
+
++-----------------+          +-----------------+             +-----------------+ 
+| ID: PUSH        |          | ID: POP         |             | ID: RET         |
+| Native size: 1  |          | Native size: 1  |             | Native size: 1  |
+| x86-64 size: 14 |          | x86-64 size: 12 |             | x86-64 size: 1  |
+| =============== | -------- | =============== | --- ... --- | =============== | 
+| value: 4        |          | value: 0        |             | value: 0        |
+| reg index: 1    |          | reg index: 2    |             | reg index: 0    |
+| checksum: 12    |          | checksum: 16    |             | checksum: 0     |
++-----------------+          +-----------------+             +-----------------+
+~~~
+
+With the help of this representation, translation becomes much **easier and readable**. Moreover, we can apply some optimizations.
+
+
+## Performance test
+Using <a href="https://githrsiub.com/dodokek/ProgrammingLanguage">my assembly work implementation</a> I wrote program, wich finds factorial. 
+
+I executed it with my CPU work implementation on C. After that I executed it using JIT translation.
+
+Let's see the improvement in speed:
+
+|  | Native       | x86-64                 |  
+| :------: | :------:  | :---------------: | 
+| Execution time (μs) | 810 $\pm$ 5  | 36 $\pm$ 5                 |  
+| Relative boost | 1       | 22.5 $\pm$ 0.1                |  
+
+> Program was given $5!$ to calculate 1000 times 
+
+
+Let's also test solving of Quadratic equation:
+
+
+|  | Native       | x86-64                 |  
+| :------: | :------:  | :---------------: | 
+| Execution time (μs) | 3375 $\pm$ 5 | 59  $\pm$ 5 |  
+| Relative boost | 1       | 57.2  $\pm$ 0.1   |  
+
+> Program was given equation  $x^2 + 4x + 3 = 0$ to solve 1000 times
+
+You can find source code of all Assembly programs <a href = "https://github.com/dodokek/Processor/tree/origin/examples">here</a>.
+
+
+We can see the huge improvement in speed, JIT compilation rules!
+
+
 ## Optimizations
 
-Before translation, binary code is transformed into *IR*. Thanks to that, some instrucions might be optimized.
+Before translation, binary code is transformed into *IR*. Thanks to that, some instrucions might be optimized. I got *0.5%* relative performance boost with them.
 
 ### Immediate's storage optimization
 In *native Assembly representation* we can see a lot of instruction series like this:
@@ -149,42 +211,11 @@ add     |
 The same optimization is applied on *sub, mul and div* instructions.
 
 
-## Performance test
-Using <a href="https://githrsiub.com/dodokek/ProgrammingLanguage">my assembly work implementation</a> I wrote program, wich finds factorial. 
-
-I executed it with my CPU work implementation on C. After that I executed it using my Binary translator.
-
-Let's see the improvement in speed:
-
-|  | Native       | x86-64                 |  
-| :------: | :------:  | :---------------: | 
-| Execution time (mcr. s) | 810       | 36                 |  
-| Relative boost | 1       | 22.5                 |  
-
-> Program was given $5!$ to calculate 1000 times 
-
-
-Let's also test solving of Quadratic equation:
-
-
-|  | Native       | x86-64                 |  
-| :------: | :------:  | :---------------: | 
-| Execution time (mcr. s) | 3375       | 59                 |  
-| Relative boost | 1       | 57.2                 |  
-
-> Program was given equation  $x^2 + 4x + 3 = 0$ to solve 1000 times
-
-You can find source code of all Assembly programs <a href = "https://github.com/dodokek/Processor/tree/origin/examples">here</a>.
-
-
-We can see the huge improvement in speed, JIT compilation rules!
-
-
 ## Conclusion
 
-I learned a lot about Binary translators, IR and x86-64 architecture. In future I want to improve IR, so it will have real CFG. A lot of new optimizations might be done with the help of it. 
+During the work on this task, I learned a lot about JIT compilation, IR and x86-64 architecture. In future I want to improve IR, so it will have real CFG. A lot of new optimizations might be done with the help of it. 
 
-<br> <br> All this journey from simple Quadratic equation to Binary translator was... pretty good. 
+<br> <br> All this journey from simple Quadratic equation to this project was... pretty good. 
 
 
 ## Useful links

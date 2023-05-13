@@ -3,6 +3,16 @@
 
 #include "parser.h"
 
+//========================
+// Defines
+
+#define EMIT(name, cmd, size)                                                  \
+        Opcode name = {                                                 \
+            .code = cmd,  \
+            .size = size                                           \
+        };                                                                     \
+        WriteCmd (self, name);           
+
 
 // ===============================================
 // Commands     ||
