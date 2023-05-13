@@ -4,12 +4,8 @@ void StartTranslation (TranslatorInfo* self)
 {
     LOG ("---------- Begin translation -------------\n");
 
-    Opcode mov_r10 = {
-        .code = MOV_R10,
-        .size = SIZE_MOV_R10
-    };
+    EMIT (mov_r10, MOV_R10, SIZE_MOV_R10);
 
-    WriteCmd (self, mov_r10);
     WriteAbsPtr(self, (uint64_t) self->memory_buffer);
 
     for (int cmd_indx = 0; cmd_indx < self->cmd_amount; cmd_indx++)
@@ -168,7 +164,7 @@ void HandlePushPopVariation (TranslatorInfo* self, Command* cur_cmd)
 
 void DoublePrintf (double num)
 {
-    printf ("=====\nOutput: %g\n=====\n", num);
+    fprintf (stderr, "%g\n", num);
 }
 
 
