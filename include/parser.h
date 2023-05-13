@@ -257,4 +257,6 @@ void DumpCurBuffer (char* cur_buff, size_t len);
 
 void TranslatorDtor (TranslatorInfo* self);
 
+void mprotect_change_rights (TranslatorInfo* self, int protect_status);
+
 #endif

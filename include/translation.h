@@ -6,10 +6,10 @@
 //========================
 // Defines
 
-#define EMIT(name, cmd, size)                                                  \
+#define EMIT(name, cmd, size_)                                                  \
         Opcode name = {                                                 \
             .code = cmd,  \
-            .size = size                                           \
+            .size = size_                                           \
         };                                                                     \
         WriteCmd (self, name);           
 
@@ -155,6 +155,9 @@ enum OPCODE_SIZES
 
     SIZE_MOV_REG_NUM = 2,
 };
+
+
+const int WRAPPER_OFFSET = 30;
 
 // ===============================================
 

@@ -115,11 +115,7 @@ void WriteAbsPtr (TranslatorInfo* self, uint64_t ptr)
 
 void TranslateMovRegNum (TranslatorInfo* self, Command* cur_cmd)
 {
-    Opcode mov_reg_num = {
-        .code = MOV_REG_NUM | (RAX_MASK + cur_cmd->reg_index) << BYTE(1),
-        .size = SIZE_MOV_REG_NUM
-    };
-    WriteCmd (self, mov_reg_num);
+    EMIT (mov_reg_num, MOV_REG_NUM | (RAX_MASK + cur_cmd->reg_index) << BYTE(1), SIZE_MOV_REG_NUM);
 
     WriteDoubleNum (self, cur_cmd->value);
 }
@@ -178,58 +174,21 @@ void DoublePrintf (double num)
 
 void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
 {
-    Opcode movsd_xmm0_rsp = {
-        .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
-        .size = SIZE_MOV_XMM_RSP
-    };
-    Opcode pusha = {
-        .code = PUSH_ALL,
-        .size = SIZE_PUSH_POP_All
-    };
-    Opcode mov_rbp_rsp = {
-        .code = MOV_RBP_RSP,
-        .size = SIZE_MOV_REG_REG
-    };
-    Opcode stack_align = {
-        .code = AND_RSP_FF,
-        .size = SIZE_AND_RSP
-    };
-
-    WriteCmd (self, movsd_xmm0_rsp);
-    WriteCmd (self, pusha);
-    WriteCmd (self, mov_rbp_rsp);
-    WriteCmd (self, stack_align);
-
-    Opcode call_out = {
-        .code = CALL_OP,
-        .size = SIZE_JMP
-    };
-
-    WriteCmd (self, call_out);
+    EMIT (mov_xmm0_stack, MOV_XMM_RSP | XMM0_MASK << BYTE(3), SIZE_MOV_XMM_RSP);
+    EMIT (push_all,    PUSH_ALL, SIZE_PUSH_POP_All);
+    EMIT (mov_rbp_rsp, MOV_RBP_RSP, SIZE_MOV_REG_REG);
+    EMIT (align_stack, AND_RSP_FF, SIZE_AND_RSP);
+    EMIT (call_double_printf, CALL_OP, SIZE_JMP);
 
     uint32_t out_ptr = (uint64_t)DoublePrintf - 
-                       (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 30 + sizeof (int));
-                                      
+                       (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + WRAPPER_OFFSET + sizeof (int));                              
     WritePtr (self, out_ptr);
 
-    Opcode mov_rsp_rbp = {
-        .code = MOV_RSP_RBP,
-        .size = SIZE_MOV_REG_REG,
-    };
 
-    Opcode popa = {
-        .code = POP_ALL,
-        .size = SIZE_PUSH_POP_All
-    };
+    EMIT (mov_rsp_rbp, MOV_RSP_RBP, SIZE_MOV_REG_REG);
+    EMIT (popa,        POP_ALL, SIZE_PUSH_POP_All);
+    EMIT (pop_rdi,     POP_RDI, SIZE_POP_RDI);
 
-    Opcode pop_rdi = {
-        .code = POP_RDI,
-        .size = SIZE_POP_RDI
-    };
-
-    WriteCmd (self, mov_rsp_rbp);
-    WriteCmd (self, popa);
-    WriteCmd (self, pop_rdi);
 }
 
 
@@ -242,60 +201,19 @@ void DoubleScanf (double* num)
 
 void TranslateIn (TranslatorInfo* self, Command* cur_cmd)
 {
-    Opcode push_rdi = {
-        .code = PUSH_RDI,
-        .size = SIZE_PUSH_RDI
-    };
-    WriteCmd (self, push_rdi);
-
-    Opcode lea_rdi_rsp = {
-        .code = LEA_RDI_RSP ,
-        .size = SIZE_LEA_RDI_RSP
-    };
-    WriteCmd (self, lea_rdi_rsp);
-
-
-    Opcode pusha = {
-        .code = PUSH_ALL,
-        .size = SIZE_PUSH_POP_All
-    };
-    Opcode mov_rbp_rsp = {
-        .code = MOV_RBP_RSP,
-        .size = SIZE_MOV_REG_REG
-    };
-    Opcode stack_align = {
-        .code = AND_RSP_FF,
-        .size = SIZE_AND_RSP
-    };
-
-    WriteCmd (self, pusha);
-    WriteCmd (self, mov_rbp_rsp);
-    WriteCmd (self, stack_align);
-
-    Opcode call_in = {
-        .code = CALL_OP,
-        .size = SIZE_JMP
-    };
-
-    WriteCmd (self, call_in);
+    EMIT (push_rdi,    PUSH_RDI,    SIZE_PUSH_RDI);
+    EMIT (lea_rdi_rsp, LEA_RDI_RSP, SIZE_LEA_RDI_RSP);
+    EMIT (push_all,    PUSH_ALL,    SIZE_PUSH_POP_All);
+    EMIT (mov_rbp_rsp, MOV_RBP_RSP, SIZE_MOV_REG_REG);
+    EMIT (align_stack, AND_RSP_FF,  SIZE_AND_RSP);
+    EMIT (call_double_scanf, CALL_OP, SIZE_JMP);    
 
     uint32_t in_ptr = (uint64_t)DoubleScanf - 
-                       (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + 30 + sizeof (int));
-                                      
+                       (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + WRAPPER_OFFSET + sizeof (int));                                 
     WritePtr (self, in_ptr);
 
-    Opcode mov_rsp_rbp = {
-        .code = MOV_RSP_RBP,
-        .size = SIZE_MOV_REG_REG,
-    };
-
-    Opcode popa = {
-        .code = POP_ALL,
-        .size = SIZE_PUSH_POP_All
-    };
-
-    WriteCmd (self, mov_rsp_rbp);
-    WriteCmd (self, popa);
+    EMIT (mov_rsp_rbp, MOV_RSP_RBP, SIZE_MOV_REG_REG);
+    EMIT (pop_all, POP_ALL, SIZE_PUSH_POP_All);
 }
 
 
@@ -305,24 +223,9 @@ void TranslateSqr (TranslatorInfo* self, Command* cur_cmd)
     // sqrt xmm0, xmm0
     // movsd [rsp], xmm0
 
-    Opcode movsd_xmm0_rsp = {
-        .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
-        .size = SIZE_MOV_XMM_RSP
-    }; 
-
-    Opcode sqrt_xmm0_xmm0 = {
-        .code = SQRTPD_XMM0_XMM0,
-        .size = SIZE_SQRT
-    };
-
-    Opcode movsd_rsp_xmm0 = {
-        .code = MOV_RSP_XMM | XMM0_MASK << BYTE(3),
-        .size = SIZE_MOV_XMM_RSP
-    };
-
-    WriteCmd (self, movsd_xmm0_rsp);
-    WriteCmd (self, sqrt_xmm0_xmm0);
-    WriteCmd (self, movsd_rsp_xmm0);
+    EMIT (mov_xmm0_stack, MOV_XMM_RSP | XMM0_MASK << BYTE(3), SIZE_MOV_XMM_RSP);
+    EMIT (sqrt_xmm0_xmm0, SQRTPD_XMM0_XMM0, SIZE_SQRT);
+    EMIT (mov_rsp_xmm0, MOV_RSP_XMM | XMM0_MASK << BYTE(3), SIZE_MOV_XMM_RSP);
 
 }
 
@@ -335,26 +238,9 @@ void TranslateBaseMath (TranslatorInfo* self, Command* cur_cmd)
     // add, sub, mul or div. third byte is changed
     // movsd [rsp], xmm0
 
-    Opcode movsd_xmm0_rsp = {
-        .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
-        .size = SIZE_MOV_XMM_RSP
-    };
-    
-    WriteCmd (self, movsd_xmm0_rsp);
-
-    Opcode movsd_xmm1_rsp_8 = {
-        .code = MOV_XMM_RSP | XMM1_MASK << BYTE(3) | (WORD_SIZE) << BYTE (5),
-        .size = SIZE_MOV_XMM_RSP
-    };
-    WriteCmd (self, movsd_xmm1_rsp_8);
-
-
-    Opcode add_rsp_8 = {
-        .code = ADD_RSP | WORD_SIZE << BYTE (3),
-        .size = SIZE_ADD_RSP
-    };
-    WriteCmd (self, add_rsp_8);
-
+    EMIT (movsd_xmm0_rsp, MOV_XMM_RSP | XMM0_MASK << BYTE(3), SIZE_MOV_XMM_RSP);
+    EMIT (movsd_xmm1_rsp_8, MOV_XMM_RSP | XMM1_MASK << BYTE(3) | (WORD_SIZE) << BYTE (5), SIZE_MOV_XMM_RSP);
+    EMIT (add_rsp_8, ADD_RSP | WORD_SIZE << BYTE (3), SIZE_ADD_RSP);
 
     Opcode arithm_xmm0_xmm1 = {
         .code = ARITHM_XMM0_XMM1,
@@ -386,13 +272,7 @@ void TranslateBaseMath (TranslatorInfo* self, Command* cur_cmd)
 
     WriteCmd (self, arithm_xmm0_xmm1);
 
-    Opcode mov_rsp_xmm = {
-        .code = MOV_RSP_XMM | XMM0_MASK << BYTE(3),
-        .size = SIZE_MOV_XMM_RSP
-    };
-
-    WriteCmd (self, mov_rsp_xmm);
-
+    EMIT (mov_rsp_xmm0, MOV_RSP_XMM | XMM0_MASK << BYTE(3), SIZE_MOV_XMM_RSP);
 }
 
 
@@ -406,36 +286,18 @@ void TranslatePushRegRam (TranslatorInfo* self, Command* cur_cmd)
 {
     RegToRsiOffset (self, cur_cmd);
 
-    Opcode add_r10_rsi = {
-        .code = ADD_R10_RSI,
-        .size = SIZE_R10_RSI 
-    };
-    WriteCmd (self, add_r10_rsi);
+    EMIT (add_r10_rsi, ADD_R10_RSI, SIZE_R10_RSI);
 
     // Push to stack part
+    EMIT (mov_rdi_r10_mem, MOV_RDI_R10, SIZE_MOV_REG_REG);
 
-    Opcode mov_rdi_r10_mem = {
-        .code = MOV_RDI_R10,
-        .size = SIZE_MOV_REG_REG
-    };
-
-    WriteCmd (self, mov_rdi_r10_mem);
     WritePtr (self, (uint32_t) cur_cmd->value * sizeof (double));
 
-    Opcode push_rdi = {
-        .code = PUSH_RDI,
-        .size = SIZE_PUSH_RDI
-    };
-
-    WriteCmd (self, push_rdi);
+    EMIT (push_rdi, PUSH_RDI, SIZE_PUSH_RDI);
 
     // Back to normal mem ptr
-    Opcode sub_r10_rsi = {
-        .code = SUB_R10_RSI,
-        .size = SIZE_R10_RSI
-    };
-    WriteCmd (self, sub_r10_rsi);
-
+    
+    EMIT (sub_r10_rsi, SUB_R10_RSI, SIZE_R10_RSI);
 }
 
 
@@ -444,35 +306,15 @@ void RegToRsiOffset(TranslatorInfo* self, Command* cur_cmd)
     // Translating double data in register to actual integer offset in memory
     // (double) r?x -> (int) rsi * 8
 
-    Opcode push_reg = {
-        .code = PUSH_REG + cur_cmd->reg_index,
-        .size = PUSH_REG_SIZE
-    };
-    WriteCmd (self, push_reg);
-
-    Opcode movsd_xmm0_rsp = {
-        .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
-        .size = SIZE_MOV_XMM_RSP
-    };
-    WriteCmd (self, movsd_xmm0_rsp);
-
-    Opcode add_rsp_8 = {
-        .code = ADD_RSP | WORD_SIZE << BYTE (3),
-        .size = SIZE_ADD_RSP
-    };
-    WriteCmd (self, add_rsp_8);
-
-    Opcode double_to_int = {
-        .code = CVTSD2SI_RSI_XMM0,
-        .size = SIZE_CVTSD2SI
-    };
-    WriteCmd (self, double_to_int);
-
-    Opcode shl_rsi_3 = {
-        .code = SHL_RSI | (3) << BYTE(3),
-        .size = SIZE_SHL
-    };
-    WriteCmd (self, shl_rsi_3);
+    EMIT (push_reg, PUSH_REG + cur_cmd->reg_index, PUSH_REG_SIZE);
+    
+    EMIT (movsd_xmm0_rsp, MOV_XMM_RSP | XMM0_MASK << BYTE(3), SIZE_MOV_XMM_RSP);
+    
+    EMIT (add_rsp_8, ADD_RSP | WORD_SIZE << BYTE (3), SIZE_ADD_RSP);
+    
+    EMIT (double_to_int, CVTSD2SI_RSI_XMM0, SIZE_CVTSD2SI);
+    
+    EMIT (shl_rsi_3, SHL_RSI | (3) << BYTE(3), SIZE_SHL);
 }
 
 
@@ -483,77 +325,40 @@ void TranslatePopRegRam (TranslatorInfo* self, Command* cur_cmd)
 
     // Adjusting memory pointer
 
-    Opcode add_r10_rsi = {
-        .code = ADD_R10_RSI,
-        .size = SIZE_R10_RSI 
-    };
-    WriteCmd (self, add_r10_rsi);
+    EMIT (add_r10_rsi, ADD_R10_RSI, SIZE_R10_RSI);
 
     // Pop to stack part
 
-    Opcode pop_rdi = {
-        .code = POP_RDI,
-        .size = SIZE_POP_RDI
-    };
-    WriteCmd (self, pop_rdi);
+    EMIT (pop_rdi, POP_RDI, SIZE_POP_RDI);
+    EMIT (mov_r10_mem_rsi, MOV_R10_RDI, SIZE_MOV_REG_REG);
 
-    Opcode mov_r10_mem_rsi = {
-        .code = MOV_R10_RDI,
-        .size = SIZE_MOV_REG_REG
-    };
-
-    WriteCmd (self, mov_r10_mem_rsi);
     WritePtr (self, (uint32_t) cur_cmd->value * sizeof (double));
 
     // Back to normal mem ptr
-    Opcode sub_r10_rsi = {
-        .code = SUB_R10_RSI,
-        .size = SIZE_R10_RSI
-    };
-    WriteCmd (self, sub_r10_rsi);
 
-
+    EMIT (sub_r10_rsi, SUB_R10_RSI, SIZE_R10_RSI);
 }
 
 
 void TranslatePopReg (TranslatorInfo* self, Command* cur_cmd)
 {
-    Opcode pop_reg = {
-        .code = POP_REG + cur_cmd->reg_index,
-        .size = POP_REG_SIZE
-    };
-
-    WriteCmd (self, pop_reg);
+    EMIT (pop_reg, POP_REG + cur_cmd->reg_index, POP_REG_SIZE);
 }
 
 
 void TranslatePushReg (TranslatorInfo* self, Command* cur_cmd)
 {
-    Opcode push_reg = {
-        .code = PUSH_REG + cur_cmd->reg_index,
-        .size = PUSH_REG_SIZE
-    };
-
-    WriteCmd (self, push_reg);
+    EMIT (push_reg, PUSH_REG + cur_cmd->reg_index, PUSH_REG_SIZE);
 }
 
 
 void TranslatePushImm (TranslatorInfo* self, Command* cur_cmd)
 {
-    Opcode mov_rsi = {
-        .code = MOV_RSI,
-        .size = SIZE_MOV_RSI
-    };
-    WriteCmd (self, mov_rsi);
+    EMIT (mov_rsi, MOV_RSI, SIZE_MOV_RSI);
+
     WriteDoubleNum (self, cur_cmd->value);
 
-    Opcode push_rsi = {
-        .code = PUSH_RSI,
-        .size = SIZE_PUSH_RSI
-    };
-
-    WriteCmd (self, push_rsi);
-
+    EMIT (push_rsi, PUSH_RSI, SIZE_PUSH_RSI);
 }
 
 
@@ -562,20 +367,11 @@ void TranslatePushImmRam (TranslatorInfo* self, Command* cur_cmd)
     // mov rdi, [r10 + ?]
     // push rdi
 
-    Opcode mov_rdi_r10 = {
-        .code = MOV_RDI_R10,
-        .size = SIZE_MOV_REG_REG
-    };
+    EMIT (mov_rdi_r10, MOV_RDI_R10, SIZE_MOV_REG_REG);
 
-    WriteCmd (self, mov_rdi_r10);
     WritePtr (self, (uint32_t) cur_cmd->value * sizeof (double));
 
-    Opcode push_rdi = {
-        .code = PUSH_RDI,
-        .size = SIZE_PUSH_RDI
-    };
-
-    WriteCmd (self, push_rdi);
+    EMIT (push_rdi, PUSH_RDI, SIZE_PUSH_RDI);
 }
 
 
@@ -584,19 +380,8 @@ void TranslatePopImmRam (TranslatorInfo* self, Command* cur_cmd)
     // pop rdi
     // mov [r10 + ?], rdi
 
-    Opcode pop_rdi = {
-        .code = POP_RDI,
-        .size = SIZE_POP_RDI
-    };
-
-    WriteCmd (self, pop_rdi);
-
-    Opcode mov_r10_rdi = {
-        .code = MOV_R10_RDI,
-        .size = SIZE_MOV_REG_REG
-    };
-
-    WriteCmd (self, mov_r10_rdi);
+    EMIT (pop_rdi, POP_RDI, SIZE_POP_RDI);
+    EMIT (mov_r10_rdi, MOV_R10_RDI, SIZE_MOV_REG_REG);
     WritePtr (self, (uint32_t) cur_cmd->value * sizeof (double));
 }
 
@@ -634,12 +419,7 @@ void TranslateJmpCall (TranslatorInfo* self, Command* jmp_cmd)
 
 void TranslateRet (TranslatorInfo* self, Command* jmp_cmd)
 {
-    Opcode ret = {
-        .code = RET_OP,
-        .size = SIZE_RET
-    };
-
-    WriteCmd (self, ret);
+    EMIT (ret, RET_OP, SIZE_RET);
 }
 
 
@@ -652,32 +432,12 @@ void TranslateConditionJmp (TranslatorInfo* self, Command* jmp_cmd)
     // ucomisd xmm0, xmm1
     // j?? ptr
 
-        
-    Opcode movsd_xmm0_rsp = {
-        .code = MOV_XMM_RSP | XMM0_MASK << BYTE(3),
-        .size = SIZE_MOV_XMM_RSP
-    };
+    EMIT (movsd_xmm0_rsp, MOV_XMM_RSP | XMM0_MASK << BYTE(3), SIZE_MOV_XMM_RSP);
+    EMIT (movsd_xmm1_rsp_8, MOV_XMM_RSP | XMM1_MASK << BYTE(3) | (WORD_SIZE) << BYTE (5), SIZE_MOV_XMM_RSP);    
     
-    WriteCmd (self, movsd_xmm0_rsp);
-
-    Opcode movsd_xmm1_rsp_8 = {
-        .code = MOV_XMM_RSP | XMM1_MASK << BYTE(3) | (WORD_SIZE) << BYTE (5),
-        .size = SIZE_MOV_XMM_RSP
-    };
-    WriteCmd (self, movsd_xmm1_rsp_8);
-
-    Opcode add_rsp_16 = {
-        .code = ADD_RSP | (WORD_SIZE * 2) << BYTE (3),
-        .size = SIZE_ADD_RSP
-    };
-    WriteCmd (self, add_rsp_16);
-
-    Opcode cmp_xmm0_xmm1 = {
-        .code = CMP_XMM0_XMM1,
-        .size = SIZE_CMP_XMM,
-    };
-    WriteCmd (self, cmp_xmm0_xmm1);
-
+    EMIT (add_rsp_16, ADD_RSP | (WORD_SIZE * 2) << BYTE (3), SIZE_ADD_RSP);
+    EMIT (cmp_xmm0_xmm1, CMP_XMM0_XMM1, SIZE_CMP_XMM);
+    
     Opcode cond_jmp = {
         .code = COND_JMP,
         .size = SIZE_COND_JMP

@@ -397,5 +397,15 @@ void LogData(char* format, ...)
 }
 
 
+void mprotect_change_rights (TranslatorInfo* self, int protect_status)
+{
+    int mprotect_status = mprotect (self->dst_x86.content, self->dst_x86.len + 1, protect_status);
+    if (mprotect_status == -1)
+    {
+        printf ("Mrotect error\n");
+        return;
+    }
+}
+
 
 
