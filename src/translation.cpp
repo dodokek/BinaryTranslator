@@ -302,15 +302,15 @@ void RegToRsiOffset(TranslatorInfo* self, Command* cur_cmd)
     // Translating double data in register to actual integer offset in memory
     // (double) r?x -> (int) rsi * 8
 
-    EMIT (push_reg, PUSH_REG + cur_cmd->reg_index, PUSH_REG_SIZE);
+    EMIT (push_reg,       PUSH_REG    + cur_cmd->reg_index,    PUSH_REG_SIZE);
     
-    EMIT (movsd_xmm0_rsp, MOV_XMM_RSP | XMM0_MASK << BYTE(3), SIZE_MOV_XMM_RSP);
+    EMIT (movsd_xmm0_rsp, MOV_XMM_RSP | XMM0_MASK << BYTE(3),  SIZE_MOV_XMM_RSP);
     
-    EMIT (add_rsp_8, ADD_RSP | WORD_SIZE << BYTE (3), SIZE_ADD_RSP);
+    EMIT (add_rsp_8,      ADD_RSP     | WORD_SIZE << BYTE (3), SIZE_ADD_RSP);
     
-    EMIT (double_to_int, CVTSD2SI_RSI_XMM0, SIZE_CVTSD2SI);
+    EMIT (double_to_int,  CVTSD2SI_RSI_XMM0,                   SIZE_CVTSD2SI);
     
-    EMIT (shl_rsi_3, SHL_RSI | (3) << BYTE(3), SIZE_SHL);
+    EMIT (shl_rsi_3,      SHL_RSI     | (3) << BYTE(3),        SIZE_SHL);
 }
 
 

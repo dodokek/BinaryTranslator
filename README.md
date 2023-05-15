@@ -52,7 +52,7 @@ Here is the translation table from *Native assembly* to *x86-64 assembly*
 | ``` Push [ r_x ]  ```     | <p style="text-align: left;">  ``` mov [r10 + r_x]    ```   </p>  |
 | ``` Push [ Num + r_x ] ```       | <p style="text-align: left;">  ``` add r10, r_x <br> mov rdi, [r10 + Num] ``` <br> ``` sub r10, r_x``` <br> ``` push rdi ``` </p>|
 | ``` Pop r_x ```        | <p style="text-align: left;"> ``` pop r_x  ```   </p>          |
-|``` Pop [ r_x ]  ```     | <p style="text-align: left;"> ``` pop rdi <br> mov [r10 + r_x], rdi   ```   </p>         |
+|``` Pop [ r_x ]  ```     | <p style="text-align: left;"> ``` pop rdi ``` <br> ```mov [r10 + r_x], rdi   ```   </p>         |
 | ```Pop [Num + r_x]  ```     | <p style="text-align: left;"> ``` pop rdi ```<br> ```add r10, r_x ``` <br> ```mov [r10 + Num], rdi``` <br> ```sub r10, r_x  ```  </p>        |
 
 > **r10** register is used as pointer to begin of *guest-memory*.
