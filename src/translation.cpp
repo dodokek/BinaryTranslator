@@ -179,7 +179,7 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
     uint32_t out_ptr = (uint64_t)DoublePrintf - 
                        (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + WRAPPER_OFFSET + sizeof (int));                              
     WritePtr (self, out_ptr);
-
+    
 
     EMIT (mov_rsp_rbp, MOV_RSP_RBP, SIZE_MOV_REG_REG);
     EMIT (popa,        POP_ALL, SIZE_PUSH_POP_All);

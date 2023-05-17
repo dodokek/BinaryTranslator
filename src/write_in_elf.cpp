@@ -26,7 +26,7 @@ void writeELFHeader (FILE* fileptr)
 
 void WriteInelf (TranslatorInfo* self)
 {
-    FILE* fileptr = fopen ("kek", "wb");
+    FILE* fileptr = get_file ("execute.elf", "wb");
     writeELFHeader(fileptr);
 
     ElfW(Phdr) textSection = {};
@@ -35,12 +35,20 @@ void WriteInelf (TranslatorInfo* self)
     textSection.p_flags = 0x07;
     textSection.p_offset = 0x78;
     textSection.p_vaddr = 0x400078;
-    textSection.p_filesz = 0x7;
-    textSection.p_memsz = 0x7;
+    textSection.p_filesz = self->dst_x86.len;
+    textSection.p_memsz = self->dst_x86.len;
     textSection.p_align = 0x1000;
 
     fwrite(&textSection, sizeof (textSection), 1, fileptr);
 
-    unsigned char code[] = {0x6a, 0x3c, 0x58, 0x31, 0xff, 0x0f, 0x05, 0x00};
-    fwrite(code, sizeof (unsigned char), 8, fileptr);
+    Opcode syscall = {
+        .code = 0x0005,
+        .size = 2
+    };
+    WriteCmd (self, syscall);
+
+    // unsigned char code[] = {0x6a, 0x3c, 0x58, 0x31, 0xff, 0x0f, 0x05, 0x00};
+    fwrite(self->dst_x86.content, sizeof (unsigned char), self->dst_x86.len, fileptr);
+
+    close_file (fileptr, "execute.elf");
 }

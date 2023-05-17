@@ -161,6 +161,7 @@ const int WRAPPER_OFFSET = 30;
 
 // ===============================================
 
+void DoubleScanf (double* num);
 
 void StartTranslation (TranslatorInfo* self);
 

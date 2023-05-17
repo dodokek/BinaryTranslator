@@ -23,7 +23,10 @@ int main()
 
     Dump86Buffer (&TranslatorInfo);
 
-    RunCode (&TranslatorInfo);
+    // RunCode (&TranslatorInfo);
+
+    WriteInelf (&TranslatorInfo);
+    // printf ("Scanf: %p, Buffer: %p\n", (void*) DoubleScanf, TranslatorInfo.dst_x86.content);
 
     TranslatorDtor (&TranslatorInfo);
 }

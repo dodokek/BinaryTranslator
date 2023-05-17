@@ -6,6 +6,8 @@
 #include <cstring>
 #include <elf.h>
 
+#include "file_utils.h"
+
 #if defined(__LP64__)
 #define ElfW(type) Elf64_ ## type
 #else
@@ -13,6 +15,7 @@
 #endif
 
 #include "parser.h"
+#include "translation.h"
 
 
 void WriteInelf (TranslatorInfo* self);
