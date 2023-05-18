@@ -45,7 +45,6 @@ void WriteInelf (TranslatorInfo* self)
 
     fwrite(self->dst_x86.content, sizeof (unsigned char), PAGESIZE * 2, fileptr);
     
-
     close_file (fileptr, "execute.elf");
 }
 
@@ -55,13 +54,15 @@ void AppendPrintf (TranslatorInfo* self, FILE* exec_file)
     FILE* printf_file = get_file ("../data/printf.bin", "rb");
     char* buffer = (char*) calloc (1000, sizeof(char));
     
-    int symb_amount = GetTextBuffer (printf_file, buffer);
-    printf ("Symbols read: %d\n", symb_amount);
+    int printf_binsize = GetTextBuffer (printf_file, buffer);
+    printf ("Symbols read: %d\n", printf_binsize);
 
-    printf ("Memcpy: len = %d\n", self->dst_x86.len);
-    memcpy (self->dst_x86.content + self->dst_x86.len, buffer, symb_amount);
-    self->dst_x86.len += symb_amount;
-    // fwrite(buffer, sizeof (unsigned char), symb_amount, exec_file);
+    printf ("Memcpy: Dst len = %d\n", self->dst_x86.len);
+    printf ("Dst ptr = %p\n", self->dst_x86.content);
+    
+    memcpy (self->dst_x86.content + self->dst_x86.len, buffer, printf_binsize);
+    self->dst_x86.len += printf_binsize;
+    // fwrite(buffer, sizeof (unsigned char), printf_binsize, exec_file);
 
     free (buffer);
     close_file (printf_file, "data/printf.bin");

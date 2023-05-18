@@ -190,8 +190,7 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
     EMIT (align_stack, AND_RSP_FF, SIZE_AND_RSP);
     EMIT (call_double_printf, CALL_OP, SIZE_JMP);
 
-    uint32_t out_ptr = (ENTRY_POINT + (uint64_t) self->x86_ip_counter) - 
-                       (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + WRAPPER_OFFSET + 7 + sizeof (int));                              
+    uint32_t out_ptr = (uint64_t) self->x86_ip_counter - cur_cmd->x86_ip - 27 - sizeof (int);                              
     WritePtr (self, out_ptr);
 
 
