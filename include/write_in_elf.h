@@ -24,5 +24,8 @@ void WriteInelf (TranslatorInfo* self);
 
 void writeELFHeader (FILE* fileptr);
 
+void AppendPrintf (TranslatorInfo* self, FILE* exec_file);
+
+int GetTextBuffer (FILE* file, char* buffer);
 
 #endif

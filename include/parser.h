@@ -164,7 +164,7 @@ const struct InstructionSizes InstrSizes[] =
     {SUB, 1, 26},
     {DIV, 1, 26},
     {POP, 10,  1},
-    {OUT, 1, 34},
+    {OUT, 1, 41},
     {NONE, NONE_S, NONE_S}, // made for proper indexation
     {JMP, 10,  5},
     {JG,  10,  26},
@@ -216,6 +216,7 @@ struct TranslatorInfo
     int cmd_amount;
 
     int native_ip_counter;
+    int x86_ip_counter;
 
     char* memory_buffer; // Buffer for commands, addressing to memory  
 };

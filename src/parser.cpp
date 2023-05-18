@@ -217,6 +217,7 @@ void FillCmdIp (TranslatorInfo* self)
         x86_ip    += self->cmds_array[i]->x86_size;
 
     }
+    self->x86_ip_counter = x86_ip;
 
 } 
 

@@ -25,7 +25,7 @@ int main()
 
     // RunCode (&TranslatorInfo);
 
-    WriteInelf (&TranslatorInfo);
+    // WriteInelf (&TranslatorInfo);
     // printf ("Scanf: %p, Buffer: %p\n", (void*) DoubleScanf, TranslatorInfo.dst_x86.content);
 
     TranslatorDtor (&TranslatorInfo);

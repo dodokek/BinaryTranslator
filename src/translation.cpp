@@ -181,13 +181,17 @@ void DoublePrintf (double num)
 void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
 {
     EMIT (mov_xmm0_stack, MOV_XMM_RSP | XMM0_MASK << BYTE(3), SIZE_MOV_XMM_RSP);
+    EMIT (double_to_int, CVTSD2SI_RSI_XMM0, SIZE_CVTSD2SI);
+    EMIT (push_rsi, PUSH_RSI, SIZE_PUSH_RSI);
+    EMIT (pop_rax, POP_REG, SIZE_POP_REG);
+
     EMIT (push_all,    PUSH_ALL, SIZE_PUSH_POP_All);
     EMIT (mov_rbp_rsp, MOV_RBP_RSP, SIZE_MOV_REG_REG);
     EMIT (align_stack, AND_RSP_FF, SIZE_AND_RSP);
     EMIT (call_double_printf, CALL_OP, SIZE_JMP);
 
-    uint32_t out_ptr = (uint64_t)DoublePrintf - 
-                       (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + WRAPPER_OFFSET + sizeof (int));                              
+    uint32_t out_ptr = (ENTRY_POINT + (uint64_t) self->x86_ip_counter) - 
+                       (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + WRAPPER_OFFSET + 7 + sizeof (int));                              
     WritePtr (self, out_ptr);
 
 

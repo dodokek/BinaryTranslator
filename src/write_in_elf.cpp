@@ -26,8 +26,6 @@ void writeELFHeader (FILE* fileptr)
 
 void WriteInelf (TranslatorInfo* self)
 {
-    unsigned char exit_code[] = {0x6a, 0x3c, 0x58, 0x31, 0xff, 0x0f, 0x05, 0x00};
-    
     FILE* fileptr = get_file ("execute.elf", "wb");
     writeELFHeader(fileptr);
 
@@ -37,15 +35,44 @@ void WriteInelf (TranslatorInfo* self)
     textSection.p_flags = PROT_EXEC + PROT_READ + PROT_WRITE; 
     textSection.p_offset = 0x78;
     textSection.p_vaddr = 0x400078;
-    textSection.p_filesz = MEMORY_SIZE +  self->dst_x86.len + sizeof (exit_code);
-    textSection.p_memsz =  MEMORY_SIZE +  self->dst_x86.len + sizeof (exit_code);
+    textSection.p_filesz = MEMORY_SIZE +  self->dst_x86.len;
+    textSection.p_memsz =  MEMORY_SIZE +  self->dst_x86.len;
     textSection.p_align = 0x1000;
 
     fwrite(&textSection, sizeof (textSection), 1, fileptr);
 
+    AppendPrintf (self, fileptr);
+
     fwrite(self->dst_x86.content, sizeof (unsigned char), PAGESIZE * 2, fileptr);
     
-    fwrite(exit_code, sizeof (unsigned char), self->dst_x86.len, fileptr);
 
     close_file (fileptr, "execute.elf");
+}
+
+
+void AppendPrintf (TranslatorInfo* self, FILE* exec_file)
+{
+    FILE* printf_file = get_file ("../data/printf.bin", "rb");
+    char* buffer = (char*) calloc (1000, sizeof(char));
+    
+    int symb_amount = GetTextBuffer (printf_file, buffer);
+    printf ("Symbols read: %d\n", symb_amount);
+
+    printf ("Memcpy: len = %d\n", self->dst_x86.len);
+    memcpy (self->dst_x86.content + self->dst_x86.len, buffer, symb_amount);
+    self->dst_x86.len += symb_amount;
+    // fwrite(buffer, sizeof (unsigned char), symb_amount, exec_file);
+
+    free (buffer);
+    close_file (printf_file, "data/printf.bin");
+}
+
+
+int GetTextBuffer (FILE* file, char* buffer)
+{
+    fseek(file, 0L, SEEK_END);
+    int size = ftell(file);
+    fseek(file, 0L, SEEK_SET);
+
+    return fread (buffer, sizeof(char), size, file);
 }
