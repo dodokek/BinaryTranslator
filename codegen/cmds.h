@@ -1,5 +1,7 @@
 //      name, origin offset,      id 
 
+DEF_CMD (HLT, 0)
+
 DEF_CMD (PUSH, 1)
 
 DEF_CMD (MUL, 2)
@@ -35,3 +37,4 @@ DEF_CMD (CALL, 17)
 DEF_CMD (RET, 18)
 
 DEF_CMD (SQR, 19)
+

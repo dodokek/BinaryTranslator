@@ -64,6 +64,8 @@ enum OPCODES_x86 : uint64_t // everything reversed
             //      ^----------------+ 
 // Constant expressions, no need for bit masks
 
+    SYSCALL = 0x050fff31583c6a,
+
     MOV_R10 = 0xBA49,   // mov r10, <64b ptr>. Begin of memory must be stored in R10
     CALL_OP = 0xE8,     // call <32b ptr>
     RET_OP = 0xC3,      // ret
@@ -154,6 +156,7 @@ enum OPCODE_SIZES
     SIZE_LEA_RDI_RSP = 5,
 
     SIZE_MOV_REG_NUM = 2,
+    SYSCALL_SIZE = 7,
 };
 
 
@@ -221,5 +224,6 @@ void TranslateRet (TranslatorInfo* self, Command* jmp_cmd);
 
 void TranslateConditionJmp (TranslatorInfo* self, Command* jmp_cmd);
 
+void TranslateHlt (TranslatorInfo* self, Command* cur_cmd);
 
 #endif

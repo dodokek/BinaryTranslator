@@ -7,6 +7,8 @@
 #include <elf.h>
 
 #include "file_utils.h"
+#include "parser.h"
+#include "translation.h"
 
 #if defined(__LP64__)
 #define ElfW(type) Elf64_ ## type
@@ -14,8 +16,8 @@
 #define ElfW(type) Elf32_ ## type
 #endif
 
-#include "parser.h"
-#include "translation.h"
+
+
 
 
 void WriteInelf (TranslatorInfo* self);

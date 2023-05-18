@@ -6,7 +6,7 @@ void StartTranslation (TranslatorInfo* self)
 
     EMIT (mov_r10, MOV_R10, SIZE_MOV_R10);
 
-    WriteAbsPtr(self, (uint64_t) self->memory_buffer);
+    WriteAbsPtr(self, ENTRY_POINT + PAGESIZE);
 
     for (int cmd_indx = 0; cmd_indx < self->cmd_amount; cmd_indx++)
     {   
@@ -67,16 +67,21 @@ void StartTranslation (TranslatorInfo* self)
             TranslateMovRegNum (self, self->cmds_array[cmd_indx]);
             break;
 
+        case HLT:
+            LOG ("Translating exit()\n");
+            TranslateHlt (self, self->cmds_array[cmd_indx]);
+            break;
+
         default:
             break;
         }
     }
 
-    Opcode ret = {
-        .code = RET_OP,
-        .size = SIZE_RET
-    };
-    WriteCmd (self, ret);
+    // Opcode ret = {
+    //     .code = RET_OP,
+    //     .size = SIZE_RET
+    // };
+    // WriteCmd (self, ret);
 }
 
 
@@ -114,6 +119,11 @@ void TranslateMovRegNum (TranslatorInfo* self, Command* cur_cmd)
     EMIT (mov_reg_num, MOV_REG_NUM | (RAX_MASK + cur_cmd->reg_index) << BYTE(1), SIZE_MOV_REG_NUM);
 
     WriteDoubleNum (self, cur_cmd->value);
+}
+
+void TranslateHlt (TranslatorInfo* self, Command* cur_cmd)
+{
+    EMIT (syscall_exit, SYSCALL, SYSCALL_SIZE);
 }
 
 
@@ -179,7 +189,7 @@ void TranslateOut (TranslatorInfo* self, Command* cur_cmd)
     uint32_t out_ptr = (uint64_t)DoublePrintf - 
                        (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + WRAPPER_OFFSET + sizeof (int));                              
     WritePtr (self, out_ptr);
-    
+
 
     EMIT (mov_rsp_rbp, MOV_RSP_RBP, SIZE_MOV_REG_REG);
     EMIT (popa,        POP_ALL, SIZE_PUSH_POP_All);

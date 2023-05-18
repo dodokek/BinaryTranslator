@@ -54,6 +54,8 @@ const uint64_t DWORD_SIZE = 16;
 
 const uint64_t WORD_SIZE = 8;
 
+const uint64_t ENTRY_POINT = 0x400078;
+
 // ===============================================
 
 
@@ -65,12 +67,11 @@ const uint64_t WORD_SIZE = 8;
 
 enum EnumCommands
 {
-    HLT = 0,
-
     #include "../codegen/cmds.h"
 
     MOV_REG_NUM_CMD = 20,
     NONE,
+    END = 28,
 };
 
 #undef DEF_CMD
@@ -156,7 +157,7 @@ struct InstructionSizes
 
 const struct InstructionSizes InstrSizes[] =
 {
-    {HLT,  1,   1},
+    {HLT,  1,   7},
     {PUSH, 10,  1}, 
     {MUL, 1, 26},
     {ADD, 1, 26},

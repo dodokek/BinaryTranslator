@@ -43,7 +43,7 @@ int AllocateCmdArrays (TranslatorInfo* self)
 {
     self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
 
-    self->dst_x86.content = (char*) aligned_alloc (PAGESIZE, self->src_cmds.len * sizeof (char)); // alignment for mprotect
+    self->dst_x86.content = (char*) aligned_alloc (PAGESIZE + MEMORY_SIZE, self->src_cmds.len * sizeof (char)); // alignment for mprotect
     memset ((void*) self->dst_x86.content, 0xC3, self->src_cmds.len);      // Filling whole buffer
                                                                            // With ret (0xC3) byte code
 
@@ -99,7 +99,7 @@ int CmdToStruct (const char* code, TranslatorInfo* self)
     {
         #include "../codegen/cmds.h"    // generating cases for all cmds
 
-        case HLT:
+        case END:
             LOG ("End of prog.\n");
             return END_OF_PROG;
 
@@ -215,7 +215,9 @@ void FillCmdIp (TranslatorInfo* self)
 
         native_ip += self->cmds_array[i]->native_size;
         x86_ip    += self->cmds_array[i]->x86_size;
+
     }
+
 } 
 
 

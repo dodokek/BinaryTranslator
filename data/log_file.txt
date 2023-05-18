@@ -1,44 +1,59 @@
 Ip   8:
-	Id: 1
+	Id: 17
+	Yeah, it is jump
 Ip  18:
+	Id: 0
+Ip  19:
 	Id: 1
-Ip  28:
-	Id: 3
 Ip  29:
 	Id: 6
 Ip  39:
+	Id: 1
+Ip  49:
+	Id: 6
+Ip  59:
 	Id: 18
-Ip  40:
+Ip  60:
 End of prog.
 
 ================ Begin of struct dump ==================
 
-Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
-Checksum: 32
-	+Operating width digit, value: 1
+Command < CALL: 17 > | Native/x86 size: 10/5 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 19
 
-Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
-Checksum: 32
-	+Operating width digit, value: 1
+Command < HLT: 0 > | Native/x86 size: 1/7 | x86 ip: 0
 
-Command < ADD: 3 > | Native/x86 size: 1/26 | x86 ip: 0
+Command < PUSH: 1 > | Native/x86 size: 10/8 | x86 ip: 0
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
 
 Command < POP: 6 > | Native/x86 size: 10/1 | x86 ip: 0
 Checksum: 64
 	+Using register, its id: 0
+
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 0
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < POP: 6 > | Native/x86 size: 10/8 | x86 ip: 0
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
 
 Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 0
 
 ================ End of struct dump ==================
 
 Optimization attempt: mov r?x, num
-Optimization attempt: mov r?x, num
-Optimization attempt: constant arithmetics
-	 Arithmetic optimization success: indx 2
 
 
 ---------- Filling labels --------
 
+	Yeah, it is jump
+ 0: Trying to find x86 ip for ip 19:
+	 Found, x86 ip is 12
 
 
 ---------- End filling labels --------
@@ -46,15 +61,31 @@ Optimization attempt: constant arithmetics
 
 ================ Begin of struct dump ==================
 
-Command < PUSH: 1 > | Native/x86 size: 21/11 | x86 ip: 0
-Checksum: 32
-	+Operating width digit, value: 2
+Command < CALL: 17 > | Native/x86 size: 10/5 | x86 ip: 0
+	Yeah, it is jump
+	+Wants to jump into 12
 
-Command < POP: 6 > | Native/x86 size: 10/1 | x86 ip: 11
+Command < HLT: 0 > | Native/x86 size: 1/7 | x86 ip: 5
+
+Command < PUSH: 1 > | Native/x86 size: 10/8 | x86 ip: 12
+Checksum: 160
+	+Operating width digit, value: 1
+--- Adresses to memory
+
+Command < POP: 6 > | Native/x86 size: 10/1 | x86 ip: 20
 Checksum: 64
 	+Using register, its id: 0
 
-Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 12
+Command < PUSH: 1 > | Native/x86 size: 10/11 | x86 ip: 21
+Checksum: 32
+	+Operating width digit, value: 2
+
+Command < POP: 6 > | Native/x86 size: 10/8 | x86 ip: 32
+Checksum: 160
+	+Operating width digit, value: 2
+--- Adresses to memory
+
+Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 40
 
 ================ End of struct dump ==================
 
@@ -64,7 +95,34 @@ Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 12
 	 0: 49 ba 
 ##########
 
-<0>:Push IMM
+Translating Jump or Call
+##########
+	 0: e8 
+##########
+
+Translating exit()
+
+##########
+	 0: 6a 3c 58 31 ff 0f 05 
+##########
+
+
+##########
+	 0: 49 8b ba 
+##########
+
+
+##########
+	 0: 57 
+##########
+
+20:Push/Pop REG
+
+##########
+	 0: 58 
+##########
+
+<21>:Push IMM
 
 ##########
 	 0: 48 be 
@@ -75,10 +133,14 @@ Command < RET: 18 > | Native/x86 size: 1/1 | x86 ip: 12
 	 0: 56 
 ##########
 
-11:Push/Pop REG
 
 ##########
-	 0: 58 
+	 0: 5f 
+##########
+
+
+##########
+	 0: 49 89 ba 
 ##########
 
 Translating RET
@@ -87,23 +149,16 @@ Translating RET
 ##########
 
 
-##########
-	 0: c3 
-##########
-
-
 
 ====== x86 buffer dump begin =======
 
- 0: 49 ba 00 60 6b 01 00 00 
- 8: 00 00 48 be 00 00 00 00 
-16: 00 00 00 40 56 58 c3 c3 
-24: 00 
+ 0: 49 ba 78 10 40 00 00 00 
+ 8: 00 00 e8 07 00 00 00 6a 
+16: 3c 58 31 ff 0f 05 49 8b 
+24: ba 08 00 00 00 57 58 48 
+32: be 00 00 00 00 00 00 00 
+40: 40 56 5f 49 89 ba 10 00 
+48: 00 00 c3 00 
 
 ====== x86 buffer dump end =======
-
-
-##########
-	 0: 05 00 
-##########
 
