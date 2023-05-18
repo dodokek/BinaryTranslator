@@ -45,6 +45,8 @@ const int HEADER_OFFSET = 8;
 
 const int PAGESIZE = 4096;
 
+const int MEMORY_OFFSET = 6000;
+
 
 const int MEMORY_SIZE = 4096;
 

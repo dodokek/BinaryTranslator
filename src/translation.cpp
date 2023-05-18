@@ -6,7 +6,7 @@ void StartTranslation (TranslatorInfo* self)
 
     EMIT (mov_r10, MOV_R10, SIZE_MOV_R10);
 
-    WriteAbsPtr(self, ENTRY_POINT + PAGESIZE);
+    WriteAbsPtr(self, ENTRY_POINT + MEMORY_OFFSET );
 
     for (int cmd_indx = 0; cmd_indx < self->cmd_amount; cmd_indx++)
     {   
