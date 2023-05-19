@@ -210,19 +210,16 @@ void DoubleScanf (double* num)
 
 void TranslateIn (TranslatorInfo* self, Command* cur_cmd)
 {
-    EMIT (push_rdi,    PUSH_RDI,    SIZE_PUSH_RDI);
-    EMIT (lea_rdi_rsp, LEA_RDI_RSP, SIZE_LEA_RDI_RSP);
     EMIT (push_all,    PUSH_ALL,    SIZE_PUSH_POP_All);
-    EMIT (mov_rbp_rsp, MOV_RBP_RSP, SIZE_MOV_REG_REG);
-    EMIT (align_stack, AND_RSP_FF,  SIZE_AND_RSP);
     EMIT (call_double_scanf, CALL_OP, SIZE_JMP);    
 
-    uint32_t in_ptr = (uint64_t)DoubleScanf - 
-                       (uint64_t)(self->dst_x86.content + cur_cmd->x86_ip + WRAPPER_OFFSET + sizeof (int));                                 
+    uint32_t in_ptr = (uint64_t) self->x86_ip_counter - cur_cmd->x86_ip - 7 - sizeof (int) + PRINTF_LEN;
+
     WritePtr (self, in_ptr);
 
-    EMIT (mov_rsp_rbp, MOV_RSP_RBP, SIZE_MOV_REG_REG);
     EMIT (pop_all, POP_ALL, SIZE_PUSH_POP_All);
+    EMIT (push_rsi, PUSH_RSI, SIZE_PUSH_RSI);
+
 }
 
 

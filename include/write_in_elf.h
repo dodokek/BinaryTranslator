@@ -10,21 +10,15 @@
 #include "parser.h"
 #include "translation.h"
 
-#if defined(__LP64__)
 #define ElfW(type) Elf64_ ## type
-#else
-#define ElfW(type) Elf32_ ## type
-#endif
-
-
-
-
 
 void WriteInelf (TranslatorInfo* self);
 
 void writeELFHeader (FILE* fileptr);
 
-void AppendPrintf (TranslatorInfo* self, FILE* exec_file);
+void writeTextSection (TranslatorInfo* self, FILE* exec_file);
+
+void AppendBinFunc (TranslatorInfo* self, FILE* exec_file, char* bin_file_name);
 
 int GetTextBuffer (FILE* file, char* buffer);
 

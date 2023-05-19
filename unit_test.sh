@@ -1,5 +1,5 @@
 cd src
-./main 2> ../output_translator.txt
+./execute.elf > ../output_translator.txt
 cd ../ProgrammingLanguage/
 ./execute.sh 2> ../output_native.txt
 cd ../

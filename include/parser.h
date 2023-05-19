@@ -58,6 +58,8 @@ const uint64_t WORD_SIZE = 8;
 
 const uint64_t ENTRY_POINT = 0x400078;
 
+const int PRINTF_LEN = 219;
+
 // ===============================================
 
 
@@ -175,7 +177,7 @@ const struct InstructionSizes InstrSizes[] =
     {JAE, 10,  26},
     {JE,  10,  26},
     {JNE, 10,  26},
-    {IN, 1, 33},
+    {IN, 1, 18},
     {CALL, 10,  5},
     {RET, 1,  1},
     {SQR, 1, 16}

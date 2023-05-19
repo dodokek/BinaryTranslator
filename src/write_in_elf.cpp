@@ -1,6 +1,39 @@
 #include "../include/write_in_elf.h"
 
-void writeELFHeader (FILE* fileptr)
+
+void WriteInelf (TranslatorInfo* self)
+{
+    FILE* exec_file = get_file ("execute.elf", "wb");
+    writeELFHeader(exec_file);
+
+    writeTextSection (self, exec_file);
+
+    AppendBinFunc (self, exec_file, "../data/printf.bin");
+    AppendBinFunc (self, exec_file, "../data/scanf.bin");
+
+    fwrite(self->dst_x86.content, sizeof (unsigned char), PAGESIZE * 2, exec_file);
+    
+    close_file (exec_file, "execute.elf");
+}
+
+
+void writeTextSection (TranslatorInfo* self, FILE* exec_file)
+{
+    ElfW(Phdr) textSection = {};
+
+    textSection.p_type = PT_LOAD;
+    textSection.p_flags = PROT_EXEC + PROT_READ + PROT_WRITE; 
+    textSection.p_offset = 0x78;
+    textSection.p_vaddr = 0x400078;
+    textSection.p_filesz = MEMORY_SIZE +  self->dst_x86.len;
+    textSection.p_memsz =  MEMORY_SIZE +  self->dst_x86.len;
+    textSection.p_align = 0x1000;
+
+    fwrite(&textSection, sizeof (textSection), 1, exec_file);
+}
+
+
+void writeELFHeader (FILE* exec_file)
 {
     ElfW(Ehdr) header = {};
     header.e_ident[EI_MAG0]  = 0x7f;
@@ -21,51 +54,23 @@ void writeELFHeader (FILE* fileptr)
     header.e_phentsize       = 0x38;
     header.e_phnum           = 0x01;
 
-    fwrite(&header, sizeof (header), 1, fileptr);
-}
-
-void WriteInelf (TranslatorInfo* self)
-{
-    FILE* fileptr = get_file ("execute.elf", "wb");
-    writeELFHeader(fileptr);
-
-    ElfW(Phdr) textSection = {};
-
-    textSection.p_type = PT_LOAD;
-    textSection.p_flags = PROT_EXEC + PROT_READ + PROT_WRITE; 
-    textSection.p_offset = 0x78;
-    textSection.p_vaddr = 0x400078;
-    textSection.p_filesz = MEMORY_SIZE +  self->dst_x86.len;
-    textSection.p_memsz =  MEMORY_SIZE +  self->dst_x86.len;
-    textSection.p_align = 0x1000;
-
-    fwrite(&textSection, sizeof (textSection), 1, fileptr);
-
-    AppendPrintf (self, fileptr);
-
-    fwrite(self->dst_x86.content, sizeof (unsigned char), PAGESIZE * 2, fileptr);
-    
-    close_file (fileptr, "execute.elf");
+    fwrite(&header, sizeof (header), 1, exec_file);
 }
 
 
-void AppendPrintf (TranslatorInfo* self, FILE* exec_file)
+void AppendBinFunc (TranslatorInfo* self, FILE* exec_file, char* bin_file_name)
 {
-    FILE* printf_file = get_file ("../data/printf.bin", "rb");
+    FILE* printf_file = get_file (bin_file_name, "rb");
     char* buffer = (char*) calloc (1000, sizeof(char));
+    assert (buffer != nullptr);
     
-    int printf_binsize = GetTextBuffer (printf_file, buffer);
-    printf ("Symbols read: %d\n", printf_binsize);
-
-    printf ("Memcpy: Dst len = %d\n", self->dst_x86.len);
-    printf ("Dst ptr = %p\n", self->dst_x86.content);
+    int file_binsize = GetTextBuffer (printf_file, buffer);
     
-    memcpy (self->dst_x86.content + self->dst_x86.len, buffer, printf_binsize);
-    self->dst_x86.len += printf_binsize;
-    // fwrite(buffer, sizeof (unsigned char), printf_binsize, exec_file);
+    memcpy (self->dst_x86.content + self->dst_x86.len, buffer, file_binsize);
+    self->dst_x86.len += file_binsize;
 
     free (buffer);
-    close_file (printf_file, "data/printf.bin");
+    close_file (printf_file, bin_file_name);
 }
 
 
