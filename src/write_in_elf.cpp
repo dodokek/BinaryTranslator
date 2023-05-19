@@ -5,6 +5,7 @@ const char ELF_FILENAME[] = "execute.elf";
 void WriteInelf (TranslatorInfo* self)
 {
     FILE* exec_file = get_file (ELF_FILENAME, "wb");
+
     writeELFHeader(exec_file);
 
     writeTextSection (self, exec_file);
