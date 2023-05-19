@@ -1,12 +1,14 @@
-# The JIT 
+# The JIT compilator
 
 ## Overview
 In this project I combined all my skills, that I gained from educating on the 1st year of MIPT. 
 
 ## About
 
-I translate binary code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Programming language</a> into **x86-64** machine code. Program walks through the executable and translate each instruction into one or several *x86-64* instructions architecture. <br><br> My translator translates the instructions and puts them in a buffer that is allocated in the C program. Further with the help of *mprotect syscall* the buffer becomes executable, and code injection occurs.
-<br><br>
+I translate binary code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Programming language</a> into **x86-64** machine code. Program walks through the executable and translate each instruction into one or several *x86-64* instructions architecture. <br><br> My translator translates the instructions and puts them into **Executable and Linkable format (ELF)**.
+
+Commands also can be executed during the main program runtime.With the help of *mprotect syscall* the *x86-64 buffer* becomes executable, and code injection occurs. 
+<br>
 With the help of JIT compilation, execution became **~30 times faster**.
 
 > Before translation I optimize command's structure to improve the performance a bit. 
@@ -213,9 +215,11 @@ The same optimization is applied on *sub, mul and div* instructions.
 
 ## Conclusion
 
-During the work on this task, I learned a lot about JIT compilation, IR and x86-64 architecture. In future I want to improve IR, so it will have real CFG. A lot of new optimizations might be done with the help of it. 
+During the work on this task, I learned a lot about JIT compilation, IR and x86-64 architecture. In future I want to improve IR, so it will have real CFG. A lot of new optimizations might be done with the help of it.
 
-<br> <br> All this journey from simple Quadratic equation to this project was... pretty good. 
+The earliest version of this project was simple JIT translation with further execution in the main program runtime. Closer to the end of semester I wrote compilation into .elf file.
+
+All this journey from simple Quadratic equation to this project was... pretty good. 
 
 
 ## Useful links

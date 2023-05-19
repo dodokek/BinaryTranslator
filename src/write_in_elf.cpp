@@ -1,9 +1,10 @@
 #include "../include/write_in_elf.h"
 
+const char ELF_FILENAME[] = "execute.elf";
 
 void WriteInelf (TranslatorInfo* self)
 {
-    FILE* exec_file = get_file ("execute.elf", "wb");
+    FILE* exec_file = get_file (ELF_FILENAME, "wb");
     writeELFHeader(exec_file);
 
     writeTextSection (self, exec_file);
@@ -13,7 +14,7 @@ void WriteInelf (TranslatorInfo* self)
 
     fwrite(self->dst_x86.content, sizeof (unsigned char), PAGESIZE * 2, exec_file);
     
-    close_file (exec_file, "execute.elf");
+    close_file (exec_file, ELF_FILENAME);
 }
 
 
