@@ -7,8 +7,8 @@ In this project I combined all my skills, that I gained from educating on the 1s
 
 I translate binary code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Programming language</a> into **x86-64** machine code. Program walks through the executable and translate each instruction into one or several *x86-64* instructions architecture. <br><br> My translator translates the instructions and puts them into **Executable and Linkable format (ELF)**.
 
-Commands also can be executed during the main program runtime.With the help of *mprotect syscall* the *x86-64 buffer* becomes executable, and code injection occurs. 
-<br>
+Commands also can be executed during the main program runtime.With the help of *mprotect syscall* the *x86-64 buffer* becomes executable, and code injection occurs. Check out this version <a href="https://github.com/dodokek/BinaryTranslator/tree/JIT-translation-in-time-execution">here</a>.
+<br><br>
 With the help of JIT compilation, execution became **~30 times faster**.
 
 > Before translation I optimize command's structure to improve the performance a bit. 
