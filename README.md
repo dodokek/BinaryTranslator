@@ -80,7 +80,7 @@ Here is the translation table from *Native assembly* to *x86-64 assembly*
 In native assembly <b>OUT</b> command pops the value from stack and prints it on the screen using <b>printf from STL</b>. 
 <br>
 <br>
-In x86-64 I will call printf function to print one double number using the same printf from STL. The only difference - the stack should be aligned and data stored in specific registers
+I wrote my own printf on assembly and then *linked* it with *.elf* file, here's how it called:
 
 ~~~C++
 mov xmm0, [rsp]
@@ -91,7 +91,7 @@ pusha
 mov rbp, rsp
 and rsp, -16 // aligning stack
 
-call DoublePrint // wrapper for standart printf
+call DoublePrintf
 
 mov rsp, rbp
 
