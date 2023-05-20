@@ -7,8 +7,8 @@ In this project I combined all my skills, that I gained from educating on the 1s
 
 I translate binary code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Programming language</a> into **x86-64** machine code. Program walks through the executable and translate each instruction into one or several *x86-64* instructions architecture. <br><br> My translator translates the instructions and puts them into **Executable and Linkable format (ELF)**.
 
-Commands also can be executed during the main program runtime.With the help of *mprotect syscall* the *x86-64 buffer* becomes executable, and code injection occurs. 
-<br>
+Commands also can be executed during the main program runtime.With the help of *mprotect syscall* the *x86-64 buffer* becomes executable, and code injection occurs. Check out this version <a href="https://github.com/dodokek/BinaryTranslator/tree/JIT-translation-in-time-execution">here</a>.
+<br><br>
 With the help of JIT compilation, execution became **~30 times faster**.
 
 > Before translation I optimize command's structure to improve the performance a bit. 
@@ -80,7 +80,7 @@ Here is the translation table from *Native assembly* to *x86-64 assembly*
 In native assembly <b>OUT</b> command pops the value from stack and prints it on the screen using <b>printf from STL</b>. 
 <br>
 <br>
-In x86-64 I will call printf function to print one double number using the same printf from STL. The only difference - the stack should be aligned and data stored in specific registers
+I wrote my own printf on assembly and then *linked* it with *.elf* file, here's how it called:
 
 ~~~C++
 mov xmm0, [rsp]
@@ -91,7 +91,7 @@ pusha
 mov rbp, rsp
 and rsp, -16 // aligning stack
 
-call DoublePrint // wrapper for standart printf
+call DoublePrintf
 
 mov rsp, rbp
 
