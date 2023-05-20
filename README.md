@@ -5,10 +5,8 @@ In this project I combined all my skills, that I gained from educating on the 1s
 
 ## About
 
-I translate binary code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Programming language</a> into **x86-64** machine code. Program walks through the executable and translate each instruction into one or several *x86-64* instructions architecture. <br><br> My translator translates the instructions and puts them into **Executable and Linkable format (ELF)**.
+I translate byte code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Assembler work implementation</a> into **x86-64** machine code. Program walks through the executable and translate each instruction into one or several *x86-64* instructions architecture. <br><br> My translator translates the instructions and puts them into **Executable and Linkable format (ELF)**.
 
-Commands also can be executed during the main program runtime.With the help of *mprotect syscall* the *x86-64 buffer* becomes executable, and code injection occurs. Check out this version <a href="https://github.com/dodokek/BinaryTranslator/tree/JIT-translation-in-time-execution">here</a>.
-<br><br>
 With the help of JIT compilation, execution became **~30 times faster**.
 
 > Before translation I optimize command's structure to improve the performance a bit. 
@@ -24,16 +22,21 @@ git clone git@github.com:dodokek/BinaryTranslator.git
 Step 2: Build the project using Makefile
 
 ~~~
-~BinaryTranslator cd src
-~BinaryTranslator/src make
+cd src
+make
 ~~~
 
-Step 3: Execute
+Step 3: Generate .elf file
 
 ~~~
-~BinaryTranslator/src make run
+make run
 ~~~
 
+Step 4: Run .elf file
+
+~~~
+./execute.elf
+~~~
 
 
 
@@ -80,7 +83,7 @@ Here is the translation table from *Native assembly* to *x86-64 assembly*
 In native assembly <b>OUT</b> command pops the value from stack and prints it on the screen using <b>printf from STL</b>. 
 <br>
 <br>
-I wrote my own printf on assembly and then *linked* it with *.elf* file, here's how it called:
+I wrote my own printf (<a href="https://github.com/dodokek/BinaryTranslator/tree/main/data/asm_sources">check out assembly sources here</a>) on assembly and then *linked* it with *.elf* file, here's how it called:
 
 ~~~C++
 mov xmm0, [rsp]
@@ -129,7 +132,7 @@ The rest translation of conditional jumps is the same with non-conditional jump.
 
 ## IR - Intermediate Representation
 
-> "In the world, where LLVM exists, we can't go without IR." - Dedinsky, ancient greek philosopher.
+> "In the world, where LLVM exists, we can't go without IR." - Dedinskophen, ancient greek philosopher.
 
 Each command of native assembly is translated into it's IR. After first iteration through *source binary file* we get array of structs:
 
@@ -147,7 +150,7 @@ Array of structs:
 +-----------------+          +-----------------+             +-----------------+
 ~~~
 
-With the help of this representation, translation becomes much **easier and readable**. Moreover, we can apply some optimizations.
+With the help of this representation, translation becomes much **easier and readable**. Moreover, we can apply some **optimizations**.
 
 
 ## Performance test
@@ -175,7 +178,7 @@ Let's also test solving of Quadratic equation:
 
 > Program was given equation  $x^2 + 4x + 3 = 0$ to solve 1000 times
 
-You can find source code of all Assembly programs <a href = "https://github.com/dodokek/Processor/tree/origin/examples">here</a>.
+You can find source code of all Assembly programs <a href = "https://github.com/dodokek/ProgrammingLanguage">here</a>.
 
 
 We can see the huge improvement in speed, JIT compilation rules!
@@ -206,7 +209,7 @@ Any structures like these:
 
 ~~~C++
 push 1  |
-push 2  |----> push 1+2
+push 2  |----> push 3
 add     |
 ~~~
 
@@ -217,9 +220,9 @@ The same optimization is applied on *sub, mul and div* instructions.
 
 During the work on this task, I learned a lot about JIT compilation, IR and x86-64 architecture. In future I want to improve IR, so it will have real CFG. A lot of new optimizations might be done with the help of it.
 
-The earliest version of this project was simple JIT translation with further execution in the main program runtime. Closer to the end of semester I wrote compilation into .elf file.
+<a href="https://github.com/dodokek/BinaryTranslator/tree/JIT-translation-in-time-execution">The earliest version of this project </a> was simple JIT translation with further execution in the main program runtime. Closer to the end of semester I wrote compilation into .elf file.
 
-All this journey from simple Quadratic equation to this project was... pretty good. 
+All this journey from simple Quadratic equation to JIT compilation was... pretty good. 
 
 
 ## Useful links
@@ -229,7 +232,7 @@ This one really helped me to understand some important concepts of binary transl
 https://dse.in.tum.de/wp-content/uploads/2022/01/translating_x86_binaries_into_llvm_intermediate_representation.pdf  
   
   
-Information, that helped me in some parts of project: <br>
+Information, that helped me in translation part: <br>
 https://learn.microsoft.com/en-us/cpp/build/x64-software-conventions?view=msvc-170#x64-register-usage
 
 https://www.felixcloutier.com/x86/divsd
