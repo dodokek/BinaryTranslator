@@ -22,4 +22,10 @@ void AppendBinFunc (TranslatorInfo* self, FILE* exec_file, char* bin_file_name);
 
 int GetTextBuffer (FILE* file, char* buffer);
 
+// =========================================
+
+const int BIN_BUFFER_SIZE = 1000;
+
+// =========================================
+
 #endif

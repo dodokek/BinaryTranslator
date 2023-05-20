@@ -63,7 +63,7 @@ void writeELFHeader (FILE* exec_file)
 void AppendBinFunc (TranslatorInfo* self, FILE* exec_file, char* bin_file_name)
 {
     FILE* printf_file = get_file (bin_file_name, "rb");
-    char* buffer = (char*) calloc (1000, sizeof(char));
+    char* buffer = (char*) calloc (BIN_BUFFER_SIZE, sizeof(char));
     assert (buffer != nullptr);
     
     int file_binsize = GetTextBuffer (printf_file, buffer);
