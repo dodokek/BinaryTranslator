@@ -1,27 +1,26 @@
 section .data
-    prompt: db "EnterDecimal  ", 0
     buffer: times 10 db 5
 
 section .text
     global _start
 
 _start:
-    mov eax, 0x0
-	xor rdx, rdx
-	mov rsi, buffer
-	mov rdi, 20
+    mov eax, 0x0    ; putting registers in state for scanf syscall
+	xor rdx, rdx    
+	mov rsi, buffer ; storing pointer to buffer where to write string
+	mov rdi, 20     ; maximum length
 	syscall
 
     ; Convert input to decimal
-    mov rax, 0
-    mov rcx, 10
-    mov rdi, buffer
-    call atoi
+    mov rax, 0      ; result will be stored in rax
+    mov rcx, 10     ; setting base for atoi
+    mov rdi, buffer ; pointer to string buffer
+    call atoi       ; string in buffer -> decimal number in rax
 
-	cvtsi2sd xmm0, eax
+	cvtsi2sd xmm0, eax  ; transforming number in eax to double-precision number in xmm0
 	sub rsp, 8 
-	movsd qword [rsp], xmm0
-	pop rsi
+	movsd qword [rsp], xmm0 ; storing xmm0 in stack
+	pop rsi                 ; moving result to rsi
 
 	ret
 ;-----------------------------------------

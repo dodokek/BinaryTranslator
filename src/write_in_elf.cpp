@@ -25,8 +25,8 @@ void writeTextSection (TranslatorInfo* self, FILE* exec_file)
 
     textSection.p_type = PT_LOAD;
     textSection.p_flags = PROT_EXEC + PROT_READ + PROT_WRITE; 
-    textSection.p_offset = 0x78;
-    textSection.p_vaddr = 0x400078;
+    textSection.p_offset = 0x00;
+    textSection.p_vaddr = 0x400000;
     textSection.p_filesz = MEMORY_SIZE +  self->dst_x86.len;
     textSection.p_memsz =  MEMORY_SIZE +  self->dst_x86.len;
     textSection.p_align = 0x1000;
@@ -48,8 +48,8 @@ void writeELFHeader (FILE* exec_file)
     header.e_ident[EI_VERSION] = 0x01;
     header.e_version           = 0x01;
     header.e_type            = ET_EXEC;
-    header.e_machine         = 0x3E;
-    header.e_entry           = 0x400078;
+    header.e_machine         = X86_MACHINE;  
+    header.e_entry           = 0x400000 + sizeof (Elf64_Phdr) + sizeof (Elf64_Ehdr);
     header.e_phoff           = 0x40;
     header.e_shoff           = 0x0;
     header.e_ehsize          = 0x40;

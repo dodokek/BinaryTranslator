@@ -1,16 +1,4 @@
 
-section .data
-
-template_str: 		db "Hello %%there %%%x %s, %c, %d, %b, %j", 10d, 0	; template string
-
-buffer: times 64 	db 12				; buffer
-
-string_buffer: times 16 db 0			; for translator to store the number to print
-
-string_help_buffer: times 16 db 0		; for reversing number string
-
-message_error:		db 10d, "No such option for % in printf, my friend :(", 10d, 0
-
 ;------------------------------------------------
 
 section .text
@@ -28,10 +16,6 @@ DodoPrint:
 
 	ret
 
-
-
-
-
 ;------------------------------------------------
 ; Translates value in eax into dec 
 ; template string
@@ -46,9 +30,9 @@ DodoPrint:
 DecToCmd:
 	call ClearStringBuffer
 
-	xor r15, r15
+	xor r15, r15    ; zero flag to zero
 
-	push rsi
+	push rsi        ; saving registers
 	push rdi
 
 	mov rsi, string_buffer
@@ -83,7 +67,7 @@ DecToCmd:
 .skip:
 	call ReverseAndPrint
 	
-	pop rdi
+	pop rdi         ; restoring registers
 	pop rsi
 	ret
 
@@ -91,6 +75,8 @@ DecToCmd:
 ;
 ;	Function clears reversed string buffer
 ;	from previous prints
+;
+; ========================================
 ;
 ;	Destroy: string_help_string
 ;
@@ -126,9 +112,8 @@ ClearStringBuffer:
 ;------------------------------------------------
 ;  Entry: rsi - pointer to end of the string to revert
 ;
-;  Destroys: 
+;  Destroys: ah, ch
 ;
-;  Expects: 
 ;------------------------------------------------
 
 ReverseAndPrint: 
@@ -156,7 +141,6 @@ ReverseAndPrint:
 	call Puts
 
 	ret
-
 
 
 ;------------------------------------------------
@@ -201,7 +185,7 @@ Puts:
 
 .loop:
 	
-	cmp byte [rsi], 0
+	cmp byte [rsi], 0   ; in cycle printing from char to char
 	je .end_loop
 
 	call Putch

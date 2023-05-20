@@ -26,6 +26,8 @@ int GetTextBuffer (FILE* file, char* buffer);
 
 const int BIN_BUFFER_SIZE = 1000;
 
+#define X86_MACHINE 0x3E
+
 // =========================================
 
 #endif
