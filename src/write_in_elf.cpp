@@ -23,13 +23,13 @@ void writeTextSection (TranslatorInfo* self, FILE* exec_file)
 {
     ElfW(Phdr) textSection = {};
 
-    textSection.p_type = PT_LOAD;
-    textSection.p_flags = PROT_EXEC + PROT_READ + PROT_WRITE; 
-    textSection.p_offset = 0x00;
-    textSection.p_vaddr = BASE_ADDRESS;
+    textSection.p_type   = PT_LOAD;
+    textSection.p_flags  = PROT_EXEC + PROT_READ + PROT_WRITE; 
+    textSection.p_offset = ZERO_OFFSET;
+    textSection.p_vaddr  = BASE_ADDRESS;
     textSection.p_filesz = MEMORY_SIZE +  self->dst_x86.len;
-    textSection.p_memsz =  MEMORY_SIZE +  self->dst_x86.len;
-    textSection.p_align = 0x1000;
+    textSection.p_memsz  = MEMORY_SIZE +  self->dst_x86.len;
+    textSection.p_align  = 0x1000;
 
     fwrite(&textSection, sizeof (textSection), 1, exec_file);
 }
@@ -48,7 +48,7 @@ void writeELFHeader (FILE* exec_file)
     header.e_ident[EI_VERSION] = EV_CURRENT;
     header.e_version           = EV_CURRENT;
     header.e_type              = ET_EXEC;
-    header.e_machine           = X86_MACHINE;  
+    header.e_machine           = EM_AMD64;  
     header.e_entry             = BASE_ADDRESS + sizeof (Elf64_Phdr) + sizeof (Elf64_Ehdr);
     header.e_phoff             = sizeof (Elf64_Ehdr);
     header.e_shoff             = 0x0; // Section header table's file offset in bytes
@@ -72,6 +72,8 @@ void AppendBinFunc (TranslatorInfo* self, FILE* exec_file, char* bin_file_name)
     self->dst_x86.len += file_binsize;
 
     free (buffer);
+    buffer = nullptr;
+    
     close_file (printf_file, bin_file_name);
 }
 

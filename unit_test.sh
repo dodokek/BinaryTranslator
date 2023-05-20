@@ -6,7 +6,10 @@ cd ../
 
 if cmp -s "output_translator.txt" "output_native.txt"
 then
-   echo "====== Unit test passed ======"
-else
    echo "=====! Unit test failed !====="
+else
+   echo "====== Unit test passed ======"
 fi
+
+rm output_translator.txt
+rm output_native.txt

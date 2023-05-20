@@ -6,13 +6,21 @@ section .text
 extern printf
 global DodoPrint
 
-DodoPrint:
-	pop r13					; saving return address
 
+;------------------------------------------------
+; Prints value, stored in rax on the screen
+;------------------------------------------------
+;
+;  Entry: rax - dec value to print
+;
+;  Destroys: eax, ebx, edx, r15
+;
+;------------------------------------------------
+
+
+DodoPrint:
 	; rax - number to print
 	call DecToCmd
-
-	push r13
 
 	ret
 
