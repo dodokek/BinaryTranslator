@@ -84,18 +84,18 @@ DecToCmd:
 
 ClearStringBuffer:
 
-	push rsi
+	push rsi       ; storing registers for further use
 	push rdi
 	push rcx
 
-	xor rcx, rcx
-	mov rsi, string_help_buffer
+	xor rcx, rcx    ; length counter = 0             
+	mov rsi, string_help_buffer   ; rsi = pointer to help buffer 
 .loop:
 
-	mov byte [rsi], 0
-	inc rsi
-	inc rcx
-	cmp rcx, 15
+	mov byte [rsi], 0   ; str[i] = 0
+	inc rsi             ; i++
+	inc rcx             ; counter++
+	cmp rcx, 15         ; if string greater than 15 return
 
 	jne .loop
 
@@ -107,36 +107,36 @@ ClearStringBuffer:
 	ret
 
 
-;------------------------------------------------
+;--------------------------------------------------------
 ;  Copies reverted string to another buffer and prints it 
-;------------------------------------------------
+;--------------------------------------------------------
 ;  Entry: rsi - pointer to end of the string to revert
 ;
 ;  Destroys: ah, ch
 ;
-;------------------------------------------------
+;--------------------------------------------------------
 
 ReverseAndPrint: 
 
 	;-------Now reversing the string upside-down-----
 
 	mov rdi, string_help_buffer
-	dec rsi	; setting ptr to end of string buffer
+	dec rsi	;                   setting ptr to end of string buffer
 	
 .reverse:
 
 	mov ah, byte [rsi]		; string_buffer[n-i] = string_help_buffer[i]
 	mov byte [rdi], ah
 
-	inc rdi
+	inc rdi                 ; i++
 	dec rsi
 
-	cmp rsi, string_buffer - 1 
+	cmp rsi, string_buffer - 1 ; if we get to the end of string - return 
 	jne .reverse
 
 	;-------Printing the string we got--------------
 
-	mov byte [rdi], 5
+	mov byte [rdi], 5       
 	mov rsi, string_help_buffer
 	call Puts
 

@@ -26,7 +26,7 @@ void writeTextSection (TranslatorInfo* self, FILE* exec_file)
     textSection.p_type = PT_LOAD;
     textSection.p_flags = PROT_EXEC + PROT_READ + PROT_WRITE; 
     textSection.p_offset = 0x00;
-    textSection.p_vaddr = 0x400000;
+    textSection.p_vaddr = BASE_ADDRESS;
     textSection.p_filesz = MEMORY_SIZE +  self->dst_x86.len;
     textSection.p_memsz =  MEMORY_SIZE +  self->dst_x86.len;
     textSection.p_align = 0x1000;
@@ -42,19 +42,19 @@ void writeELFHeader (FILE* exec_file)
     header.e_ident[EI_MAG1]  = 'E';
     header.e_ident[EI_MAG2]  = 'L';
     header.e_ident[EI_MAG3]  = 'F';
-    header.e_ident[EI_CLASS] = ELFCLASS64;
-    header.e_ident[EI_DATA]  = ELFDATA2LSB;
-    header.e_ident[EI_OSABI] = 0x00;
-    header.e_ident[EI_VERSION] = 0x01;
-    header.e_version           = 0x01;
-    header.e_type            = ET_EXEC;
-    header.e_machine         = X86_MACHINE;  
-    header.e_entry           = 0x400000 + sizeof (Elf64_Phdr) + sizeof (Elf64_Ehdr);
-    header.e_phoff           = 0x40;
-    header.e_shoff           = 0x0;
-    header.e_ehsize          = 0x40;
-    header.e_phentsize       = 0x38;
-    header.e_phnum           = 0x01;
+    header.e_ident[EI_CLASS]   = ELFCLASS64;
+    header.e_ident[EI_DATA]    = ELFDATA2LSB;
+    header.e_ident[EI_OSABI]   = 0x00;
+    header.e_ident[EI_VERSION] = EV_CURRENT;
+    header.e_version           = EV_CURRENT;
+    header.e_type              = ET_EXEC;
+    header.e_machine           = X86_MACHINE;  
+    header.e_entry             = BASE_ADDRESS + sizeof (Elf64_Phdr) + sizeof (Elf64_Ehdr);
+    header.e_phoff             = sizeof (Elf64_Ehdr);
+    header.e_shoff             = 0x0; // Section header table's file offset in bytes
+    header.e_ehsize            = sizeof (Elf64_Ehdr);
+    header.e_phentsize         = sizeof(Elf64_Phdr);
+    header.e_phnum             = 0x01; // The product of e_phentsize and e_phnum gives the table's size in bytes
 
     fwrite(&header, sizeof (header), 1, exec_file);
 }
