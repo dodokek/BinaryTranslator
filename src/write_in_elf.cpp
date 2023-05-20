@@ -6,12 +6,17 @@ void WriteInelf (TranslatorInfo* self)
 {
     FILE* exec_file = get_file (ELF_FILENAME, "wb");
 
-    writeELFHeader(exec_file);
+    // Writing headers
 
+    writeELFHeader(exec_file);
     writeTextSection (self, exec_file);
+
+    // Appending printf/scanf functions to the end of x86 bytecode
 
     AppendBinFunc (self, exec_file, "../data/printf.bin");
     AppendBinFunc (self, exec_file, "../data/scanf.bin");
+
+    // Writing whole bytecode into .elf file
 
     fwrite(self->dst_x86.content, sizeof (unsigned char), PAGESIZE * 2, exec_file);
     
@@ -44,17 +49,17 @@ void writeELFHeader (FILE* exec_file)
     header.e_ident[EI_MAG3]  = 'F';
     header.e_ident[EI_CLASS]   = ELFCLASS64;
     header.e_ident[EI_DATA]    = ELFDATA2LSB;
-    header.e_ident[EI_OSABI]   = 0x00;
+    header.e_ident[EI_OSABI]   = 0x00;        // Operating system/ABI identification
     header.e_ident[EI_VERSION] = EV_CURRENT;
     header.e_version           = EV_CURRENT;
     header.e_type              = ET_EXEC;
     header.e_machine           = EM_AMD64;  
     header.e_entry             = BASE_ADDRESS + sizeof (Elf64_Phdr) + sizeof (Elf64_Ehdr);
     header.e_phoff             = sizeof (Elf64_Ehdr);
-    header.e_shoff             = 0x0; // Section header table's file offset in bytes
+    header.e_shoff             = 0x0;                   // Section header table's file offset in bytes
     header.e_ehsize            = sizeof (Elf64_Ehdr);
     header.e_phentsize         = sizeof(Elf64_Phdr);
-    header.e_phnum             = 0x01; // The product of e_phentsize and e_phnum gives the table's size in bytes
+    header.e_phnum             = 0x01;                  // The product of e_phentsize and e_phnum gives the table's size in bytes
 
     fwrite(&header, sizeof (header), 1, exec_file);
 }
@@ -62,19 +67,21 @@ void writeELFHeader (FILE* exec_file)
 
 void AppendBinFunc (TranslatorInfo* self, FILE* exec_file, char* bin_file_name)
 {
-    FILE* printf_file = get_file (bin_file_name, "rb");
-    char* buffer      = (char*) calloc (BIN_BUFFER_SIZE, sizeof(char));
-    assert (buffer != nullptr);
+    FILE* binfunc_file = get_file (bin_file_name, "rb");
+    char* bin_buffer      = (char*) calloc (BIN_BUFFER_SIZE, sizeof(char));
+    assert (bin_buffer != nullptr);
     
-    int file_binsize = GetTextBuffer (printf_file, buffer);
+    // Reading bin file to bin_buffer
+    int file_binsize = GetTextBuffer (binfunc_file, bin_buffer);
     
-    memcpy (self->dst_x86.content + self->dst_x86.len, buffer, file_binsize);
+    // Appending to the end of bin_buffer binary function code
+    memcpy (self->dst_x86.content + self->dst_x86.len, bin_buffer, file_binsize);
     self->dst_x86.len += file_binsize;
 
-    free (buffer);
-    buffer = nullptr;
-    
-    close_file (printf_file, bin_file_name);
+
+    free (bin_buffer);
+    bin_buffer = nullptr;
+    close_file (binfunc_file, bin_file_name);
 }
 
 

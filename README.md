@@ -7,7 +7,7 @@ In this project I combined all my skills, that I gained from educating on the 1s
 
 I translate byte code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Assembler work implementation</a> into **x86-64** machine code. Program walks through the executable and translate each instruction into one or several *x86-64* instructions architecture. <br><br> My translator translates the instructions and puts them into **Executable and Linkable format (ELF)**.
 
-With the help of JIT compilation, execution became **~30 times faster**.
+With the help of JIT compilation, execution became **~3.8 times faster**.
 
 > Before translation I optimize command's structure to improve the performance a bit. 
 
@@ -162,8 +162,8 @@ Let's see the improvement in speed:
 
 |  | Native       | x86-64                 |  
 | :------: | :------:  | :---------------: | 
-| Execution time (μs) | 810 $\pm$ 5  | 36 $\pm$ 5                 |  
-| Relative boost | 1       | 22.5 $\pm$ 0.1                |  
+| Execution time (μs) | 177 $\pm$ 5  | 55 $\pm$ 5                 |  
+| Relative boost | 1       | 3.2 $\pm$ 0.1                |  
 
 > Program was given $5!$ to calculate 1000 times 
 
@@ -173,8 +173,8 @@ Let's also test solving of Quadratic equation:
 
 |  | Native       | x86-64                 |  
 | :------: | :------:  | :---------------: | 
-| Execution time (μs) | 3375 $\pm$ 5 | 59  $\pm$ 5 |  
-| Relative boost | 1       | 57.2  $\pm$ 0.1   |  
+| Execution time (μs) | 165 $\pm$ 5 | 69  $\pm$ 5 |  
+| Relative boost | 1       | 2.39  $\pm$ 0.1   |  
 
 > Program was given equation  $x^2 + 4x + 3 = 0$ to solve 1000 times
 
