@@ -1,4 +1,4 @@
-# The JIT compilator
+# The AOT translator
 
 ## Overview
 In this project I combined all my skills, that I gained from educating on the 1st year of MIPT. 
@@ -7,7 +7,8 @@ In this project I combined all my skills, that I gained from educating on the 1s
 
 I translate byte code, generated from my own <a href="https://github.com/dodokek/ProgrammingLanguage">Assembler work implementation</a> into **x86-64** machine code. Program walks through the executable and translate each instruction into one or several *x86-64* instructions architecture. <br><br> My translator translates the instructions and puts them into **Executable and Linkable format (ELF)**.
 
-With the help of JIT compilation, execution became **~3.8 times faster**.
+With the help of AOT translation, execution became **~3.8 times faster**.
+*Competing with flag: -O2.*
 
 > Before translation I optimize command's structure to improve the performance a bit. 
 
@@ -156,7 +157,7 @@ With the help of this representation, translation becomes much **easier and read
 ## Performance test
 Using <a href="https://githrsiub.com/dodokek/ProgrammingLanguage">my assembly work implementation</a> I wrote program, wich finds factorial. 
 
-I executed it with my CPU work implementation on C. After that I executed it using JIT translation.
+I executed it with my CPU work implementation on C. After that I executed *.elf* file.
 
 Let's see the improvement in speed:
 
@@ -181,7 +182,7 @@ Let's also test solving of Quadratic equation:
 You can find source code of all Assembly programs <a href = "https://github.com/dodokek/ProgrammingLanguage">here</a>.
 
 
-We can see the huge improvement in speed, JIT compilation rules!
+We can see the huge improvement in speed, Binary translation rules!
 
 
 ## Optimizations
@@ -218,11 +219,11 @@ The same optimization is applied on *sub, mul and div* instructions.
 
 ## Conclusion
 
-During the work on this task, I learned a lot about JIT compilation, IR and x86-64 architecture. In future I want to improve IR, so it will have real CFG. A lot of new optimizations might be done with the help of it.
+During the work on this task, I learned a lot about Binary translation, IR and x86-64 architecture. In future I want to improve IR, so it will have real CFG. A lot of new optimizations might be done with the help of it.
 
 <a href="https://github.com/dodokek/BinaryTranslator/tree/JIT-translation-in-time-execution">The earliest version of this project </a> was simple JIT translation with further execution in the main program runtime. Closer to the end of semester I wrote compilation into .elf file.
 
-All this journey from simple Quadratic equation to JIT compilation was... pretty good. 
+All this journey from simple Quadratic equation to Binary translator was... pretty good. 
 
 
 ## Useful links

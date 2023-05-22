@@ -18,6 +18,8 @@ OBJ_DIR = ./lib/
 SRC   = file_utils.cpp translation.cpp parser.cpp optimizer.cpp write_in_elf.cpp main.cpp
 OBJ   = $(patsubst %.cpp, $(OBJ_DIR)%.o, $(SRC)) 
 
+ASM_SRC = ../data/asm_sources/
+
 #linking
 all : $(OBJ)
 	$(CC) $(IFLAGS) $(CFLAGS) $^ -no-pie -o $(OUTPUT_FILE_NAME)
@@ -29,6 +31,14 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cpp
 
 run:
 	./main
+
+scanf: $(ASM_SRC)scanf.s
+	nasm -f elf64 -g $(ASM_SRC)scanf.s -o $(ASM_SRC)scanf.o
+	ld $(ASM_SRC)scanf.o -o $(ASM_SRC)scanf
+
+printf: $(ASM_SRC)printf.s
+	nasm -f elf64 -g $(ASM_SRC)printf.s -o $(ASM_SRC)printf.o
+	ld $(ASM_SRC)printf.o -o $(ASM_SRC)printf
 
 clear: 
 	rm -f $(OBJ_DIR)*.o

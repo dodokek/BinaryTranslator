@@ -17,7 +17,7 @@ _start:
     mov rdi, buffer ; pointer to string buffer
     call atoi       ; string in buffer -> decimal number in rax
 
-	cvtsi2sd xmm0, eax  ; transforming number in eax to double-precision number in xmm0
+	cvtsi2sd xmm0, eax      ; transforming number in eax to double-precision number in xmm0
 	sub rsp, 8 
 	movsd qword [rsp], xmm0 ; storing xmm0 in stack
 	pop rsi                 ; moving result to rsi

@@ -48,7 +48,7 @@ DecToCmd:
 
 	cmp eax, 0			; in case digit is below zero
 	jge .loop
-	neg eax
+	neg eax             ; rax = -rax
 	mov r15, 1			; setting flag to print '-' at the end
 
 
@@ -63,7 +63,7 @@ DecToCmd:
 	mov [rsi], edx	; string_buffer = on of the digits in the number
 	inc rsi			; ptr++
 
-	cmp eax, 0
+	cmp eax, 0      ; checking end of string
 	jne .loop
 
 	cmp r15, 1		; adding '-' in case of negative flag in r15

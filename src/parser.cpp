@@ -36,6 +36,10 @@ void TranslatorDtor (TranslatorInfo* self)
     
     free (self->memory_buffer);
     self->memory_buffer = nullptr;
+
+    free (self->src_cmds.content);
+    free (self->dst_x86.content);
+    free (self->cmds_array);
 }
 
 
@@ -43,11 +47,11 @@ int AllocateCmdArrays (TranslatorInfo* self)
 {
     self->cmds_array = (Command**) calloc (self->src_cmds.len, sizeof (Command*));
 
-    self->dst_x86.content = (char*) aligned_alloc (PAGESIZE, self->src_cmds.len * sizeof (char) * 3); // alignment for mprotect
+    self->dst_x86.content = (char*) calloc (PAGESIZE * 2, sizeof (char)); // alignment for mprotect
     memset ((void*) self->dst_x86.content, 0xC3, self->src_cmds.len);      // Filling whole buffer
                                                                            // With ret (0xC3) byte code
 
-    self->memory_buffer = (char*) aligned_alloc (MEMORY_ALIGNMENT, MEMORY_SIZE * sizeof(char));
+    self->memory_buffer = (char*) calloc (MEMORY_SIZE, sizeof(char));
     memset ((void*) self->memory_buffer, 0xAA, MEMORY_SIZE); // filling for with 0xAA
 
 

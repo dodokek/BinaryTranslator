@@ -26,15 +26,15 @@ void WriteInelf (TranslatorInfo* self)
 
 void writeTextSection (TranslatorInfo* self, FILE* exec_file)
 {
-    ElfW(Phdr) textSection = {};
-
-    textSection.p_type   = PT_LOAD;
-    textSection.p_flags  = PROT_EXEC + PROT_READ + PROT_WRITE; 
-    textSection.p_offset = ZERO_OFFSET;
-    textSection.p_vaddr  = BASE_ADDRESS;
-    textSection.p_filesz = MEMORY_SIZE +  self->dst_x86.len;
-    textSection.p_memsz  = MEMORY_SIZE +  self->dst_x86.len;
-    textSection.p_align  = 0x1000;
+    ElfW(Phdr) textSection = {
+            .p_type   = PT_LOAD,
+            .p_flags  = PROT_EXEC + PROT_READ + PROT_WRITE, 
+            .p_offset = ZERO_OFFSET,
+            .p_vaddr  = BASE_ADDRESS,
+            .p_filesz = MEMORY_SIZE +  self->dst_x86.len,
+            .p_memsz  = MEMORY_SIZE +  self->dst_x86.len,
+            .p_align  = 0x1000 // alue to which the segments are aligned in memory
+    };
 
     fwrite(&textSection, sizeof (textSection), 1, exec_file);
 }
@@ -49,7 +49,7 @@ void writeELFHeader (FILE* exec_file)
     header.e_ident[EI_MAG3]  = 'F';
     header.e_ident[EI_CLASS]   = ELFCLASS64;
     header.e_ident[EI_DATA]    = ELFDATA2LSB;
-    header.e_ident[EI_OSABI]   = 0x00;        // Operating system/ABI identification
+    header.e_ident[EI_OSABI]   = 0x00;                  // Operating system/ABI identification
     header.e_ident[EI_VERSION] = EV_CURRENT;
     header.e_version           = EV_CURRENT;
     header.e_type              = ET_EXEC;
@@ -58,7 +58,7 @@ void writeELFHeader (FILE* exec_file)
     header.e_phoff             = sizeof (Elf64_Ehdr);
     header.e_shoff             = 0x0;                   // Section header table's file offset in bytes
     header.e_ehsize            = sizeof (Elf64_Ehdr);
-    header.e_phentsize         = sizeof(Elf64_Phdr);
+    header.e_phentsize         = sizeof (Elf64_Phdr);
     header.e_phnum             = 0x01;                  // The product of e_phentsize and e_phnum gives the table's size in bytes
 
     fwrite(&header, sizeof (header), 1, exec_file);
